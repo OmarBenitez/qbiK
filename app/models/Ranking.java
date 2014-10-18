@@ -12,9 +12,25 @@ public class Ranking extends Model {
 
     public Integer negativos;
 
+    public Integer total;
+
     public Ranking() {
         this.negativos = 0;
         this.positivos = 0;
     }
 
+    public void masUno() {
+        this.positivos++;
+        upTotal();
+    }
+
+    public void menosUno() {
+        this.negativos++;
+        upTotal();
+    }
+
+    private void upTotal(){
+        this.total = this.positivos - this.negativos;
+    }
+    
 }

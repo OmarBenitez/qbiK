@@ -29,9 +29,9 @@ public class Publicacion extends Model {
 
     @Embedded
     public List<Comentario> comentarios;
+
     
-    @Embedded 
-    public Ranking ranking;
+    public Integer ranking;
 
     public Publicacion(String titulo, String contenido, Usuario usuario) {
         this.titulo = titulo;
@@ -39,17 +39,22 @@ public class Publicacion extends Model {
         this.fechaPublicacion = new Date();
         this.usuario = usuario;
         this.comentarios = new ArrayList<Comentario>();
-        this.ranking = new Ranking();
+        //this.ranking = new Ranking();
+        this.ranking = 0;
     }
 
     public Publicacion() {
         this.fechaPublicacion = new Date();
         this.comentarios = new ArrayList<Comentario>();
-        this.ranking = new Ranking();
+        this.ranking = 0;
     }
 
     public static List<Publicacion> getPublicacionesByUsuario(String id) {
         return Publicacion.find("usuario", Usuario.findById(id)).asList();
+    }
+
+    public static List<Publicacion> getBest() {
+        return Publicacion.find().order("ranking").asList();
     }
 
 }

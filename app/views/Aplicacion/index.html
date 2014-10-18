@@ -1,20 +1,41 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
-#{menuTag /}
+#{menuTag titles:['mejores']/}
 
-    <!-- Intro Header -->
-    <header class="intro">
-        <div class="intro-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">A dónde no ir</h1>
-                        <p class="intro-text">Chihuahua<br>Created by <span class="logo">qbi<span>K</span></span></p>
-                        <a href="#about" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
-                    </div>
+<!-- Intro Header -->
+<header class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1 class="brand-heading">A dónde no ir</h1>
+                    <p class="intro-text">Chihuahua<br>Created by <span class="logo">qbi<span>K</span></span></p>
+                    <a href="#mejores" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
+
+<!-- About Section -->
+<section id="mejores" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>Mejores Publicaciones</h2>
+                <ul>
+                    #{paginate.list items:publicaciones, as:'object'}
+                    <li>
+                        <h3>
+                            ${object.titulo}
+                        </h3>
+                        <div>
+                            ${object.contenido.raw()}
+                        </div>
+                    </li>
+                    #{/paginate.list}
+                </ul>
+        </div>
+    </div>
+</section>

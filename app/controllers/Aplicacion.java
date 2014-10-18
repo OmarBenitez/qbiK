@@ -14,7 +14,8 @@ import models.*;
 public class Aplicacion extends Controller {
 
     public static void index() {
-        render();
+        List<Publicacion> publicaciones = Publicacion.getBest();
+        render(publicaciones);
     }
 
 }
