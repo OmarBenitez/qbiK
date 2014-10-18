@@ -2,3 +2,8 @@
 
 require:
     - play
+    - play -> morphia 1.2.12
+    - play -> secure
+    - play -> sass 1.1
+    - play -> paginate 0.12
+    - play -> crud
