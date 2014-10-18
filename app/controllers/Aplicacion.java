@@ -7,7 +7,11 @@ import java.util.*;
 
 import models.*;
 
-public class Application extends Controller {
+/**
+ * 
+ * @author Beny
+ */
+public class Aplicacion extends Controller {
 
     public static void index() {
         render();
