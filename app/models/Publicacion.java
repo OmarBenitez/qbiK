@@ -14,7 +14,7 @@ import play.modules.morphia.Model;
  * @author Beny
  */
 @Entity
-public class Publicacion extends Model {
+public class Publicacion extends BaseModel {
 
     @Required
     public String titulo;
@@ -30,7 +30,9 @@ public class Publicacion extends Model {
     @Embedded
     public List<Comentario> comentarios;
 
-    
+    @Reference
+    public Municipio municipio;
+
     public Integer ranking;
 
     public Publicacion(String titulo, String contenido, Usuario usuario) {

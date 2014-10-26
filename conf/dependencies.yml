@@ -7,3 +7,4 @@ require:
     - play -> sass 1.1
     - play -> paginate 0.12
     - play -> crud
+    - net.sf.flexjson -> flexjson 2.1

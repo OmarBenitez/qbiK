@@ -9,7 +9,7 @@ import play.modules.morphia.Model;
  * @author Beny
  */
 @Entity
-public class Tag extends Model {
+public class Tag extends BaseModel {
 
     @Required
     public String nombre;

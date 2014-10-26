@@ -12,7 +12,7 @@ import play.modules.morphia.Model;
  *
  * @author Beny
  */
-public class Comentario extends Model {
+public class Comentario extends BaseModel {
 
     @Reference
     @Required

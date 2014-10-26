@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
-#{menuTag titles:['mejores']/}
+#{menuTag titles:['ingresar', 'contacto']/}
 
 <!-- Intro Header -->
 <header class="intro">
@@ -19,23 +19,37 @@
     </div>
 </header>
 
-<!-- About Section -->
-<section id="mejores" class="container content-section text-center">
+
+<section id="ingresar" class="container content-section text-center page" ng-controller="mainCtrl">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            <h2>Mejores Publicaciones</h2>
-                <ul>
-                    #{paginate.list items:publicaciones, as:'object'}
-                    <li>
-                        <h3>
-                            ${object.titulo}
-                        </h3>
-                        <div>
-                            ${object.contenido.raw()}
-                        </div>
-                    </li>
-                    #{/paginate.list}
-                </ul>
+            <form role="form">
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select type="text" class="form-control" id="estado" placeholder="Estado" 
+                            ng-model="estado" ng-options="e.nombre for e in estados" ng-change="getMunicipios()">
+                        
+                    </select>
+                </div>
+                <div class="form-group" ng-show="estado">
+                    <label for="municipio">Municipio</label>
+                    <select type="text" class="form-control" id="municipio" placeholder="Municipio" 
+                            ng-model="municipio" ng-options="m.nombre for m in municipios" data-live-search="true">
+                        
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default col-md-12 col-lg-12 col-xs-12"
+                        ng-show="municipio" ng-click="go()">Ingresar</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="contacto" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>Contacto</h2>
         </div>
     </div>
 </section>

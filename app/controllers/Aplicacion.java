@@ -14,8 +14,18 @@ import models.*;
 public class Aplicacion extends Controller {
 
     public static void index() {
+        Estado.fillEstados();
+        Municipio.fillMunicipios();
         List<Publicacion> publicaciones = Publicacion.getBest();
         render(publicaciones);
     }
 
+    public static void login(){
+        render();
+    }
+
+    public static void registro() {
+        render();
+    }
+    
 }

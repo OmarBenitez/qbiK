@@ -6,7 +6,7 @@ import play.modules.morphia.Model;
  *
  * @author Beny
  */
-public class Ranking extends Model {
+public class Ranking extends BaseModel {
 
     public Integer positivos;
 

@@ -1,19 +1,200 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
     <head>
-        <title>Not found</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>    
+        <meta charset="utf-8">   
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <style>
+            #canvas-container {
+                left:0;
+                position: relative;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .inner-shadow { 
+                left:0;
+                position:absolute;
+                width: 100%;
+                height: 300px;
+                text-align: center;
+                font-size: 200px;
+                line-height:300px;
+                vertical-align: center; 
+                box-shadow: inset  0  18px 23px -8px rgba(0,0,0,.3), 
+                    inset  0 -18px 23px -8px rgba(0,0,0,.3);
+            }
+
+
+            .another {
+                margin-top: 320px;
+                text-align: center;
+            }
+
+            canvas {
+                position: absolute;
+                opacity: 0.5;
+            }
+
+            #myCanvas {
+                left: -50px;
+                top: -50px; 
+            }
+
+            h1 >div > img {
+                height: 100px;
+                font-size: 64px;
+                font-weight: 200;
+            }
+
+        </style>
     </head>
     <body>
-        #{if play.mode.name() == 'DEV'}
-            #{404 result /}
-        #{/if}
-        #{else}
-            <h1>Not found</h1>
-            <p>
-                ${result.message}
-            </p>
-        #{/else}
+        <div class="container">
+
+            <div class="inner-shadow">
+                <div id="canvas-container">
+                    <text>404</text>
+                </div>
+            </div>
+            <div class="another">
+                <div class="row">
+                    <h1 class="col-md-12">
+                        <div>
+                            Página no encontrada
+                        </div>
+                    </h1>
+                    <h3>No es necesario que reportes el error, ya estamos trabajando en ello</h3>
+                    <p>
+                        #{if play.mode.name() == 'DEV'}
+                            #{404 result /}
+                        #{/if}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script>
+
+            function handleOrientation(event) {
+                var x = Math.abs(event.beta);
+                var y = Math.abs(event.gamma);
+                var canvas = document.getElementById('myCanvas');
+                canvas.style.left = parseInt(y / 180 * 50 - 50) + "px";
+                canvas.style.top = parseInt(x / 180 * 50 - 50) + "px";
+            }
+
+            window.addEventListener('deviceorientation', handleOrientation);
+
+            window.addEventListener('mousemove', function(e) {
+                x = e.clientX || e.pageX;
+                y = e.clientY || e.pageY;
+                var canvas = document.getElementById('myCanvas');
+                canvas.style.left = parseInt(x / (window.innerWidth) * 50) - 50 + "px";
+                canvas.style.top = parseInt(y / (window.innerHeight) * 50) - 50 + "px";
+
+            }, false);
+
+            window.onresize = function() {
+                document.getElementById('canvas-container').innerHTML = "<text>404</text>"
+                init()
+            }
+
+            function init() {
+                var width = window.innerWidth + 100,
+                        height = 400;
+
+                var colors = [
+                    "rgb(197,27,125)",
+                    "rgb(222,119,174)",
+                    "rgb(241,182,218)",
+                    "rgb(253,224,239)",
+                    "rgb(247,247,247)",
+                    "rgb(230,245,208)",
+                    "rgb(184,225,134)",
+                    "rgb(127,188,65)",
+                    "rgb(77,146,33)"
+                ];
+
+                var colors = [
+                    "#333",
+                    "#555",
+                    "#777",
+                    "#999",
+                    "#aaa",
+                    "#ccc"
+                ]
+
+                var sites = d3.range(70).map(function(d) {
+                    return [Math.random() * width, Math.random() * height];
+                });
+
+                var voronoi = d3.geom.voronoi();
+
+                var canvas = d3.select("#canvas-container").append("canvas")
+                        .attr("id", "myCanvas")
+                        .attr("width", width)
+                        .attr("height", height)
+                        .on("mousemove", function() {
+                            sites[0] = d3.mouse(this);
+                            redraw();
+                        });
+
+                var context = canvas.node().getContext("2d");
+
+                redraw();
+
+                function redraw() {
+                    var cells = voronoi(sites);
+
+                    context.clearRect(0, 0, width, height);
+
+                    context.fillStyle = "#000";
+                    draw(cells[0]);
+                    context.fill();
+
+                    for (var k = 0, l = colors.length; k < l; ++k) {
+                        context.fillStyle = colors[k];
+                        for (var i = 1, n = cells.length; i < n; ++i) {
+                            if (i % l === k && draw(cells[i]))
+                                context.fill();
+                        }
+                    }
+
+                    context.strokeStyle = "white";
+                    for (var i = 0, n = cells.length; i < n; ++i) {
+                        if (draw(cells[i]))
+                            context.stroke();
+                    }
+
+                    context.fillStyle = "black";
+                    for (var i = 1, n = sites.length, site; i < n; ++i) {
+                        site = sites[i];
+                        context.beginPath();
+                        context.arc(site[0], site[1], 1.5, 0, 2 * Math.PI, false);
+                        context.fill();
+                    }
+                }
+
+                function draw(cell) {
+                    if (cell) {
+                        context.beginPath();
+                        context.moveTo(cell[0][0], cell[0][1]);
+                        for (var j = 1, m = cell.length; j < m; ++j) {
+                            context.lineTo(cell[j][0], cell[j][1]);
+                        }
+                        context.closePath();
+                        return true;
+                    }
+                }
+            }
+
+            init();
+
+        </script>
     </body>
 </html>
+
