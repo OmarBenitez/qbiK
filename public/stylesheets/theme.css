@@ -500,6 +500,15 @@ text-angular .form-control {
 #signin_main {
     padding-top: 150px;
 }
+
+.contacto {
+    text-align: left;
+}
+
+
+
+
+
 @-webkit-keyframes pulse {    
     0 {
         -webkit-transform: scale(1);
