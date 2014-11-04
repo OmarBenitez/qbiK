@@ -2,6 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+*      /                module:secure
+
 # Home page
 GET     /                                       Aplicacion.index
 GET     /login                                  Aplicacion.login
@@ -9,7 +11,7 @@ GET     /registro                               Aplicacion.registro
 GET     /estados.json                           Estados.json
 GET     /municipios/{clave}                     Municipios.json
 GET     /publicaciones/{id}                     Publicaciones.list
-POST    /authenticate                           Security.authenticate
+
 
 
 

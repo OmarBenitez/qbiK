@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Ingresar' /}
+#{set title:'Registrar' /}
 <ul class="cb-slideshow">
     <li><span>Image 01</span><div><h3></h3></div></li>
     <li><span>Image 02</span><div><h3></h3></div></li>
@@ -24,11 +24,12 @@
                                     <i class="fa fa-user"></i>
                                 </div>
                                 <div class="form-main">
-                                    <form action="/login" method="POST">
+                                    <form action="@{create()}" method="POST">
                                         <div class="form-group">
-                                            <input type="email" id="un_1" name="username" class="form-control" placeholder="Usuario" required="required">
+                                            <input type="text" id="un_1" name="nombre" class="form-control" placeholder="Usuario" required="required">
+                                            <input type="email" id="em_1" name="email" class="form-control" placeholder="Correo" required="required">
                                             <input type="password" id="pw_1" name="password" class="form-control" placeholder="Contraseña" required="required">
-                                            <input type="checkbox" name="remember" id="remember" value="true">
+                                            <input type="password" id="pw_2" class="form-control" placeholder="Repetir Contraseña" required="required">
                                             <label for="remember">Recordar</label>
                                         </div>
                                         <button id="signIn_1" type="submit" class="btn btn-default col-md-12 col-xs-12">Ingresar</button>
@@ -41,8 +42,8 @@
                                             <a href="#password_recovery" id="forgot_from_1">Recuperar contraseña</a>
                                         </div>
                                         <div class="col-xs-5">
-                                            <i class="fa fa-check"></i>
-                                            <a href="@{Usuarios.blank()}" id="signup_from_1">Registrate</a>
+                                            <i class="fa fa-arrow-right"></i>
+                                            <a href="@{Secure.login()}" id="signup_from_1">Ingresa</a>
                                         </div>
                                     </div>
                                 </div>		

@@ -2,7 +2,6 @@ package models;
 
 import com.google.code.morphia.annotations.Entity;
 import java.util.List;
-import play.modules.morphia.Model;
 
 /**
  *
@@ -13,11 +12,18 @@ public class Usuario extends BaseModel {
 
     public String email;
 
+    public String nombre;
+    
     public String password;
 
-    public Usuario(String email, String password) {
+    public Usuario(String nombre,String email, String password) {
+        this.nombre = nombre;
         this.email = email;
         this.password = password;
+    }
+
+    public Usuario() {
+        
     }
 
     public List<Publicacion> getPublicaciones() {

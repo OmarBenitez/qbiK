@@ -8,3 +8,4 @@ require:
     - play -> paginate 0.12
     - play -> crud
     - net.sf.flexjson -> flexjson 2.1
+    - org.json -> json 20090211

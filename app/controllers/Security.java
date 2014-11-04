@@ -1,51 +1,31 @@
 package controllers;
 
+import static controllers.Secure.logout;
+import static controllers.Secure.redirectToOriginalURL;
+import java.util.Date;
 import models.Usuario;
 import org.apache.commons.codec.digest.DigestUtils;
-import play.mvc.Controller;
-import play.mvc.Http.Cookie;
+import play.libs.Crypto;
+import play.mvc.Http;
 
 /**
  *
  * @author omar
  */
-public class Security extends Controller {
+public class Security extends Secure.Security {
 
-    public static void authenticate(String email, String password) {
-
-        Usuario u = Usuario.find("email", email).first();
-
-        if (u == null) {
-            Aplicacion.registro();
-        } else if (u.password.equals(DigestUtils.md5Hex(password))) {
-            Cookie cookieEmail = new Cookie();
-            Cookie cookiePwd = new Cookie();
-            cookieEmail.name = "email";
-            cookiePwd.name = "Pwd";
-            cookieEmail.value = u.email;
-            cookiePwd.value = u.password;
-            cookieEmail.maxAge = 30000;
-            cookiePwd.maxAge = 30000;
-            request.cookies.put(cookieEmail.name, cookieEmail);
-            request.cookies.put(cookiePwd.name, cookiePwd);
+    static boolean authenticate(String email, String password) {
+        Usuario user = Usuario.find("email", email).first();
+        if(user == null){
+            Usuarios.blank();
         } else {
-            
+            if(user.password.equalsIgnoreCase(DigestUtils.md5Hex(password))){
+                return true;
+            } else {
+                flash.error("secure.error", user);
+            }
         }
-    }
-
-    public static void authenticate(Usuario u) {
-
-        Cookie cookieEmail = new Cookie();
-        Cookie cookiePwd = new Cookie();
-        cookieEmail.name = "email";
-        cookiePwd.name = "Pwd";
-        cookieEmail.value = u.email;
-        cookiePwd.value = u.password;
-        cookieEmail.maxAge = 30000;
-        cookiePwd.maxAge = 30000;
-        request.cookies.put(cookieEmail.name, cookieEmail);
-        request.cookies.put(cookiePwd.name, cookiePwd);
-
+        return false;
     }
 
 }
