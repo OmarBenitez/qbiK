@@ -1,12 +1,7 @@
 package controllers;
 
-import static controllers.Secure.logout;
-import static controllers.Secure.redirectToOriginalURL;
-import java.util.Date;
 import models.Usuario;
 import org.apache.commons.codec.digest.DigestUtils;
-import play.libs.Crypto;
-import play.mvc.Http;
 
 /**
  *
