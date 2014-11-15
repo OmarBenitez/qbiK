@@ -1,0 +1,69 @@
+@font-face {
+    font-family: qbiK;
+    src: url(/public/fonts/cubic.ttf);
+}
+
+.brand img {
+    height: 60px;
+}
+
+.list {
+    /* Prevent vertical gaps */
+    line-height: 0;
+
+    -webkit-column-count: 3;
+    -webkit-column-gap:   3px;
+    -moz-column-count:    3;
+    -moz-column-gap:      3px;
+    column-count:         3;
+    column-gap:           3px;
+}
+.list .item {
+    /* Just in case there are inline attributes */
+    width: 100% !important;
+    height: 100% !important;
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+
+    .list {
+        /* Prevent vertical gaps */
+        line-height: 0;
+        -webkit-column-count:   1;
+        -webkit-column-gap:     3px;
+        -moz-column-count:    1;
+        -moz-column-gap:      3px;
+        column-count:         1;
+        column-gap:           3px;
+    }
+
+}
+
+.brand-img {
+    height: 100%;
+}
+
+.gravatar {
+    list-style: none;
+}
+
+.gravatar img {
+    border-radius: 999px;
+    padding: 5px;
+    background: #fff;
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    width: 180px;
+    height: 180px;
+    border: 1px solid #ddd;
+}
+
+.logo {
+    font-family: 'qbiK';
+}
+
+.logo > span {
+    color: #009ACB;
+}

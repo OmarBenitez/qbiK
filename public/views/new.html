@@ -1,0 +1,25 @@
+<form class="form-horizontal" name="form">
+    <fieldset>
+        <legend>Nuevo Producto</legend>
+    </fieldset>
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label" for="object.nombre">Nombre</label>
+        <input class="form-control" type="text" id="object_nombre" placeholder="Nombre" ng-model="object.nombre" name="nombre" required>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label" for="object.descripcion">Descripcion</label>
+        <input class="form-control"  type="text" id="object_descripcion" placeholder="Descripcion" ng-model="object.descripcion" name="descripcion" required>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label" for="object.precio">Precio</label>
+        <input class="form-control"  type="number" id="object_precio" placeholder="Precio" ng-model="object.precio" name="precio" required>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <label class="control-label" for="object.urlImg">Imagen</label>
+        <input class="form-control"  type="text" id="object_imgUrl" placeholder="Imagen" ng-model="object.urlImg" name="url">
+    </div>
+    <div class="col-md-12 col-xs-12">
+        <button class="btn btn-primary pull-right col-xs-12 col-md-2" ng-click="send(object)" style="margin-top: 10px;" ng-disabled="form.$invalid">Crear</button>
+    </div>
+</form>
+<img ng-src="{{object.urlImg}}" class="col-md-6 col-xs-12" style="margin-top: 10px;">

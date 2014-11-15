@@ -1,0 +1,32 @@
+<div class="container ">
+    <section id="ingresar" class="content-section text-center page" ng-controller="main">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select type="text" class="form-control" id="estado" placeholder="Estado" 
+                                ng-model="estado" ng-options="e.nombre for e in estados" ng-change="getMunicipios()">
+
+                        </select>
+                    </div>
+                    <div class="form-group" ng-show="estado">
+                        <label for="municipio">Municipio</label>
+                        <select type="text" class="form-control" id="municipio" placeholder="Municipio" 
+                                ng-model="municipio" ng-options="m.nombre for m in municipios" data-live-search="true">
+
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default col-md-12 col-lg-12 col-xs-12"
+                            ng-show="municipio" ng-click="go()">Ingresar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Footer -->
+<footer>
+    <div class="container text-center col-lg-12 col-md-12 col-xs-12">
+        <p>Copyright &copy; <span class="logo">qbi<span>K</span></span></p>
+    </div>
+</footer>
