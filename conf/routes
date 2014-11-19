@@ -8,9 +8,6 @@
 GET     /                                       Aplicacion.index
 GET     /login                                  Aplicacion.login
 GET     /registro                               Aplicacion.registro
-GET     /estados.json                           Estados.json
-GET     /municipios/{clave}                     Municipios.json
-GET     /publicaciones/{id}                     Publicaciones.list
 
 
 

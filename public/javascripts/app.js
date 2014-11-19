@@ -3,14 +3,14 @@ var socket = io.connect('http://localhost:1337/');
 angular.module('qbik', []).config(function($routeProvider) {
     $routeProvider
             .when('/', {
-                templateUrl: 'public/views/index.html'
+                templateUrl: '/public/views/Publicaciones/blank.html'
                 , controller: 'home'})
             .when('/detalle/', {
-                templateUrl: 'public/views/detalle.html'
+                templateUrl: '/public/views/detalle.html'
                 , controller: 'detalle'
             })
             .when('/add/', {
-                templateUrl: 'public/views/new.html'
+                templateUrl: '/public/views/new.html'
                 , controller: 'nuevo'
             })
             .otherwise({redirectTo: '/'});
@@ -24,10 +24,7 @@ angular.module('qbik', []).config(function($routeProvider) {
     }
 
     service.load = function() {
-        $http.get('productos.json').success(function(data) {
-            service.data = data;
-            service.sendEvent('productos');
-        })
+
     };
 
     return service;
@@ -36,13 +33,13 @@ angular.module('qbik', []).config(function($routeProvider) {
 
     $scope.estados = [];
     $scope.municipios = [];
-    
-    $http.get('/estados.json').success(function(data){
+
+    $http.get('/estados.json').success(function(data) {
         $scope.estados = data;
     });
-    
-    $scope.getMunicipios = function(){
-        $http.get('/municipios/'+$scope.estado.clave).success(function(data){
+
+    $scope.getMunicipios = function() {
+        $http.get('/municipios/' + $scope.estado.clave).success(function(data) {
             $scope.municipios = data;
         });
     };

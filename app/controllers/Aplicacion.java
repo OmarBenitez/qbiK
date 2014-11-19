@@ -16,10 +16,7 @@ import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
 public class Aplicacion extends Controller {
 
     public static void index() {
-        Estado.fillEstados();
-        Municipio.fillMunicipios();
-        List<Publicacion> publicaciones = Publicacion.getBest();
-        render(publicaciones);
+        render();
     }
 
     public static void login(){

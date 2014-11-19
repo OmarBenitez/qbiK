@@ -20,5 +20,10 @@ public class Publicaciones extends CRUD {
         render(objects);
 
     }
+    
+    public static void blank(){
+        Publicacion object = new Publicacion();
+        render(object);
+    }
 
 }

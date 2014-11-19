@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="banner">
+
+    </div>
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="ejemplo_email_3" class="col-lg-2 control-label">Email</label>
+            <div class="col-lg-10">
+                <input type="email" class="form-control" id="ejemplo_email_3"
+                       placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ejemplo_password_3" class="col-lg-2 control-label">Contraseña</label>
+            <div class="col-lg-10">
+                <input type="password" class="form-control" id="ejemplo_password_3" 
+                       placeholder="Contraseña">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> No cerrar sesión
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <input type="file" class="input-file" name="myFile" id="myFile" onchange="readURL(this);">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="submit" class="btn btn-default">Entrar</button>
+            </div>
+        </div>
+        <script>
+            $(function() {
+                console.log($('.input-file'));
+                $('.input-file').inputfile({
+                    uploadText: 'Select a file',
+                    removeText: '<span class="glyphicon glyphicon-trash"></span>',
+                    restoreText: '<span class="glyphicon glyphicon-remove"></span>',
+                    uploadButtonClass: 'btn btn-primary',
+                    removeButtonClass: 'btn btn-default'
+                });
+            });
+        </script>
+    </form>
+</div>
