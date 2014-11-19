@@ -27,31 +27,32 @@
 
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.ico'}">
         <style>
-            body {
+            body, html {
                 padding-top: 0;
                 background: #fff;
+                background: 100% 100%;
             }
         </style>
     </head>
-    <div id="login-block">
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-
-                <div class="login-box clearfix animated flipInY" >
-                    <div class="page-icon animated bounceInDown">
-                        <img src="@{'public/img/icons/png/user-icon.png'}" alt="Key icon">
-                    </div>
-                    <div class="login-logo">
-                        <a href="#">Amelie</a>
+    <body>
+        <div class="container"> 
+            <div class="openerWrap"> 
+                <div class="log fadeIn animated">  
+                    <a class="gbtnHollow" href="#">Sign Up</a>
+                    <button type="submit" class="btn btn-login">Login</button>
+                </div> 
+                <div class="copy sectionWrap"> 
+                    <div class="logo bounceInDown animated"></div> 
+                    <h1 class="fadeIn animated"> No name app </h1> 
+                    <div class="openerBtns fadeIn animated"> 
+                        <a class="gbtnTertiary">Opcion 1</a> 
+                        <a class="gbtnHollow">Opcion 2</a> 
                     </div> 
-                    <hr>
+                </div> 
+
+
+                <div class="login-form-show fadeInRight animated" style="display: none">
                     <div class="login-form">
-                        <!-- Start Error box -->
-                        <div class="alert alert-danger hide">
-                            <button type="button" class="close" data-dismiss="alert"> ×</button>
-                            <h4>Error!</h4>
-                            Usuario y/o password invalidos
-                        </div> <!-- End Error box -->
                         <form action="/login" method="POST" role="form">
                             <div class="form-group">
                                 <input type="email" name="username" placeholder="Correo" class="form-control" required> 
@@ -62,20 +63,58 @@
                             <button type="submit" class="btn btn-login">Login</button> 
                         </form>	
                         <div class="login-links"> 
-                            <a href="@{Usuarios.blank()}">
-                                No tienes cuenta? <strong>Registrate</strong>
-                            </a>
+                            <a href="@{Usuarios.blank()}">No tienes cuenta? <strong>Registrate</strong></a>
                         </div>      		
-                    </div> 			        	
+                    </div> 
+                </div>
+
+                <div class="btn-down">
+                    <a href="#cargar" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
                 </div>
             </div>
+            <section id="contacto" class="container content-section text-center section">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Quienes Somos?</h3>
+                        <br>
+                        <br>
+                        <ul class="gravatar col-md-12">
+                            <li class="col-md-3 col-xs-6">
+                                <div class="grav">
+                                    <img src="http://www.gravatar.com/avatar/521535dabf2a9f17753764f11bd5b5fc?s=200" data-bindattr-826="826">
+                                </div>
+                            </li>
+                            <li class="col-md-3 col-xs-6">
+                                <div class="grav">
+                                    <img src="http://www.gravatar.com/avatar/bcee2737a479ebec433d5c49223a93bc?s=200" data-bindattr-826="826">
+                                </div>
+                            </li>
+                            <li class="col-md-3 col-xs-6">
+                                <div class="grav">
+                                    <img src="http://www.gravatar.com/avatar/7d3dc18d6aca5e8f7ea226c3a454d76a?s=200" data-bindattr-826="826">
+                                </div>
+                            </li>
+                            <li class="col-md-3 col-xs-6">
+                                <div class="grav">
+                                    <img src="http://www.gravatar.com/avatar/0bdd135cfefd2cdbdd8eb334dc49e96f?s=200" data-bindattr-826="826">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
-
-    <!--        <script src="@{'/public/javascripts/jquery-2.1.1.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-            <script src="@{'/public/javascripts/bootstrap.js'}" type="text/javascript" charset="${_response_encoding}"></script>-->
+    </body>
+    <!-- 
+    <script src="@{'/public/javascripts/jquery-2.1.1.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/bootstrap.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    -->
+    
     <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
     <script src="@{'public/js/vendor/jquery.min.js'}"></script>
+    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="@{'public/js/flat-ui.min.js'}"></script>
     <script src="http://localhost:1337/socket.io/socket.io.js" type="text/javascript" charset="${_response_encoding}"></script>

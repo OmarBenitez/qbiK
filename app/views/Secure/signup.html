@@ -1,0 +1,42 @@
+<div id="login-block">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+
+            <div class="login-box clearfix animated flipInY" >
+                <div class="page-icon animated bounceInDown">
+                    <img src="@{'public/img/icons/png/user-icon.png'}" alt="Key icon">
+                </div>
+                <div class="login-logo">
+                    <a href="#">no name app</a>
+                </div> 
+                <hr>
+                <div class="login-form">
+                    <!-- Start Error box--> 
+                    <!--<div class="alert alert-danger hide">
+                        <button type="button" class="close" data-dismiss="alert"> ×</button>
+                        <h4>Error!</h4>
+                        Usuario y/o password invalidos
+                    </div> -->
+                    <!-- End Error box -->
+                    <form action="/login" method="POST" role="form">
+                        <div class="form-group">
+                            <input type="email" name="username" placeholder="Correo" class="form-control" required> 
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="Contraseña" class="form-control" required=""> 
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="Confirmar Contraseña" class="form-control" required=""> 
+                        </div>
+                        <button type="submit" class="btn btn-login">Registrar</button> 
+                    </form>	
+                    <div class="login-links"> 
+                        <a href="@{Usuarios.blank()}">
+                            Ya tienes cuenta? <strong>Ingresa!</strong>
+                        </a>
+                    </div>      		
+                </div> 			        	
+            </div>
+        </div>
+    </div>
+</div>
