@@ -1,7 +1,7 @@
-<html ng-app="tienditaApp">
+<html ng-app="qbik">
     <head>
         <title>Login</title>
-        <meta charset="${_response_encoding}">
+        <meta charset="UTF-8">
         <!--        <link rel="stylesheet" href="@{'/public/stylesheets/bootstrap.css'}" />
                 <link rel="stylesheet" href="@{'/public/stylesheets/bootstrap-theme.css'}" />-->
 
@@ -51,7 +51,7 @@
                 </div> 
 
 
-                <div class="login-form-show fadeInRight animated" style="display: none">
+                <div class="login-form-show fadeInRight animated">
                     <div class="login-form">
                         <form action="/login" method="POST" role="form">
                             <div class="form-group">
@@ -74,47 +74,48 @@
                     </a>
                 </div>
             </div>
-            <section id="contacto" class="container content-section text-center section">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Quienes Somos?</h3>
-                        <br>
-                        <br>
-                        <ul class="gravatar col-md-12">
-                            <li class="col-md-3 col-xs-6">
-                                <div class="grav">
-                                    <img src="http://www.gravatar.com/avatar/521535dabf2a9f17753764f11bd5b5fc?s=200" data-bindattr-826="826">
-                                </div>
-                            </li>
-                            <li class="col-md-3 col-xs-6">
-                                <div class="grav">
-                                    <img src="http://www.gravatar.com/avatar/bcee2737a479ebec433d5c49223a93bc?s=200" data-bindattr-826="826">
-                                </div>
-                            </li>
-                            <li class="col-md-3 col-xs-6">
-                                <div class="grav">
-                                    <img src="http://www.gravatar.com/avatar/7d3dc18d6aca5e8f7ea226c3a454d76a?s=200" data-bindattr-826="826">
-                                </div>
-                            </li>
-                            <li class="col-md-3 col-xs-6">
-                                <div class="grav">
-                                    <img src="http://www.gravatar.com/avatar/0bdd135cfefd2cdbdd8eb334dc49e96f?s=200" data-bindattr-826="826">
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
         </div>
+        <section id="contacto" class="container content-section text-center section">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Quienes Somos?</h3>
+                    <br>
+                    <br>
+                    <ul class="gravatar col-md-12">
+                        <li class="col-md-3 col-xs-6">
+                            <div class="grav">
+                                <img src="http://www.gravatar.com/avatar/521535dabf2a9f17753764f11bd5b5fc?s=200" data-bindattr-826="826">
+                            </div>
+                        </li>
+                        <li class="col-md-3 col-xs-6">
+                            <div class="grav">
+                                <img src="http://www.gravatar.com/avatar/bcee2737a479ebec433d5c49223a93bc?s=200" data-bindattr-826="826">
+                            </div>
+                        </li>
+                        <li class="col-md-3 col-xs-6">
+                            <div class="grav">
+                                <img src="http://www.gravatar.com/avatar/7d3dc18d6aca5e8f7ea226c3a454d76a?s=200" data-bindattr-826="826">
+                            </div>
+                        </li>
+                        <li class="col-md-3 col-xs-6">
+                            <div class="grav">
+                                <img src="http://www.gravatar.com/avatar/0bdd135cfefd2cdbdd8eb334dc49e96f?s=200" data-bindattr-826="826">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
     </body>
     <!-- 
     <script src="@{'/public/javascripts/jquery-2.1.1.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/bootstrap.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     -->
-    
+
     <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
     <script src="@{'public/js/vendor/jquery.min.js'}"></script>
-    
+
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="@{'public/js/flat-ui.min.js'}"></script>
     <script src="http://localhost:1337/socket.io/socket.io.js" type="text/javascript" charset="${_response_encoding}"></script>

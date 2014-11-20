@@ -1,6 +1,6 @@
 var socket = io.connect('http://localhost:1337/');
 
-angular.module('qbik', []).config(function($routeProvider) {
+angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvider) {
     $routeProvider
             .when('/', {
                 templateUrl: '/public/views/Publicaciones/blank.html'

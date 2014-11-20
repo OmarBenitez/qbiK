@@ -1,29 +1,20 @@
 <div class="container">
     <div class="banner">
-
+        <div class="bg"></div>
+        <text>{{object.titulo}}<text>
     </div>
-    <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form" name="newProd">
         <div class="form-group">
-            <label for="ejemplo_email_3" class="col-lg-2 control-label">Email</label>
+            <label for="titulo" class="col-lg-2 control-label">Título</label>
             <div class="col-lg-10">
-                <input type="email" class="form-control" id="ejemplo_email_3"
-                       placeholder="Email">
+                <input type="text" class="form-control" 
+                       placeholder="Titulo" ng-model="object.titulo" required>
             </div>
         </div>
         <div class="form-group">
-            <label for="ejemplo_password_3" class="col-lg-2 control-label">Contraseña</label>
+            <label for="titulo" class="col-lg-2 control-label">Contenido</label>
             <div class="col-lg-10">
-                <input type="password" class="form-control" id="ejemplo_password_3" 
-                       placeholder="Contraseña">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> No cerrar sesión
-                    </label>
-                </div>
+                <div text-angular ng-model="object.contenido"></div>
             </div>
         </div>
         <div class="form-group">
@@ -33,7 +24,7 @@
         </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-                <button type="submit" class="btn btn-default">Entrar</button>
+                <button type="submit" class="btn btn-default" ng-disabled="newProd">Entrar</button>
             </div>
         </div>
         <script>
@@ -41,8 +32,8 @@
                 console.log($('.input-file'));
                 $('.input-file').inputfile({
                     uploadText: 'Select a file',
-                    removeText: '<span class="glyphicon glyphicon-trash"></span>',
-                    restoreText: '<span class="glyphicon glyphicon-remove"></span>',
+                    removeText: '<span class="fa fa-trash"></span>',
+                    restoreText: '<span class="fa fa-remove"></span>',
                     uploadButtonClass: 'btn btn-primary',
                     removeButtonClass: 'btn btn-default'
                 });
