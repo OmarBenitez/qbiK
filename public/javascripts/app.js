@@ -3,69 +3,34 @@ var socket = io.connect('http://localhost:1337/');
 angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvider) {
     $routeProvider
             .when('/', {
-                templateUrl: '/public/views/Publicaciones/blank.html'
+                templateUrl: '/public/views/home.html'
                 , controller: 'home'})
-            .when('/detalle/', {
-                templateUrl: '/public/views/detalle.html'
-                , controller: 'detalle'
-            })
-            .when('/add/', {
-                templateUrl: '/public/views/new.html'
-                , controller: 'nuevo'
-            })
+            .when('/productos/new', {
+                templateUrl: '/public/views/Publicaciones/blank.html'
+                , controller: 'productos'})
             .otherwise({redirectTo: '/'});
-}).factory('appFactory', function($http, $rootScope) {
+}).factory('appFactory', function($rootScope) {
 
     var service = {};
-    service.data = [];
+    service.publicaciones = [];
+
 
     service.sendEvent = function(event) {
         $rootScope.$broadcast(event);
-    }
+    };
 
-    service.load = function() {
-
+    service.addPublicacion = function(publicacion) {
+        socket.emit('newPublicacion', publicacion);
     };
 
     return service;
 
-}).controller('main', function($scope, $http) {
+}).controller('productos', function($scope, appFactory) {
 
-    $scope.estados = [];
-    $scope.municipios = [];
+    $scope.productos = [];
 
-    $http.get('/estados.json').success(function(data) {
-        $scope.estados = data;
-    });
-
-    $scope.getMunicipios = function() {
-        $http.get('/municipios/' + $scope.estado.clave).success(function(data) {
-            $scope.municipios = data;
-        });
+    $scope.add = function(p) {
+        appFactory.addPublicacion(p);
     };
 
-}).controller('home', function($scope, $rootScope, appFactory) {
-    $scope.prods = [];
-    appFactory.load();
-    $scope.$on('productos', function() {
-        $scope.prods = appFactory.data;
-    });
-    socket.on('updateProds', function(prod) {
-        console.log(prod);
-        $scope.prods.push(prod);
-        $rootScope.$apply();
-    });
-}).controller('detalle', function($scope, appFactory) {
-    $scope.prods = [];
-    appFactory.load();
-    $scope.$on('productos', function() {
-        $scope.prods = appFactory.data;
-    });
-}).controller('nuevo', function($scope, $http) {
-    $scope.send = function(dato) {
-        $http.post('/add/prod', dato).success(function(data, status) {
-            socket.emit('newProd', data);
-            $scope.object = {};
-        });
-    };
 });

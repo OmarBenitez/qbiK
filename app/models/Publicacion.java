@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import play.data.validation.Required;
+import play.modules.morphia.Blob;
 import play.modules.morphia.Model;
 
 /**
@@ -18,6 +19,9 @@ public class Publicacion extends BaseModel {
 
     @Required
     public String titulo;
+    
+    @Required
+    public String banner;
 
     @Required
     public String contenido;

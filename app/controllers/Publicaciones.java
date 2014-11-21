@@ -1,29 +1,23 @@
 package controllers;
 
-import java.util.List;
-import models.Municipio;
 import models.Publicacion;
-import play.mvc.With;
 
 /**
  *
  * @author omar
  */
+@CRUD.For(Publicacion.class)
 public class Publicaciones extends CRUD {
 
-    public static void list(String id) {
-
-        Municipio municipio = Municipio.find("clave", id).first();
-        
-        List<Publicacion> objects = Publicacion.find("municipio", municipio).asList();
-        
-        render(objects);
-
-    }
-    
-    public static void blank(){
+    public static void create() throws Exception {
         Publicacion object = new Publicacion();
-        render(object);
+        object.titulo = params.get("object.titulo");
+        object.contenido = params.get("object.contenido");
+        object.banner = params.get("object.banner");
+        
+        object.validateAndSave();
+        
+        renderJSON(object);
     }
 
 }
