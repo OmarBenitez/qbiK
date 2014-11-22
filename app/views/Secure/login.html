@@ -1,4 +1,4 @@
-<html ng-app="qbik">
+<html ng-app="tienditaApp">
     <head>
         <title>Login</title>
         <meta charset="UTF-8">
@@ -36,77 +36,91 @@
     </head>
     <body>
         <div class="container"> 
-            <div class="openerWrap"> 
-                <div class="log fadeIn animated">  
-                    <a class="gbtnHollow" href="#">Sign Up</a>
-                    <button type="submit" class="btn btn-login">Login</button>
-                </div> 
-                <div class="copy sectionWrap"> 
-                    <div class="logo bounceInDown animated"></div> 
-                    <h1 class="fadeIn animated"> No name app </h1> 
-                    <div class="openerBtns fadeIn animated"> 
-                        <a class="gbtnTertiary">Opcion 1</a> 
-                        <a class="gbtnHollow">Opcion 2</a> 
-                    </div> 
-                </div> 
-
-
-                <div class="login-form-show fadeInRight animated">
-                    <div class="login-form">
-                        <form action="/login" method="POST" role="form">
-                            <div class="form-group">
-                                <input type="email" name="username" placeholder="Correo" class="form-control" required> 
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" placeholder="Contraseña" class="form-control" required=""> 
-                            </div>
-                            <button type="submit" class="btn btn-login">Login</button> 
-                        </form>	
-                        <div class="login-links"> 
-                            <a href="@{Usuarios.blank()}">No tienes cuenta? <strong>Registrate</strong></a>
-                        </div>      		
+            <section id="contacto" class="container content-section text-center">
+                <div class="row">
+                    <div class="log fadeIn animated col-xs-12 col-md-12">  
+                        <button type="submit" class="btn btn-login col-xs-6 col-md-6">Login</button>
+                        <button type="submit" class="btn btn-login singup col-xs-6 col-md-6">Sign Up</button>
                     </div> 
                 </div>
-
-                <div class="btn-down">
-                    <a href="#cargar" class="btn btn-circle page-scroll">
-                        <i class="fa fa-angle-double-down animated"></i>
-                    </a>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <div class="sectionWrap col-xs-6 col-md-6"> 
+                            <div class="page-icon logo bounceInDown animated">
+                                <img src="@{'public/img/icons/png/copa.png'}" alt="Key icon">
+                            </div>
+                            <h1 class="fadeIn animated"> No name app </h1>                            
+                            <div class="openerBtns fadeIn animated"> 
+                                <a class="gbtnTertiary col-xs-3 col-md-3" href="#"> Opcion 1 </a> 
+                                <a class="gbtnHollow col-xs-3 col-md-3" href="#"> Opcion 2 </a> 
+                            </div> 
+                        </div> 
+                        <div class="login-form-show fadeInRight animated col-xs-6 col-md-6">
+                            <div class="login-form">
+                                <form action="/login" method="POST" role="form">
+                                    <div class="form-group">
+                                        <input type="email" name="username" placeholder="Correo" class="form-control" required> 
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password" placeholder="Contraseña" class="form-control" required=""> 
+                                    </div>
+                                    <button type="submit" class="btn btn-login">Login</button> 
+                                </form>	
+                                <div class="login-links"> 
+                                    <a href="@{Usuarios.blank()}">No tienes cuenta? <strong>Registrate</strong></a>
+                                </div>      		
+                            </div> 
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="btn-down">
+                            <a href="#cargar" class="btn btn-circle page-scroll">
+                                <i class="fa fa-angle-double-down animated"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <section id="contacto" class="container content-section text-center section">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <h3>Quienes Somos?</h3>
+                        <br>
+                        <br>
+                        <ul class="gravatar col-md-12 col-xs-12">
+                            <li class="col-md-3 col-xs-3">
+                                <div class="grav">
+                                    <img src="http://www.gravatar.com/avatar/521535dabf2a9f17753764f11bd5b5fc?s=200" data-bindattr-826="826">
+                                    <p>Omar Benitez Escajeda</p>
+                                </div>
+                            </li>
+                            <li class="col-md-3 col-xs-3">
+                                <div class="grav">
+                                    <img src="http://www.gravatar.com/avatar/bcee2737a479ebec433d5c49223a93bc?s=200" data-bindattr-826="826">
+                                    <p>Ingrid Pinedo Pantoja</p>
+                                </div>
+                            </li>
+                            <li class="col-md-3 col-xs-3">
+                                <div class="grav">
+                                    <img src="http://www.gravatar.com/avatar/7d3dc18d6aca5e8f7ea226c3a454d76a?s=200" data-bindattr-826="826">
+                                    <p>Oscar Gutierrez Almanza</p>
+                                </div>
+                            </li>
+                            <li class="col-md-3 col-xs-3">
+                                <div class="grav">
+                                    <img src="http://www.gravatar.com/avatar/0bdd135cfefd2cdbdd8eb334dc49e96f?s=200" data-bindattr-826="826">
+                                    <p>Hiram Hernandez Reyes</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
         </div>
-        <section id="contacto" class="container content-section text-center section">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>Quienes Somos?</h3>
-                    <br>
-                    <br>
-                    <ul class="gravatar col-md-12">
-                        <li class="col-md-3 col-xs-6">
-                            <div class="grav">
-                                <img src="http://www.gravatar.com/avatar/521535dabf2a9f17753764f11bd5b5fc?s=200" data-bindattr-826="826">
-                            </div>
-                        </li>
-                        <li class="col-md-3 col-xs-6">
-                            <div class="grav">
-                                <img src="http://www.gravatar.com/avatar/bcee2737a479ebec433d5c49223a93bc?s=200" data-bindattr-826="826">
-                            </div>
-                        </li>
-                        <li class="col-md-3 col-xs-6">
-                            <div class="grav">
-                                <img src="http://www.gravatar.com/avatar/7d3dc18d6aca5e8f7ea226c3a454d76a?s=200" data-bindattr-826="826">
-                            </div>
-                        </li>
-                        <li class="col-md-3 col-xs-6">
-                            <div class="grav">
-                                <img src="http://www.gravatar.com/avatar/0bdd135cfefd2cdbdd8eb334dc49e96f?s=200" data-bindattr-826="826">
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
     </body>
     <!-- 
     <script src="@{'/public/javascripts/jquery-2.1.1.js'}" type="text/javascript" charset="${_response_encoding}"></script>
@@ -122,6 +136,5 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.js"></script>
     <script src="@{'/public/javascripts/app.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-
 
 </body>

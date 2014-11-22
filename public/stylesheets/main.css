@@ -129,75 +129,48 @@ body, html {
         1px 1px 0 #000;
 
 }
-.openerWrap {
-    z-index: 10;
-    height: 100%;
-}
-
+/*------------------------------------------------------------------*/
 .log {
     float: right;
-    position: relative;
-    z-index: 2;
-    margin: 2% -4% 0 0;
-    width: 204px;
-}
-
-.gbtnHollow:hover {
-    color: #5F6F81;
-    opacity: 0.5;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    -o-transition: 0.5s;
-    transition: 0.5s;
-}
-
-.btn.btn-login {
-    width: 120px;
-    display: block;
-    margin: -18% 0 0 50%;
-    color: white;
-    background: #5F6F81;
-    border: 1px solid #5F6F81;
-    text-transform: none;
-    font-size: 18px;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    -o-transition: 0.5s;
-    transition: 0.5s;
-} 
-.btn.btn-login:hover {
-    border: 1px solid #FFF;
-    opacity: 0.8;
-}
-
-.copy {
-    display: block;
-    width: 70%;
     display: inline-block;
-    vertical-align: middle;
-    z-index: 2;
-    text-align: left;
+    position: relative;
+    z-index: 2; 
+    height: auto;
+    width: auto;
+    box-sizing: border-box;
+}
+.btn.btn-login {
+    margin-right: 10px;
+    float: right;
+    text-transform: none;
+}
+
+.btn.singup {
+    border: 2px solid #5F6F81;
+    background: rgba(0,0,0,0.1);
     color: #5F6F81;
 }
 
-.logo {
-    background: url(/public/images/icono-lavanda.jpg) no-repeat;
-    width: 40%;
-    height: 50%;
+.sectionWrap {
     margin-top: 10%;
-    -webkit-animation-delay: 0.2s;
+    box-sizing: border-box;
+}
+
+.page-icon.logo {
+    margin: -10% 0 0 -10%;
 }
 
 .sectionWrap h1{
-    margin: -19% 0 0 2%;
+    margin: 0 0 0 -25%;
     font-family: 'Engagement';
-    font-size: 500%;
+    font-size: 400%;
+    color: #5F6F81;
 }
 
 .openerBtns {
     position: relative;
     z-index: 2;
-    padding: 40px 0;
+    padding: 30px 0;    
 }
 
 .openerBtns .gbtnTertiary {
@@ -215,12 +188,6 @@ body, html {
     box-sizing: border-box;
     padding: 0px;
     background: #5F6F81;//background: rgba(0,0,0,0.1);
-    opacity: 0.8;
-    -webkit-transition: background 0.2s ease 0s;
-    -moz-transition: background 0.2s ease 0s;
-    -ms-transition: background 0.2s ease 0s;
-    -o-transition: background 0.2s ease 0s;
-    transition: background 0.2s ease 0s;
 }
 
 .openerBtns .gbtnHollow {
@@ -238,29 +205,25 @@ body, html {
     box-sizing: border-box;
     padding: 0px;
     background: rgba(0,0,0,0.1);
-    -webkit-transition: background 0.2s ease 0s;
-    -moz-transition: background 0.2s ease 0s;
-    -ms-transition: background 0.2s ease 0s;
-    -o-transition: background 0.2s ease 0s;
-    transition: background 0.2s ease 0s;
 }
 
 .login-form-show {
     float: right;
-    width: 300px;
-    height: 500px;
-    margin: -40% -6% 0 0;    
+    margin: 20% -5% -20% 0;   
+    box-sizing: border-box; 
 }
+
 .login-form {
     border-radius: 3px;
 }
+
 .login-form .btn.btn-login{
-    margin: 0 0  0 25%;
+    margin: 0 0 0 0;
 }
 
 .btn-down{
-    margin: 12% 0 -2% 46%;
-} 
+    margin: 16% 0 -2% 0;
+}
 
 .btn-circle {
     width: 60px;
@@ -277,35 +240,28 @@ body, html {
     -moz-transition: background .3s ease-in-out;
     transition: background .3s ease-in-out;
 }
-.btn {
-    text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 400;
-    -webkit-transition: all .3s ease-in-out;
-    -moz-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
-}
 
 .section {
+    background: rgba(0,0,0,.2) no-repeat;
+    position: relative;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,.2) 100% 100% no-repeat;
-    position: relative;
+    margin-top: 3%;
 }
 
 .section h3 {
     font-family: 'Engagement';
     font-size: 500%;
     color: #5F6F81;
+    text-align: center;
 }
 
 .grav:hover {;   
     opacity: 0.5;
 }
 
-@media (min-height:1800px) and (min-width:900px){
-
-    .logo {
-        margin-top: 50%;
-    }  
+.grav > p {
+    color: white;
+    font-family: 'Engagement';
+    font-size: 150%;
 }
