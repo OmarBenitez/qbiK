@@ -56,5 +56,5 @@ public class Usuarios extends CRUD{
         render(object);
         
     }
-    
+        
 }

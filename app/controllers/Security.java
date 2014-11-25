@@ -22,5 +22,11 @@ public class Security extends Secure.Security {
         }
         return false;
     }
+    
+    public static Usuario getUser(){
+        Usuario user = Usuario.find("email", 
+                Secure.Security.session.get("username")).first();
+        return user;
+    }
 
 }
