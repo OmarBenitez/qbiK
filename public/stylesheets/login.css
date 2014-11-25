@@ -1,0 +1,16 @@
+body {
+    background-color: #fff;
+    color: #364B61;
+}
+
+@media (max-width:1000px){
+    
+    section {
+        height: auto;
+    }
+    
+    .section {
+        height: auto;
+    }
+    
+}

@@ -1,6 +1,6 @@
 var socket = io.connect('http://localhost:1337/');
 
-angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvider) {
+angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvider) {
     $routeProvider
             .when('/', {
                 templateUrl: '/public/views/home.html'
@@ -13,46 +13,46 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 controller: 'publicaciones'
             })
             .otherwise({redirectTo: '/'});
-}).factory('appFactory', function ($rootScope) {
+}).factory('appFactory', function($rootScope) {
 
     var service = {};
     service.publicaciones = [];
 
 
-    service.sendEvent = function (event) {
+    service.sendEvent = function(event) {
         $rootScope.$broadcast(event);
     };
 
-    service.addPublicacion = function (publicacion) {
+    service.addPublicacion = function(publicacion) {
         socket.emit('newPublicacion', publicacion);
     };
 
     return service;
 
-}).controller('home', function ($scope, appFactory) {
+}).controller('home', function($scope, appFactory) {
 
-}).controller('publicaciones', function ($scope, appFactory) {
+}).controller('publicaciones', function($scope, appFactory) {
 
     $scope.publicaciones = [];
 
-    $scope.add = function (p) {
+    $scope.add = function(p) {
         appFactory.addPublicacion(p);
     };
 
 
     //Test
-    $scope.click = function (arg) {
+    $scope.click = function(arg) {
         alert('Clicked ' + arg);
     };
 //    $scope.html = '<a ng-click="click(1)" href="#">Click me</a>';
-    $scope.comentario  = '<p>Hello</p>';
+    $scope.comentario = '<p>Hello</p>';
 
-}).directive('hashtag', function ($compile) {
+}).directive('hashtag', function($compile) {
     return {
         restrict: 'A',
         replace: true,
-        link: function (scope, ele, attrs) {
-            scope.$watch(attrs.hashtag, function (comentario) {
+        link: function(scope, ele, attrs) {
+            scope.$watch(attrs.hashtag, function(comentario) {
                 var hashtags = [];
                 var tmpHashtag = "";
                 var hashFoundAt = -1;
@@ -62,7 +62,8 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     if (hashFoundAt === -1) {
                         if (comentario[i] === "#") {
                             hashFoundAt = i;
-                        };
+                        }
+                        ;
                     } else {
                         if (comentario[i] === " " || i === comentario.length - 1) {
                             //Fin del hashtag, revisar si el tamaño es mas de 1
@@ -81,11 +82,25 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                             tmpHashtag += comentario[i];
                         }
                     }
-                    
+
                 }
                 ele.html(comentario);
                 $compile(ele.contents())(scope);
             });
         }
     };
+});
+
+
+angular.module('login', ['ngRoute']).config(function($routeProvider) {
+    $routeProvider
+            .when('/', {
+                templateUrl: '/public/views/Login/loginForm.html'
+                , controller: 'login'})
+            .when('/registro', {
+                templateUrl: '/public/views/Login/registroForm.html'
+                , controller: 'login'})
+            .otherwise({redirectTo: '/'});
+}).controller('login', function(){
+    
 });

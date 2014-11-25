@@ -6,7 +6,6 @@
 
 # Home page
 GET     /                                       Aplicacion.index
-GET     /login                                  Aplicacion.login
 GET     /registro                               Aplicacion.registro
 POST    /productos/new                          Publicaciones.create
 

@@ -6093,6 +6093,7 @@ footer p {
 
 .login-logo{
     font-family: 'Engagement';
+    font-weight: 100;
 }
 
 .login-logo a {
@@ -6173,9 +6174,8 @@ footer p {
 
 /* Login Button */
 .btn.btn-login {
-    width: 120px;
+    
     display:block;
-    margin: 20px auto 20px;
     color: white;
     text-transform:uppercase ;	 
     background: #5F6F81; 
@@ -6196,8 +6196,7 @@ footer p {
 .login-links{
     text-align: center;
 }
-.login-links a{
-    color: #FFF; 
+.login-links a{ 
     display:inline-block;
     padding:5px; 
     -webkit-transition: all .5s ease;

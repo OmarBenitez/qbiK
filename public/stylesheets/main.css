@@ -131,16 +131,12 @@ body, html {
 }
 /*------------------------------------------------------------------*/
 .log {
-    float: right;
     display: inline-block;
     position: relative;
     z-index: 2; 
-    height: auto;
-    width: auto;
     box-sizing: border-box;
 }
 .btn.btn-login {
-    margin-right: 10px;
     float: right;
     text-transform: none;
 }
@@ -156,16 +152,7 @@ body, html {
     box-sizing: border-box;
 }
 
-.page-icon.logo {
-    margin: -10% 0 0 -10%;
-}
 
-.sectionWrap h1{
-    margin: 0 0 0 -25%;
-    font-family: 'Engagement';
-    font-size: 400%;
-    color: #5F6F81;
-}
 
 .openerBtns {
     position: relative;
@@ -249,19 +236,21 @@ body, html {
     margin-top: 3%;
 }
 
-.section h3 {
-    font-family: 'Engagement';
-    font-size: 500%;
-    color: #5F6F81;
-    text-align: center;
-}
-
 .grav:hover {;   
     opacity: 0.5;
 }
 
-.grav > p {
-    color: white;
-    font-family: 'Engagement';
-    font-size: 150%;
+.row {
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+section {
+    height: 100%;
+    width: 100%;
 }
