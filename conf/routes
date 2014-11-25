@@ -2,14 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-*      /                module:secure
+#*      /                module:secure
 
 # Home page
 GET     /                                       Aplicacion.index
 GET     /login                                  Aplicacion.login
 GET     /registro                               Aplicacion.registro
-POST     /productos/new                          Publicaciones.create
-
+POST    /productos/new                          Publicaciones.create
 
 
 
