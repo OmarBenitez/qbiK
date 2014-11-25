@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Perfil;
+import models.Permiso;
 import models.Usuario;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -27,6 +29,17 @@ public class Security extends Secure.Security {
         Usuario user = Usuario.find("email", 
                 Secure.Security.session.get("username")).first();
         return user;
+    }
+    
+    public static boolean check(String profile) {
+        try{
+            Usuario usuario = Usuario.findById(session.get(Aplicacion.PERFIL_HASH));
+            Perfil perfil = usuario.perfil;
+            Permiso permiso = Permiso.find("clave", profile).first();
+            return perfil.tieneDerecho(permiso);
+        }catch(Exception ex){
+            return false;
+        }
     }
 
 }

@@ -4,11 +4,14 @@ package controllers;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Municipio;
 import models.Usuario;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
 import org.json.JSONException;
 import org.json.JSONObject;
+import play.modules.morphia.Model;
+import play.mvc.With;
 
 
 
@@ -19,6 +22,8 @@ import org.json.JSONObject;
  *
  * @author omar
  */
+@With(Secure.class)
+@Check("usuarios")
 public class Usuarios extends CRUD{
 
     public static void create() throws JSONException{
@@ -28,6 +33,9 @@ public class Usuarios extends CRUD{
         String nombre = values.get("nombre")[0];
         String email = values.get("email")[0];
         String password = values.get("password")[0];
+        String uuid = values.get("ciudad")[0];
+        
+        Municipio ciudad = Municipio.findById(uuid);
         
         Usuario u = Usuario.find("email", email).first();
         
@@ -39,6 +47,7 @@ public class Usuarios extends CRUD{
             }
         } else {
             Usuario usuario = new Usuario(nombre, email, DigestUtils.md5Hex(password));
+            usuario.ciudad = ciudad;
             usuario.validateAndSave();
             try {
                 Secure.authenticate(usuario.email, password, true);

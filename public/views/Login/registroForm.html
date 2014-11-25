@@ -1,4 +1,4 @@
-<form action="/usuarios/create" method="POST">
+<form action="/usuarios/create" method="POST" name="reg">
     <div class="form-group">
         <input type="text" id="un_1" name="nombre" class="form-control" placeholder="Usuario" required="required">
     </div>
@@ -6,10 +6,20 @@
         <input type="email" id="em_1" name="email" class="form-control" placeholder="Correo" required="required">
     </div>
     <div class="form-group">
-        <input type="password" id="pw_1" name="password" class="form-control" placeholder="Contraseña" required="required">
+        <select class="form-control" ng-model="estado" ng-options="e.nombre for e in estados" placeholder="Estado" ng-change="getMunicipios(estado)">
+            <option value="">Estado</option>
+        </select>
     </div>
     <div class="form-group">
-        <input type="password" id="pw_2" class="form-control" placeholder="Repetir Contraseña" required="required">
+        <select class="form-control"  name="ciudad" ng-model="municipio" ng-options="m.nombre for m in municipios track by m.idAsStr" placeholder="Estado" required>
+            <option value="">Municipio</option>
+        </select>
     </div>
-    <button id="signIn_1" type="submit" class="btn btn-login">Registrar</button>
+    <div class="form-group">
+        <input type="password" id="pw_1" name="password" ng-model="pwd" class="form-control" placeholder="Contraseña" required="required">
+    </div>
+    <div class="form-group">
+        <input type="password" id="pw_2"  ng-model="pwd2" class="form-control" placeholder="Repetir Contraseña" required="required">
+    </div>
+    <button id="signIn_1" type="submit" class="btn btn-login" ng-disabled="pwd!==pwd2 || reg.$invalid">Registrar</button>
 </form>

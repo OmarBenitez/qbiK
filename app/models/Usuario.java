@@ -1,6 +1,7 @@
 package models;
 
 import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.Reference;
 import controllers.Security;
 import java.util.List;
 
@@ -16,6 +17,12 @@ public class Usuario extends BaseModel {
     public String nombre;
 
     public String password;
+    
+    @Reference
+    public Perfil perfil;
+    
+    @Reference
+    public Municipio ciudad;
 
     public Usuario(String nombre, String email, String password) {
         this.nombre = nombre;

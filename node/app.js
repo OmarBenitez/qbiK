@@ -27,9 +27,11 @@ io.sockets.on('connection', function(socket) {
                             }
                 },
         function(error, response, body) {
-            socket.broadcast.emit("updateProds", publicacion);
             if (!error && response.statusCode === 200) {
-                console.log(body);
+                if(body.idAsStr){
+                    socket.emit('newProdSuccess', body);
+                    socket.broadcast.emit("updateProds", publicacion);
+                } 
             }
         });
 

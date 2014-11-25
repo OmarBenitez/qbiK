@@ -53,19 +53,34 @@
             </nav>
         </li>
         <li class="pull-left login-logo"><a href="/">Amelie</a></li>
-        <li class="pull-right hidden-xs"><a href="/">Nueva Publicación  <i class="fa fa-plus"></i></a></li>
+        <li class="pull-right hidden-xs"><a href="/#/publicaciones/new">Nueva Publicación  <i class="fa fa-plus"></i></a></li>
         <li class="pull-right hidden-md hidden-lg hidden-sm"><a href="/"><i class="fa fa-plus"></i></a></li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <i class="fa fa-user"></i>
-                <span class="hidden-xs hidden-sm"> ${models.Usuario.connected().nombre}</span> 
-                <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="@{Usuarios.show(models.Usuario.connected().id)}">Perfil</a></li>
-                <li><a href="/secure/logout">Salir</a></li>
-            </ul>
-        </li>
+        #{if models.Usuario.connected()}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs hidden-sm"> ${models.Usuario.connected().nombre}</span> 
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="@{Usuarios.show(models.Usuario.connected().id)}">Perfil</a></li>
+                    <li><a href="/secure/logout">Salir</a></li>
+                </ul>
+            </li>
+        #{/if}
+        #{else}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs hidden-sm"> Usuario</span> 
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="/secure/login">Ingresa</a></li>
+                    <li><a href="/secure/login#/registro">Registrate</a></li>
+                </ul>
+            </li>
+        #{/else}
     </ul>
 </div><!-- /container -->
 <script src="/public/js/classie.js"></script>

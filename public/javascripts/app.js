@@ -8,6 +8,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
             .when('/publicaciones/new', {
                 templateUrl: '/public/views/Publicaciones/blank.html'
                 , controller: 'publicaciones'})
+            .when('/publicaciones/:id', {
+                templateUrl: '/public/views/Publicaciones/show.html',
+                controller: 'publicaciones'
+            })
             .when('/publicaciones/hashtag', {
                 templateUrl: '/public/views/Publicaciones/hashtag.html',
                 controller: 'publicaciones'
@@ -31,7 +35,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
 
 }).controller('home', function($scope, appFactory) {
 
-}).controller('publicaciones', function($scope, appFactory) {
+}).controller('publicaciones', function($scope, appFactory, $location) {
 
     $scope.publicaciones = [];
 
@@ -39,6 +43,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
         appFactory.addPublicacion(p);
     };
 
+    socket.on('newProdSuccess', function(object) {
+        console.log(object);
+        $location.path("/publicaciones/" + object.isAsStr);
+    });
 
     //Test
     $scope.click = function(arg) {
@@ -101,6 +109,16 @@ angular.module('login', ['ngRoute']).config(function($routeProvider) {
                 templateUrl: '/public/views/Login/registroForm.html'
                 , controller: 'login'})
             .otherwise({redirectTo: '/'});
-}).controller('login', function(){
-    
+}).controller('login', function($scope, $http) {
+
+    $http.get('/estados/json').success(function(data) {
+        $scope.estados = data;
+    });
+
+    $scope.getMunicipios = function(estado) {
+        $http.get('/municipios/json/' + estado.idAsStr).success(function(data) {
+            $scope.municipios = data;
+        });
+    };
+
 });

@@ -1,12 +1,15 @@
 package controllers;
 
 import models.Publicacion;
+import play.mvc.With;
 
 /**
  *
  * @author omar
  */
 @CRUD.For(Publicacion.class)
+@With(Secure.class)
+@Check("publis")
 public class Publicaciones extends CRUD {
 
     public static void create() throws Exception {
@@ -17,7 +20,7 @@ public class Publicaciones extends CRUD {
         
         object.validateAndSave();
         
-        renderJSON(object);
+        renderJSON(Publicacion.toJsonListSerializer().serialize(object));
     }
 
 }

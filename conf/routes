@@ -5,9 +5,16 @@
 #*      /                module:secure
 
 # Home page
-GET     /                                       Aplicacion.index
-GET     /registro                               Aplicacion.registro
-POST    /productos/new                          Publicaciones.create
+GET     /                                           Aplicacion.index
+GET     /registro                                   Aplicacion.registro
+GET     /publicaciones/new                          Publicaciones.blank
+GET     /publicaciones/edit/{id}                    Publicaciones.show
+GET     /publicaciones/new                          Publicaciones.blank
+POST    /publicaciones/create                       Publicaciones.create
+
+#Estados
+GET     /estados/json                           Aplicacion.estadosJson
+GET     /municipios/json/{id}                     Aplicacion.municipiosJson
 
 
 
