@@ -9,7 +9,6 @@ import play.mvc.With;
  */
 @CRUD.For(Publicacion.class)
 @With(Secure.class)
-@Check("publis")
 public class Publicaciones extends CRUD {
 
     public static void create() throws Exception {

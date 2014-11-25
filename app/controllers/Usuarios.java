@@ -22,8 +22,6 @@ import play.mvc.With;
  *
  * @author omar
  */
-@With(Secure.class)
-@Check("usuarios")
 public class Usuarios extends CRUD{
 
     public static void create() throws JSONException{
@@ -63,6 +61,14 @@ public class Usuarios extends CRUD{
         Usuario object = new Usuario();
         
         render(object);
+        
+    }
+    
+    public static void getUsuario(String id){
+        
+        Usuario usuario = Usuario.findById(id);
+        
+        renderJSON(Usuario.toJsonListSerializer().serialize(usuario));
         
     }
         

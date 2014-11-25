@@ -16,6 +16,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
                 templateUrl: '/public/views/Publicaciones/hashtag.html',
                 controller: 'publicaciones'
             })
+            .when('/usuarios/show/:id', {
+                templateUrl: '/public/views/Usuarios/show.html',
+                controller: 'usuarios'
+            })
             .otherwise({redirectTo: '/'});
 }).factory('appFactory', function($rootScope) {
 
@@ -29,6 +33,15 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
 
     service.addPublicacion = function(publicacion) {
         socket.emit('newPublicacion', publicacion);
+    };
+    
+    service.getUsuario = function(id){
+        
+        socket.emit('getUsuario', id);
+        
+        socket.on('takeUsuario', function(usuario){
+            console.log(usuario);
+        });
     };
 
     return service;
@@ -97,6 +110,8 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
             });
         }
     };
+}).controller('usuarios', function($routeParams, appFactory){
+    appFactory.getUsuario($routeParams.id);
 });
 
 

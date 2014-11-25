@@ -16,6 +16,8 @@ POST    /publicaciones/create                       Publicaciones.create
 GET     /estados/json                           Aplicacion.estadosJson
 GET     /municipios/json/{id}                     Aplicacion.municipiosJson
 
+#Usuarios
+GET     /usuario/json/{id}                         Usuarios.getUsuario
 
 
 # Ignore favicon requests
