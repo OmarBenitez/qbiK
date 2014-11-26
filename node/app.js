@@ -15,28 +15,38 @@ var usuariosOnline = [];
 
 io.sockets.on('connection', function(socket) {
 
-    socket.on('newPublicacion', function(publicacion) {
-
-
-
-        request.post(
-                'http://localhost:9000/publicaciones/create',
-                {
-                    form:
-                            {
-                                'object.titulo': publicacion.titulo,
-                                'object.contenido': publicacion.contenido,
-                                'object.banner': publicacion.banner
-                            }
-                },
-        function(error, response, body) {
-            if (!error && response.statusCode === 200) {
-                if (body.idAsStr) {
-                    socket.emit('newProdSuccess', body);
-                    socket.broadcast.emit("updateProds", publicacion);
-                }
+    socket.on('getPublicacion', function(id) {
+        client.get("http://localhost:9000/publicaciones/show/" + id, function(data, response) {
+            data = JSON.parse(data);
+            if (data.idAsStr) {
+                socket.emit('takePublicacion', data);
             }
         });
+
+    });
+
+    socket.on('newPublicacion', function(publicacion) {
+
+        var args = {
+            data: {
+                'titulo': publicacion.titulo,
+                'contenido': publicacion.contenido,
+                'banner': publicacion.banner
+            },
+            headers: {"Content-Type": "application/json"}
+        };
+
+        client.post(
+                'http://localhost:9000/publicaciones/create',
+                args
+                ,
+                function(data, response) {
+                    data = JSON.parse(data);
+                    if (data.idAsStr) {
+                        socket.emit('newProdSuccess', data);
+                        socket.broadcast.emit("updateProds", publicacion);
+                    }
+                });
 
     });
 
@@ -44,12 +54,12 @@ io.sockets.on('connection', function(socket) {
     socket.on('getUsuario', function(id) {
         var route = 'http://localhost:9000/usuario/json/' + id;
         console.log(route);
-        client.get("http://localhost:9000/usuario/json/5474cd31ccf2e2dc88c13fdc", function(data, response){
-            
+        client.get("http://localhost:9000/usuario/json/5474cd31ccf2e2dc88c13fdc", function(data, response) {
+
             socket.emit('takeUsuario', JSON.parse(data));
-            
+
         });
-        
+
     });
 
 

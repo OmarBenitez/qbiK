@@ -10,6 +10,7 @@ GET     /registro                                   Aplicacion.registro
 GET     /publicaciones/new                          Publicaciones.blank
 GET     /publicaciones/edit/{id}                    Publicaciones.show
 GET     /publicaciones/new                          Publicaciones.blank
+GET     /publicaciones/show/{id}                    Publicaciones.show
 POST    /publicaciones/create                       Publicaciones.create
 
 #Estados
