@@ -13,9 +13,16 @@ import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
  * @author Beny
  */
 public class Aplicacion extends Controller {
+
     static String PERFIL_HASH = "asd98ad6r198asd098as09dv0u9";
 
     public static void index() {
+        if (Estado.count() == 0) {
+            Estado.fillEstados();
+        }
+        if (Municipio.count() == 0) {
+            Municipio.fillMunicipios();
+        }
         render();
     }
 
