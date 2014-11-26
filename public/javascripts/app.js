@@ -98,7 +98,20 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
 //    $scope.html = '<a ng-click="click(1)" href="#">Click me</a>';
     $scope.comentario = '';
 
+}).filter('hashtagFilter2', function () {
+    return function(input) {
+        var hashtagLink = "/tags/";
+        if (null === input || undefined === input || input.length === 0) {
+            return "";
+        }
+        return input.replace(/\#[a-zA-Z0-9]+/g, function (match, group1) {
+            return '<a href="' + hashtagLink + match.substring(1, match.length) + '">'
+                    + match
+                    + '</a>';
+        });
+    };
 }).filter('hashtagFilter', function () {
+    //@Deprecated
     return function(input) {
         if (null === input || undefined === input || input.length === 0) {
             return "";
@@ -113,7 +126,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             return publicacionWithLinks
                     + '<a href="' + hashtagLink + tmpHashtag + '">'
                     + '#' + tmpHashtag
-                    + '<a>';
+                    + '</a>';
         };
         for (var i = 0; i < originalText.length; i++) {
             if (originalText[i] === "#") {
@@ -180,7 +193,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             ngModel: "="
         },
         template:
-                '<div class="contenido" ng-bind-html = "ngModel | hashtagFilter"></div>'
+                '<div class="contenido" ng-bind-html = "ngModel | hashtagFilter2"></div>'
     };
 }).controller('usuarios', function($routeParams, appFactory) {
     appFactory.getUsuario($routeParams.id);
