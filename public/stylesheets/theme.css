@@ -1,3 +1,4 @@
+/*
 @font-face {
     font-family: qbiK;
     src: url(/public/fonts/cubic.ttf);
@@ -93,7 +94,7 @@ a:focus {
 }
 
 .navbar-custom .nav li.active {
-    outline: nonte;
+    outline: none;
     background-color: rgba(255,255,255,.3);
 }
 
@@ -146,8 +147,8 @@ a:focus {
     padding: 100px 0;
     text-align: center;
     color: #fff;
-    /*background: url(http://4.bp.blogspot.com/_pEueGwwoWTk/TO1VZN0EXWI/AAAAAAAAAEs/ocl9sqRHC_U/s1600/NewYork2010_RadioCity_grayscale.jpg) no-repeat bottom center scroll;*/
-    /*background-color: #000;*/
+    //background: url(http://4.bp.blogspot.com/_pEueGwwoWTk/TO1VZN0EXWI/AAAAAAAAAEs/ocl9sqRHC_U/s1600/NewYork2010_RadioCity_grayscale.jpg) no-repeat bottom center scroll;
+    //background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -268,7 +269,7 @@ a:focus {
     animation-delay: 30s; 
 }
 
-/* Animation for the slideshow images */
+// Animation for the slideshow images 
 @-webkit-keyframes imageAnimation { 
     0% { opacity: 0;
          -webkit-animation-timing-function: ease-in; }
@@ -350,7 +351,7 @@ a:focus {
     19% { opacity: 0 }
     100% { opacity: 0 }
 }
-/* Show at least something when animations not supported */
+// Show at least something when animations not supported 
 .no-cssanimations .cb-slideshow li span{
     opacity: 1;
 }
@@ -631,3 +632,5 @@ section{
     height:100% !important;
     width:100% !important;
 }
+
+*/
