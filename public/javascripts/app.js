@@ -56,7 +56,17 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
 
     return service;
 
-}).controller('home', function ($scope, appFactory) {
+
+}).controller('home', function($scope, appFactory, $http) {
+
+    $scope.pubs = [];
+    
+    $scope.topPubs = [];
+    
+    $http.get('/publicaciones/list').success(function(data){
+        $scope.pubs = data;
+        $scope.topPubs = data;
+    });
 
 }).controller('publicaciones', function($scope, appFactory, $routeParams, $rootScope) {
 

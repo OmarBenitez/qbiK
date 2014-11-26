@@ -235,7 +235,7 @@ body, html {
 }
 
 .grav:hover {;   
-    opacity: 0.5;
+             opacity: 0.5;
 }
 
 .row {
@@ -255,4 +255,21 @@ section {
 
 .ptop {
     padding-top: 80px;
+}
+
+.carousel-caption {
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+    -webkit-text-stroke: 1px black;
+    text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.carousel .item {
+    background-position: center center;
+    background-size: cover;
+}
+
+.contenido a{
+    color: #1abc9c;
 }

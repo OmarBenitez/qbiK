@@ -12,6 +12,7 @@ GET     /publicaciones/edit/{id}                    Publicaciones.show
 GET     /publicaciones/new                          Publicaciones.blank
 GET     /publicaciones/show/{id}                    Publicaciones.show
 POST    /publicaciones/create                       Publicaciones.create
+GET     /publicaciones/list                         Publicaciones.list
 
 #Estados
 GET     /estados/json                           Aplicacion.estadosJson
