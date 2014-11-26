@@ -207,7 +207,8 @@ body, html {
 }
 
 .btn-down{
-    margin: 16% 0 -2% 0%;
+    margin: 16% 0 -2% 45%;//-3% 0 -2% 45%;
+    //position: absolute;
 }
 
 .btn-circle {
@@ -255,4 +256,23 @@ section {
 
 .ptop {
     padding-top: 80px;
+}
+
+.gn-menu-main, .gn-menu-main ul {
+    border: 1px solid #c6d0da;
+    border-radius: 0px;
+    margin-left: -1px;
+}
+
+.dropdown-menu > li:last-child > a:first-child {
+    border-radius: 0px;
+    border-top: 1px solid #c6d0da;
+}
+
+.dropdown-menu > li:first-child > a:first-child {
+    border-radius: 0px;
+}
+
+.alingpub {
+    margin-right: 12%;
 }
