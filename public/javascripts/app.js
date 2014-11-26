@@ -25,6 +25,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
 
     var service = {};
     service.publicaciones = [];
+    service.publicacion = {};
 
 
     service.sendEvent = function(event) {
@@ -34,21 +35,30 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
     service.addPublicacion = function(publicacion) {
         socket.emit('newPublicacion', publicacion);
     };
-    
-    service.getUsuario = function(id){
-        
+
+    service.getPublicacion = function(id) {
+        socket.emit('getPublicacion', id);
+    };
+
+    service.getUsuario = function(id) {
+
         socket.emit('getUsuario', id);
-        
-        socket.on('takeUsuario', function(usuario){
+
+        socket.on('takeUsuario', function(usuario) {
             console.log(usuario);
         });
     };
+
+    socket.on('takePublicacion', function(publicacion) {
+        service.publicacion = publicacion;
+        service.sendEvent('takePublicacion');
+    });
 
     return service;
 
 }).controller('home', function($scope, appFactory) {
 
-}).controller('publicaciones', function($scope, appFactory, $location) {
+}).controller('publicaciones', function($scope, appFactory, $routeParams, $rootScope) {
 
     $scope.publicaciones = [];
 
@@ -57,9 +67,18 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
     };
 
     socket.on('newProdSuccess', function(object) {
-        console.log(object);
-        $location.path("/publicaciones/" + object.isAsStr);
+        window.location = "/#/publicaciones/" + object.idAsStr;
     });
+
+    if ($routeParams.id) {
+
+        appFactory.getPublicacion($routeParams.id);
+
+        $scope.$on('takePublicacion', function() {
+            $scope.object = appFactory.publicacion;
+            $rootScope.$apply();
+        });
+    }
 
     //Test
     $scope.click = function(arg) {
@@ -110,7 +129,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
             });
         }
     };
-}).controller('usuarios', function($routeParams, appFactory){
+}).controller('usuarios', function($routeParams, appFactory) {
     appFactory.getUsuario($routeParams.id);
 });
 
