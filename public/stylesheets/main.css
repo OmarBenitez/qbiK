@@ -207,7 +207,7 @@ body, html {
 }
 
 .btn-down{
-    margin: 16% 0 -2% 45%;//-3% 0 -2% 45%;
+    margin: 16% 0 -2% 0;//-3% 0 -2% 45%;
     //position: absolute;
 }
 
@@ -292,4 +292,8 @@ section {
 
 .alingpub {
     margin-right: 12%;
+}
+
+#home {
+    height: 100%;
 }
