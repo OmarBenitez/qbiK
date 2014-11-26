@@ -1,4 +1,4 @@
-<html ng-app="qbik">
+<html ng-app="login">
     <head>
         <title>Login</title>
         <meta charset="UTF-8">
@@ -21,28 +21,6 @@
         <link rel="stylesheet" type="text/css" href="/public/stylesheets/demo.css" />
 
         <link rel="stylesheet" type="text/css" href="/public/stylesheets/component.css" />
-
-        <script src="/public/js/modernizr.custom.js"></script>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
-        <script>
-            $(function() {
-                $('a[href*=#]:not([href=#])').click(function() {
-                    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-
-                        var target = $(this.hash);
-                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                        if (target.length) {
-                            $('html,body').animate({
-                                scrollTop: target.offset().top
-                            }, 1000);
-                            return false;
-                        }
-                    }
-                });
-            });
-        </script>
 
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
 
@@ -67,7 +45,7 @@
                         </div>
                         <h1 class="fadeInLeft animated login-logo">No name app</h1>
                     </div> 
-                    <div class="sectionWrap fadeIn animated col-xs-12 col-md-6" ng-view>
+                    <div class="sectionWrap bounceIn animated col-xs-12 col-md-6" ng-view>
 
                     </div>
                 </div>

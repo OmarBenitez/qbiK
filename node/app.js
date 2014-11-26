@@ -14,7 +14,7 @@ app.configure(function() {
 var usuariosOnline = [];
 
 io.sockets.on('connection', function(socket) {
-
+    
     socket.on('getPublicacion', function(id) {
         client.get("http://localhost:9000/publicaciones/show/" + id, function(data, response) {
             data = JSON.parse(data);

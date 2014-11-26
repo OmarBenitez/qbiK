@@ -21,12 +21,12 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 controller: 'usuarios'
             })
             .otherwise({redirectTo: '/'});
-}).factory('appFactory', function ($rootScope) {
+}).factory('appFactory', function ($rootScope, $http) {
 
     var service = {};
     service.publicaciones = [];
     service.publicacion = {};
-
+    service.user = {};
 
     service.sendEvent = function (event) {
         $rootScope.$broadcast(event);
@@ -48,11 +48,20 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             console.log(usuario);
         });
     };
+    
+    service.getConnectedUser = function(){
+        $http.get('/connected/user').success(function(data){
+            console.log(data);
+            service.user = data;
+        });
+    };
 
     socket.on('takePublicacion', function(publicacion) {
         service.publicacion = publicacion;
         service.sendEvent('takePublicacion');
     });
+
+    service.getConnectedUser();
 
     return service;
 

@@ -273,3 +273,28 @@ section {
 .contenido a{
     color: #1abc9c;
 }
+
+.delay-1 {
+    -webkit-animation-delay: 1s;
+}
+.delay-2 {
+    -webkit-animation-delay: 2s;
+}
+.delay-3 {
+    -webkit-animation-delay: 3s;
+}
+.delay-4 {
+    -webkit-animation-delay: 4s;
+}
+.delay-5 {
+    -webkit-animation-delay: 5s;
+}
+.delay-6 {
+    -webkit-animation-delay: 6s;
+}
+.delay-7 {
+    -webkit-animation-delay: 7s;
+}
+.delay-8 {
+    -webkit-animation-delay: 8s;
+}
