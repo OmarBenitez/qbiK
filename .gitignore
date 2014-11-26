@@ -2,3 +2,4 @@ nbproject/
 tmp/
 modules/
 !.gitignore
+public/javascripts/npm-debug.log

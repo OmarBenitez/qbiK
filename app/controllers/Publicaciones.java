@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.gson.Gson;
+import java.util.List;
 import models.Publicacion;
 import play.mvc.With;
 
@@ -24,12 +25,18 @@ public class Publicaciones extends CRUD {
     }
 
     public static void show(String id) {
-
-        System.out.println(id);
         Publicacion p = Publicacion.findById(id);
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(p));
 
+    }
+
+    public static void list() {
+        
+        List<Publicacion> pubs = Publicacion.find().asList();
+        
+        renderJSON(Publicacion.toJsonListSerializer().serialize(pubs));
+        
     }
 
 }
