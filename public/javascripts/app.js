@@ -1,6 +1,6 @@
 var socket = io.connect('http://localhost:1337/');
 
-angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvider) {
+angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvider) {
     $routeProvider
             .when('/', {
                 templateUrl: '/public/views/home.html'
@@ -37,7 +37,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * @param {type} $http
          * @returns {_L28.service}
          */
-        .factory('appFactory', function($rootScope, $http) {
+        .factory('appFactory', function ($rootScope, $http) {
 
             var service = {};
             service.homePubs = [];
@@ -45,65 +45,65 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
             service.publicacion = {};
             service.user = {};
 
-            service.sendEvent = function(event) {
+            service.sendEvent = function (event) {
                 $rootScope.$broadcast(event);
             };
 
-            service.addPublicacion = function(publicacion) {
+            service.addPublicacion = function (publicacion) {
                 socket.emit('newPublicacion', publicacion);
             };
 
-            service.getPublicacion = function(id) {
+            service.getPublicacion = function (id) {
                 socket.emit('getPublicacion', id);
             };
 
-            service.getUsuario = function(id) {
+            service.getUsuario = function (id) {
 
                 socket.emit('getUsuario', id);
 
-                socket.on('takeUsuario', function(usuario) {
+                socket.on('takeUsuario', function (usuario) {
                     console.log(usuario);
                 });
             };
 
-            service.getConnectedUser = function() {
-                $http.get('/connected/user').success(function(data) {
+            service.getConnectedUser = function () {
+                $http.get('/connected/user').success(function (data) {
                     service.user = data;
                 });
             };
 
-            service.search = function(query) {
-                $http.get('/search/' + query).success(function(data) {
+            service.search = function (query) {
+                $http.get('/search/' + query).success(function (data) {
                     window.location = '/#/search/' + query;
                 });
             };
 
-            service.rate = function(id, rating, uid) {
+            service.rate = function (id, rating, uid) {
                 socket.emit('rate', id, rating, uid);
             };
 
-            service.getHomePubs = function() {
+            service.getHomePubs = function () {
                 socket.emit('getHomePubs');
             };
 
-            socket.on('takeHomePubs', function(publicaciones) {
+            socket.on('takeHomePubs', function (publicaciones) {
                 service.homePubs = publicaciones;
                 service.sendEvent('takeHomePubs');
             });
-            
-            socket.on('takeNewHomePub', function(p){
+
+            socket.on('takeNewHomePub', function (p) {
 //                service.homePubs = service.homePubs.reverse();
 //                service.homePubs.push(p);
 //                service.homePubs = service.homePubs.reverse();
                 service.sendEvent('takeNewHomePub', p);
             });
 
-            socket.on('updateRate', function(publicacion) {
+            socket.on('updateRate', function (publicacion) {
                 service.publicacion = publicacion;
                 service.sendEvent('takeRate');
             });
 
-            socket.on('takePublicacion', function(publicacion) {
+            socket.on('takePublicacion', function (publicacion) {
                 service.publicacion = publicacion;
                 service.sendEvent('takePublicacion');
             });
@@ -122,18 +122,18 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * @param {type} $http
          * @returns {undefined}
          */
-        .controller('home', function($scope, appFactory, $rootScope) {
+        .controller('home', function ($scope, appFactory, $rootScope) {
 
             if (!$scope.pubs) {
                 appFactory.getHomePubs();
             }
 
-            $scope.$on('takeHomePubs', function() {
+            $scope.$on('takeHomePubs', function () {
                 $scope.pubs = appFactory.homePubs;
                 $rootScope.$apply();
             });
-            
-            $scope.$on('takeNewHomePub', function(p) {
+
+            $scope.$on('takeNewHomePub', function (p) {
                 $scope.pubs = $scope.pubs.reverse();
                 $scope.pubs.push(p);
                 $scope.pubs = $scope.pubs.reverse();
@@ -148,22 +148,22 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * @param {type} $scope
          * @param {type} appFactory
          * @returns {undefined}
-         */.controller('busqueda', function($scope, appFactory, $routeParams, $http) {
+         */.controller('busqueda', function ($scope, appFactory, $routeParams, $http) {
             $scope.pubs = [];
-            
+
             if ($routeParams.query) {
-                $http.get('/search/' + $routeParams.query).success(function(data) {
+                $http.get('/search/' + $routeParams.query).success(function (data) {
                     $scope.pubs = data;
                 });
             }
-            
+
             if ($routeParams.tag) {
-                $http.get('/tags/' + $routeParams.tag).success(function(data) {
+                $http.get('/tags/' + $routeParams.tag).success(function (data) {
                     $scope.pubs = data;
                 });
             }
-            
-            $scope.search = function(query) {
+
+            $scope.search = function (query) {
                 if (query.length > 0) {
 //            console.log('query: ' + query);
                     appFactory.search(query);
@@ -180,7 +180,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * @param {type} $rootScope
          * @returns {undefined}
          */
-        .controller('publicaciones', function($scope, appFactory, $routeParams, $rootScope) {
+        .controller('publicaciones', function ($scope, appFactory, $routeParams, $rootScope) {
 
             if (!appFactory.user.idAsStr && window.location.toString().indexOf('new') > -1) {
                 window.location = "/";
@@ -193,12 +193,12 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
             $scope.publicaciones = [];
             $scope.rating = -1;
 
-            $scope.add = function(p) {
+            $scope.add = function (p) {
                 p.usuario = appFactory.user.idAsStr;
                 appFactory.addPublicacion(p);
             };
 
-            $scope.rateFunction = function(rating) {
+            $scope.rateFunction = function (rating) {
                 if (appFactory.user.idAsStr) {
                     appFactory.rate($routeParams.id, rating, appFactory.user.idAsStr);
                 } else {
@@ -207,7 +207,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
                 }
             };
 
-            socket.on('newProdSuccess', function(object) {
+            socket.on('newProdSuccess', function (object) {
                 window.location = "/#/publicaciones/" + object.idAsStr;
             });
 
@@ -215,23 +215,22 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
 
                 appFactory.getPublicacion($routeParams.id);
 
-                $scope.$on('takePublicacion', function() {
+                $scope.$on('takePublicacion', function () {
                     $scope.object = appFactory.publicacion;
                     $scope.rating = appFactory.publicacion.rating;
                     $rootScope.$apply();
                 });
             }
 
-            $scope.$on('takeRate', function() {
+            $scope.$on('takeRate', function () {
                 $scope.rating = appFactory.publicacion.rating;
                 $rootScope.$apply();
             });
 
             //Test
-            $scope.click = function(arg) {
+            $scope.click = function (arg) {
                 alert('Clicked ' + arg);
             };
-//    $scope.html = '<a ng-click="click(1)" href="#">Click me</a>';
             $scope.comentario = '';
 
         })
@@ -239,8 +238,8 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * Filtro para eliminar las etiquetas de html
          * @returns {Function}
          */
-        .filter('htmlToPlaintext', function() {
-            return function(text) {
+        .filter('htmlToPlaintext', function () {
+            return function (text) {
                 return String(text).replace(/<[^>]+>/gm, '');
             };
         })
@@ -249,33 +248,25 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * Filtro para crear los hastags
          * @returns {Function}
          */
-        .filter('hashtagFilter2', function() {
-            return function(input) {
+        .filter('hashtagFilter2', function () {
+            return function (input) {
                 var hashtagLink = "/#/tags/";
                 if (null === input || undefined === input || input.length === 0) {
                     return "";
                 }
-                return input.replace(/\#[a-zA-Z0-9]+/g, function(match, group1) {
+                return input.replace(/\#[a-zA-Z0-9]+/g, function (match, group1) {
                     return '<a href="' + hashtagLink + match.substring(1, match.length) + '">'
                             + match
                             + '</a>';
                 });
             };
         })
-        
-        
-        
-        .filter('htmlToPlaintext', function() {
-            return function (text) {
-                return String(text).replace(/<[^>]+>/gm, '');
-            }
-        })
 
         /**
          * Directiva para el manejo de los ratings
          * @returns {_L202.Anonym$7}
          */
-        .directive("starRating", function() {
+        .directive("starRating", function () {
             return {
                 restrict: "A",
                 template: "<ul class='rating'>" +
@@ -288,8 +279,8 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
                     max: "=",
                     onRatingSelected: "&"
                 },
-                link: function(scope, elem, attrs) {
-                    var updateStars = function() {
+                link: function (scope, elem, attrs) {
+                    var updateStars = function () {
                         scope.stars = [];
                         for (var i = 0; i < scope.max; i++) {
                             scope.stars.push({
@@ -297,13 +288,13 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
                             });
                         }
                     };
-                    scope.toggle = function(index) {
+                    scope.toggle = function (index) {
                         scope.ratingValue = index + 1;
                         scope.onRatingSelected({
                             rating: index + 1
                         });
                     };
-                    scope.$watch("ratingValue", function(oldVal, newVal) {
+                    scope.$watch("ratingValue", function (oldVal, newVal) {
                         if (newVal) {
                             updateStars();
                         }
@@ -315,7 +306,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * Directiva para el manejo de los hashtags
          * @returns {_L254.Anonym$10}
          */
-        .directive('hashtag', function() {
+        .directive('hashtag', function () {
             return {
                 restrict: 'E',
                 scope: {
@@ -333,7 +324,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * @param {type} appFactory
          * @returns {undefined}
          */
-        .controller('usuarios', function($routeParams, appFactory) {
+        .controller('usuarios', function ($routeParams, appFactory) {
             appFactory.getUsuario($routeParams.id);
         });
 /**
@@ -341,7 +332,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
  * @param {type} param1
  * @param {type} param2
  */
-angular.module('login', ['ngRoute']).config(function($routeProvider) {
+angular.module('login', ['ngRoute']).config(function ($routeProvider) {
     $routeProvider
             .when('/', {
                 templateUrl: '/public/views/Login/loginForm.html'
@@ -350,14 +341,14 @@ angular.module('login', ['ngRoute']).config(function($routeProvider) {
                 templateUrl: '/public/views/Login/registroForm.html'
                 , controller: 'login'})
             .otherwise({redirectTo: '/'});
-}).controller('login', function($scope, $http) {
+}).controller('login', function ($scope, $http) {
 
-    $http.get('/estados/json').success(function(data) {
+    $http.get('/estados/json').success(function (data) {
         $scope.estados = data;
     });
 
-    $scope.getMunicipios = function(estado) {
-        $http.get('/municipios/json/' + estado.idAsStr).success(function(data) {
+    $scope.getMunicipios = function (estado) {
+        $http.get('/municipios/json/' + estado.idAsStr).success(function (data) {
             $scope.municipios = data;
         });
     };
