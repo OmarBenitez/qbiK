@@ -54,6 +54,12 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
             service.user = data;
         });
     };
+    
+    service.search = function(query) {
+        $http.get('/search/' + query).success(function(data) {
+            window.location= '/%23/search/' + query;
+        });
+1    };
 
     service.rate = function(id, rating, uid) {
         socket.emit('rate', id, rating, uid);
@@ -85,6 +91,13 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
         $scope.topPubs = data;
     });
 
+}).controller('busqueda', function($scope, appFactory) {
+    $scope.search = function(query) {
+        if (query.length > 0) {
+//            console.log('query: ' + query);
+            appFactory.search(query);
+        }
+    };
 }).controller('publicaciones', function($scope, appFactory, $routeParams, $rootScope) {
 
     if (!appFactory.user.idAsStr && window.location.toString().indexOf('new') > -1) {
@@ -150,82 +163,6 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
                     + match
                     + '</a>';
         });
-    };
-}).filter('hashtagFilter', function() {
-    //@Deprecated
-    return function(input) {
-        if (null === input || undefined === input || input.length === 0) {
-            return "";
-        }
-        var hashtags = [];
-        var tmpHashtag = "";
-        var hashFoundAt = -1;
-        var hashtagLink = "/tags/";
-        var publicacionWithLinks = "";
-        var originalText = "" + input.substring(3, input.length - 4);
-        var concatHashtagLink = function(publicacionWithLinks, hashtagLink, tmpHashtag) {
-            return publicacionWithLinks
-                    + '<a href="' + hashtagLink + tmpHashtag + '">'
-                    + '#' + tmpHashtag
-                    + '</a>';
-        };
-        for (var i = 0; i < originalText.length; i++) {
-            if (originalText[i] === "#") {
-                if (hashFoundAt === -1) {
-                    //Se ha encontrado un #
-                    hashFoundAt = i;
-                    if (publicacionWithLinks.length === 0) {
-                        publicacionWithLinks = originalText.substring(0, i);
-                    } else if (tmpHashtag.length > 0) {
-                        publicacionWithLinks = concatHashtagLink(publicacionWithLinks, hashtagLink, tmpHashtag);
-                        hashFoundAt = i;
-                        hashtags.push(tmpHashtag);
-                        tmpHashtag = "";
-                    }
-                } else {
-                    if (tmpHashtag.length > 0) {
-                        publicacionWithLinks = concatHashtagLink(publicacionWithLinks, hashtagLink, tmpHashtag);
-                        hashFoundAt = i;
-                        hashtags.push(tmpHashtag);
-                        tmpHashtag = "";
-                    }
-                }
-            } else if (hashFoundAt !== -1) {
-                //Cualquier otra cosa que no sea #, despues de haber encontrado un #
-                if (/^[^a-z0-9]$/i.test(originalText[i]) || i === originalText.length - 1) {
-                    if (/^[a-z0-9]$/i.test(originalText[i])) {
-                        //# con un solo caracter
-                        tmpHashtag += originalText[i];
-                    }
-                    //Un hashtag termina despues de encontrar algun caracter que no sea número o letra o al final del texto
-                    if (tmpHashtag.length > 0) {
-                        publicacionWithLinks = concatHashtagLink(publicacionWithLinks, hashtagLink, tmpHashtag);
-                        hashFoundAt = -1;
-                        hashtags.push(tmpHashtag);
-                        tmpHashtag = "";
-                        if (originalText[i] !== "#" && !/^[a-z0-9]$/i.test(originalText[i])) {
-                            //Si el caracter no es un # simplemente se agrega
-                            publicacionWithLinks += originalText[i];
-                        } else if (originalText[i] === "#") {
-                            //Si es un #, entonces se comienza el proceso nuevamente
-                            hashFoundAt = i;
-                        }
-                    } else {
-                        //???
-                        //Todo: revisar otros tipos de espacio, como \t o \n, etc
-                        publicacionWithLinks += originalText[i];
-                    }
-                } else {
-                    //Se ha encontrado un caracter despues del # ([a-z0-9])
-                    //Se agrega el caracter al hashtag temporal
-                    tmpHashtag += originalText[i];
-                }
-            } else {
-                //Si no es un #, y si no es una letra o numero despues de un #, entonces simplemente se agrega
-                publicacionWithLinks += originalText[i];
-            }
-        }
-        return publicacionWithLinks;
     };
 }).directive("starRating", function() {
     return {

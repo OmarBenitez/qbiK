@@ -6,8 +6,10 @@
                 <div class="gn-scroller">
                     <ul class="gn-menu">
                         <li class="gn-search-item">
-                            <input placeholder="Buscar" type="search" class="gn-search">
-                            <a class="gn-icon gn-icon-search"><span>Buscar</span></a>
+                            <form ng-submit="search(query)" ng-controller="busqueda">
+                                <input placeholder="Buscar" type="search" class="gn-search" ng-model="query">
+                                <a class="gn-icon gn-icon-search"><span>Buscar</span></a>
+                            </form>
                         </li>
                         <li class="gn-submenu">
                             <a class="gn-icon gn-icon-download ">Ofertas</a>
@@ -34,7 +36,7 @@
                                 <li><a class="gn-icon gn-icon-illustrator">Licuadoras</a></li>
                                 <li><a class="gn-icon gn-icon-illustrator">Lavadoras</a></li>
                                 <li><a class="gn-icon gn-icon-illustrator">Refrigeradores</a></li>
-                                <li><a class="gn-icon gn-icon-illustrator">Microondas</a></li>
+                                    <li><a class="gn-icon gn-icon-illustrator">Microondas</a></li>
                                 <li><a class="gn-icon gn-icon-illustrator">Otros</a></li>
                             </ul>
                         </li>
@@ -69,22 +71,22 @@
             </li>
         #{/if}
         #{else}
-            <li class="dropdown">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <i class="fa fa-user"></i>
-                    <span class="hidden-xs hidden-sm"> Usuario</span> 
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="/secure/login">Ingresa</a></li>
-                    <li><a href="/secure/login#/registro">Registrate</a></li>
-                </ul>
-            </li>
+        <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <i class="fa fa-user"></i>
+                <span class="hidden-xs hidden-sm"> Usuario</span> 
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="/secure/login">Ingresa</a></li>
+                <li><a href="/secure/login#/registro">Registrate</a></li>
+            </ul>
+        </li>
         #{/else}
     </ul>
 </div><!-- /container -->
 <script src="/public/js/classie.js"></script>
 <script src="/public/js/gnmenu.js"></script>
 <script>
-    new gnMenu(document.getElementById('gn-menu'));
+                                new gnMenu(document.getElementById('gn-menu'));
 </script>
