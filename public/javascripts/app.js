@@ -21,198 +21,264 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
                 controller: 'usuarios'
             })
             .otherwise({redirectTo: '/'});
-}).factory('appFactory', function($rootScope, $http) {
+})
+        /**
+         * Fabrica de la aplicacion
+         * 
+         * @param {type} $rootScope
+         * @param {type} $http
+         * @returns {_L28.service}
+         */
+        .factory('appFactory', function($rootScope, $http) {
 
-    var service = {};
-    service.publicaciones = [];
-    service.publicacion = {};
-    service.user = {};
+            var service = {};
+            service.publicaciones = [];
+            service.publicacion = {};
+            service.user = {};
 
-    service.sendEvent = function(event) {
-        $rootScope.$broadcast(event);
-    };
+            service.sendEvent = function(event) {
+                $rootScope.$broadcast(event);
+            };
 
-    service.addPublicacion = function(publicacion) {
-        socket.emit('newPublicacion', publicacion);
-    };
+            service.addPublicacion = function(publicacion) {
+                socket.emit('newPublicacion', publicacion);
+            };
 
-    service.getPublicacion = function(id) {
-        socket.emit('getPublicacion', id);
-    };
+            service.getPublicacion = function(id) {
+                socket.emit('getPublicacion', id);
+            };
 
-    service.getUsuario = function(id) {
+            service.getUsuario = function(id) {
 
-        socket.emit('getUsuario', id);
+                socket.emit('getUsuario', id);
 
-        socket.on('takeUsuario', function(usuario) {
-            console.log(usuario);
-        });
-    };
+                socket.on('takeUsuario', function(usuario) {
+                    console.log(usuario);
+                });
+            };
 
-    service.getConnectedUser = function() {
-        $http.get('/connected/user').success(function(data) {
-            service.user = data;
-        });
-    };
-    
-    service.search = function(query) {
-        $http.get('/search/' + query).success(function(data) {
-            window.location= '/%23/search/' + query;
-        });
-1    };
+            service.getConnectedUser = function() {
+                $http.get('/connected/user').success(function(data) {
+                    service.user = data;
+                });
+            };
 
-    service.rate = function(id, rating, uid) {
-        socket.emit('rate', id, rating, uid);
-    };
+            service.search = function(query) {
+                $http.get('/search/' + query).success(function(data) {
+                    window.location = '/%23/search/' + query;
+                });
+            };
 
-    socket.on('updateRate', function(publicacion) {
-        service.publicacion = publicacion;
-        service.sendEvent('takeRate');
-    });
+            service.rate = function(id, rating, uid) {
+                socket.emit('rate', id, rating, uid);
+            };
 
-    socket.on('takePublicacion', function(publicacion) {
-        service.publicacion = publicacion;
-        service.sendEvent('takePublicacion');
-    });
+            socket.on('updateRate', function(publicacion) {
+                service.publicacion = publicacion;
+                service.sendEvent('takeRate');
+            });
 
-    service.getConnectedUser();
+            socket.on('takePublicacion', function(publicacion) {
+                service.publicacion = publicacion;
+                service.sendEvent('takePublicacion');
+            });
 
-    return service;
+            service.getConnectedUser();
+
+            return service;
 
 
-}).controller('home', function($scope, appFactory, $http) {
+        })
 
-    $scope.pubs = [];
+        /**
+         * Controlador del inicio
+         * @param {type} $scope
+         * @param {type} appFactory
+         * @param {type} $http
+         * @returns {undefined}
+         */
+        .controller('home', function($scope, appFactory, $http) {
 
-    $scope.topPubs = [];
+            $scope.pubs = [];
 
-    $http.get('/publicaciones/list').success(function(data) {
-        $scope.pubs = data;
-        $scope.topPubs = data;
-    });
+            $scope.topPubs = [];
 
-}).controller('busqueda', function($scope, appFactory) {
-    $scope.search = function(query) {
-        if (query.length > 0) {
+            $http.get('/publicaciones/list').success(function(data) {
+                $scope.pubs = data;
+                $scope.topPubs = data;
+            });
+
+        })
+
+        /**
+         * Controlador de busqueda
+         * 
+         * @param {type} $scope
+         * @param {type} appFactory
+         * @returns {undefined}
+         */.controller('busqueda', function($scope, appFactory) {
+            $scope.search = function(query) {
+                if (query.length > 0) {
 //            console.log('query: ' + query);
-            appFactory.search(query);
-        }
-    };
-}).controller('publicaciones', function($scope, appFactory, $routeParams, $rootScope) {
+                    appFactory.search(query);
+                }
+            };
+        })
 
-    if (!appFactory.user.idAsStr && window.location.toString().indexOf('new') > -1) {
-        window.location = "/";
-    }
+        /**
+         * Controlador de las publicaciones
+         * 
+         * @param {type} $scope
+         * @param {type} appFactory
+         * @param {type} $routeParams
+         * @param {type} $rootScope
+         * @returns {undefined}
+         */
+        .controller('publicaciones', function($scope, appFactory, $routeParams, $rootScope) {
 
-    if (!appFactory.user.idAsStr && window.location.toString().indexOf('show') > -1) {
-        window.location = "/";
-    }
+            if (!appFactory.user.idAsStr && window.location.toString().indexOf('new') > -1) {
+                window.location = "/";
+            }
 
-    $scope.publicaciones = [];
-    $scope.rating = -1;
+            if (!appFactory.user.idAsStr && window.location.toString().indexOf('show') > -1) {
+                window.location = "/";
+            }
 
-    $scope.add = function(p) {
-        p.usuario = appFactory.user.idAsStr;
-        appFactory.addPublicacion(p);
-    };
+            $scope.publicaciones = [];
+            $scope.rating = -1;
 
-    $scope.rateFunction = function(rating) {
-        if (appFactory.user.idAsStr) {
-            appFactory.rate($routeParams.id, rating, appFactory.user.idAsStr);
-        } else {
-            $scope.rating = appFactory.publicacion.rating;
-            $rootScope.$apply();
-        }
-    };
+            $scope.add = function(p) {
+                p.usuario = appFactory.user.idAsStr;
+                appFactory.addPublicacion(p);
+            };
 
-    socket.on('newProdSuccess', function(object) {
-        window.location = "/#/publicaciones/" + object.idAsStr;
-    });
+            $scope.rateFunction = function(rating) {
+                if (appFactory.user.idAsStr) {
+                    appFactory.rate($routeParams.id, rating, appFactory.user.idAsStr);
+                } else {
+                    $scope.rating = appFactory.publicacion.rating;
+                    $rootScope.$apply();
+                }
+            };
 
-    if ($routeParams.id) {
+            socket.on('newProdSuccess', function(object) {
+                window.location = "/#/publicaciones/" + object.idAsStr;
+            });
 
-        appFactory.getPublicacion($routeParams.id);
+            if ($routeParams.id) {
 
-        $scope.$on('takePublicacion', function() {
-            $scope.object = appFactory.publicacion;
-            $scope.rating = appFactory.publicacion.rating;
-            $rootScope.$apply();
-        });
-    }
+                appFactory.getPublicacion($routeParams.id);
 
-    $scope.$on('takeRate', function() {
-        $scope.rating = appFactory.publicacion.rating;
-        $rootScope.$apply();
-    });
+                $scope.$on('takePublicacion', function() {
+                    $scope.object = appFactory.publicacion;
+                    $scope.rating = appFactory.publicacion.rating;
+                    $rootScope.$apply();
+                });
+            }
 
-    //Test
-    $scope.click = function(arg) {
-        alert('Clicked ' + arg);
-    };
+            $scope.$on('takeRate', function() {
+                $scope.rating = appFactory.publicacion.rating;
+                $rootScope.$apply();
+            });
+
+            //Test
+            $scope.click = function(arg) {
+                alert('Clicked ' + arg);
+            };
 //    $scope.html = '<a ng-click="click(1)" href="#">Click me</a>';
-    $scope.comentario = '';
+            $scope.comentario = '';
 
-}).filter('hashtagFilter2', function() {
-    return function(input) {
-        var hashtagLink = "/tags/";
-        if (null === input || undefined === input || input.length === 0) {
-            return "";
-        }
-        return input.replace(/\#[a-zA-Z0-9]+/g, function(match, group1) {
-            return '<a href="' + hashtagLink + match.substring(1, match.length) + '">'
-                    + match
-                    + '</a>';
-        });
-    };
-}).directive("starRating", function() {
-    return {
-        restrict: "A",
-        template: "<ul class='rating'>" +
-                "  <li ng-repeat='star in stars' ng-class='star' ng-click='toggle($index)'>" +
-                "    <i class='fa fa-star'></i>" + //&#9733
-                "  </li>" +
-                "</ul>",
-        scope: {
-            ratingValue: "=",
-            max: "=",
-            onRatingSelected: "&"
-        },
-        link: function(scope, elem, attrs) {
-            var updateStars = function() {
-                scope.stars = [];
-                for (var i = 0; i < scope.max; i++) {
-                    scope.stars.push({
-                        filled: i < scope.ratingValue
+        })
+
+        /**
+         * Filtro para crear los hastags
+         * @returns {Function}
+         */
+        .filter('hashtagFilter2', function() {
+            return function(input) {
+                var hashtagLink = "/tags/";
+                if (null === input || undefined === input || input.length === 0) {
+                    return "";
+                }
+                return input.replace(/\#[a-zA-Z0-9]+/g, function(match, group1) {
+                    return '<a href="' + hashtagLink + match.substring(1, match.length) + '">'
+                            + match
+                            + '</a>';
+                });
+            };
+        })
+
+        /**
+         * Directiva para el manejo de los ratings
+         * @returns {_L202.Anonym$7}
+         */
+        .directive("starRating", function() {
+            return {
+                restrict: "A",
+                template: "<ul class='rating'>" +
+                        "  <li ng-repeat='star in stars' ng-class='star' ng-click='toggle($index)'>" +
+                        "    <i class='fa fa-star'></i>" + //&#9733
+                        "  </li>" +
+                        "</ul>",
+                scope: {
+                    ratingValue: "=",
+                    max: "=",
+                    onRatingSelected: "&"
+                },
+                link: function(scope, elem, attrs) {
+                    var updateStars = function() {
+                        scope.stars = [];
+                        for (var i = 0; i < scope.max; i++) {
+                            scope.stars.push({
+                                filled: i < scope.ratingValue
+                            });
+                        }
+                    };
+                    scope.toggle = function(index) {
+                        scope.ratingValue = index + 1;
+                        scope.onRatingSelected({
+                            rating: index + 1
+                        });
+                    };
+                    scope.$watch("ratingValue", function(oldVal, newVal) {
+                        if (newVal) {
+                            updateStars();
+                        }
                     });
                 }
             };
-            scope.toggle = function(index) {
-                scope.ratingValue = index + 1;
-                scope.onRatingSelected({
-                    rating: index + 1
-                });
+        })
+        /**
+         * Directiva para el manejo de los hashtags
+         * @returns {_L254.Anonym$10}
+         */
+        .directive('hashtag', function() {
+            return {
+                restrict: 'E',
+                scope: {
+                    ngModel: "="
+                },
+                template:
+                        '<div class="contenido" ng-bind-html = "ngModel | hashtagFilter2"></div>'
             };
-            scope.$watch("ratingValue", function(oldVal, newVal) {
-                if (newVal) {
-                    updateStars();
-                }
-            });
-        }
-    };
-}).directive('hashtag', function() {
-    return {
-        restrict: 'E',
-        scope: {
-            ngModel: "="
-        },
-        template:
-                '<div class="contenido" ng-bind-html = "ngModel | hashtagFilter2"></div>'
-    };
-}).controller('usuarios', function($routeParams, appFactory) {
-    appFactory.getUsuario($routeParams.id);
-});
+        })
 
+        /**
+         * Controlador de usuarios
+         * 
+         * @param {type} $routeParams
+         * @param {type} appFactory
+         * @returns {undefined}
+         */
+        .controller('usuarios', function($routeParams, appFactory) {
+            appFactory.getUsuario($routeParams.id);
+        });
 
+/**
+ * Modulo del login y registro
+ * @param {type} param1
+ * @param {type} param2
+ */
 angular.module('login', ['ngRoute']).config(function($routeProvider) {
     $routeProvider
             .when('/', {
