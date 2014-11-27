@@ -34,19 +34,20 @@
             </div>
         </div>-->
 
-    <div class="media">
-        <div   ng-repeat="p in pubs" class="media-body {{$index %2 !==0 ? 'bounceInLeft' : 'bounceInRight'}} wow">
+    <div class="media col-xs-12">
+        <div   ng-repeat="p in pubs" class="media-body {{$index %2 !==0 ? 'bounceInLeft' : 'bounceInRight'}} wow col-xs-12">
             <div class="media">
-                <a class="{{$index % 2 !== 0 ? 'pull-right' : 'pull-left'}}" href="/#/publicaciones/{{p.idAsStr}}">
-                    <img class="media-object img-circle " ng-src="{{p.banner}}" >
-                </a>
-                <div class="media-body">
-                    <h3>{{p.titulo}}</h3>
-                    <p>{{p.contenido| htmlToPlaintext}}</p>
-                    <br>
-                    <small class="text-muted">{{p.usuario.nombre}} | {{p.fechaPublicacion| date:'medium'}}</small>
-                    <a href="/#/publicaciones/{{p.idAsStr}}" class="btn btn-primary pull-right">Ver mas...</a>
-                    <hr>
+                <div class="media-body col-xs-12">
+                    <a class="{{$index % 2 !== 0 ? 'pull-right' : 'pull-left'}} col-xs-12 col-md-3 img" href="/#/publicaciones/{{p.idAsStr}}"
+                       style="background-image: url('{{p.banner}}')"
+                       >
+                    </a>
+                    <h3 class="col-xs-12 col-md-9">{{p.titulo}}</h3>
+                    <p class="col-xs-12">{{p.contenido| htmlToPlaintext}}</p>
+                    <small class="text-muted col-md-6 col-xs-12">{{p.usuario.nombre}} | {{p.fechaPublicacion| date:'medium'}}</small>
+                    <a href="/#/publicaciones/{{p.idAsStr}}" class="pull-right col-md-2 hidden-xs">Ver mas...</a>
+                    <a href="/#/publicaciones/{{p.idAsStr}}" class="btn btn-primary col-xs-12 hidden-sm hidden-md hidden-lg">Ver mas...</a>
+                    <hr class="col-xs-12">
                 </div>
             </div>
         </div>
