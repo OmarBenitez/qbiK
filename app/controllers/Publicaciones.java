@@ -23,14 +23,23 @@ public class Publicaciones extends CRUD {
 
         object.usuario = u;
         object.municipio = u.ciudad;
+        object.hashtags = Publicacion.getHashtagsFromContent(object);
+        
+        System.out.println(object.hashtags);
 
         object.validateAndSave();
+        
+        
+        
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(object));
     }
 
     public static void show(String id) {
         Publicacion p = Publicacion.findById(id);
+        
+        System.out.println("p.hashtags: " + p.hashtags);
+        System.out.println("Publicacion.getHashtagsFromContent(p): " + Publicacion.getHashtagsFromContent(p));
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(p));
 
@@ -51,6 +60,10 @@ public class Publicaciones extends CRUD {
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(p));
 
+    }
+    
+    public static void search(String query) {
+//        List<Publicacion> publicaciones = Publicacion
     }
 
 }

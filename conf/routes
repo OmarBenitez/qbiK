@@ -17,6 +17,10 @@ GET     /publicacion/rate/{id}/{rate}/{userId}      Publicaciones.rate
 
 GET     /connected/user                             Usuarios.actual
 
+
+#Busqueda
+GET     /search/{query}                             Publicaciones.search
+
 #Estados
 GET     /estados/json                           Aplicacion.estadosJson
 GET     /municipios/json/{id}                     Aplicacion.municipiosJson

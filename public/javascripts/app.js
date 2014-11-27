@@ -57,7 +57,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
     
     service.search = function(query) {
         $http.get('/search/' + query).success(function(data) {
-            window.location= '/%23/search/' + query;
+            window.location= '/#/search/' + query;
         });
 1    };
 

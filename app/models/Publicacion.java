@@ -6,6 +6,8 @@ import com.google.code.morphia.annotations.Reference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import play.data.validation.Required;
 import play.modules.morphia.Blob;
 import play.modules.morphia.Model;
@@ -25,6 +27,8 @@ public class Publicacion extends BaseModel {
 
     @Required
     public String contenido;
+
+    public List<String> hashtags;
 
     public Date fechaPublicacion;
 
@@ -80,6 +84,22 @@ public class Publicacion extends BaseModel {
             this.rating = Math.round(this.totalRating / (this.rated.size() + 1));
             this.save();
         }
+    }
+
+    public static List<String> getHashtagsFromContent(Publicacion pub) {
+        List<String> hts = new ArrayList<>();
+        System.out.println("Gotta find them all");
+        if (pub != null && pub.contenido != null && pub.contenido.length() > 0) {
+            Pattern p = Pattern.compile("\\#[a-z0-9]+");
+            Matcher m = p.matcher(pub.contenido);
+            while (m.find()) {
+                System.out.println(m.group());
+                if (m.group().length() >= 2) {
+                    hts.add(m.group().substring(1));
+                }
+            }
+        }
+        return hts;
     }
 
 }
