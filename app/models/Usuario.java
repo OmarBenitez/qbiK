@@ -41,5 +41,10 @@ public class Usuario extends BaseModel {
     public static Usuario connected() {
         return Security.getUser();
     }
+    
+    @Override
+    public String toString() {
+        return String.format("%s - %s", this.nombre, this.email);
+    }
 
 }

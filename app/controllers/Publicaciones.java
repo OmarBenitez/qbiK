@@ -37,9 +37,6 @@ public class Publicaciones extends CRUD {
 
     public static void show(String id) {
         Publicacion p = Publicacion.findById(id);
-        
-        System.out.println("p.hashtags: " + p.hashtags);
-        System.out.println("Publicacion.getHashtagsFromContent(p): " + Publicacion.getHashtagsFromContent(p));
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(p));
 
@@ -63,7 +60,15 @@ public class Publicaciones extends CRUD {
     }
     
     public static void search(String query) {
-//        List<Publicacion> publicaciones = Publicacion
+        List<Publicacion> publicaciones 
+                = Publicacion.getPublicacionesByQuery(query);
+        renderJSON(Publicacion.toJsonListSerializer().serialize(publicaciones));
+    }
+    
+    public static void tags(String tag) {
+        List<Publicacion> publicaciones
+                = Publicacion.getPublicacionesByTag(tag);
+        renderJSON(Publicacion.toJsonListSerializer().serialize(publicaciones));
     }
 
 }

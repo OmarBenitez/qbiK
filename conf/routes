@@ -21,6 +21,9 @@ GET     /connected/user                             Usuarios.actual
 #Busqueda
 GET     /search/{query}                             Publicaciones.search
 
+#Tags
+GET     /tags/{tag}                                 Publicaciones.tags
+
 #Estados
 GET     /estados/json                           Aplicacion.estadosJson
 GET     /municipios/json/{id}                     Aplicacion.municipiosJson

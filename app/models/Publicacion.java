@@ -5,7 +5,9 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import play.data.validation.Required;
@@ -100,6 +102,28 @@ public class Publicacion extends BaseModel {
             }
         }
         return hts;
+    }
+    
+    public static List<Publicacion> getPublicacionesByQuery(String query) {
+        MorphiaQuery q = Publicacion.q();
+        q.or(
+                q.criteria("titulo").containsIgnoreCase(query),
+                q.criteria("hashtags").containsIgnoreCase(query),
+                q.criteria("contenido").containsIgnoreCase(query)
+        );
+        List<Publicacion> pubs = q.asList();
+        Set<Publicacion> set = new LinkedHashSet<>(pubs);
+        pubs.clear();
+        pubs.addAll(set);
+        return pubs;
+    }
+    
+    public static List<Publicacion> getPublicacionesByTag(String tag) {
+        List<Publicacion> pubs = Publicacion.find("hashtags", tag).asList();
+        Set<Publicacion> set = new LinkedHashSet<>(pubs);
+        pubs.clear();
+        pubs.addAll(set);
+        return pubs;
     }
 
 }
