@@ -1,3 +1,5 @@
+String.prototype.contains = function(string){ return this.indexOf(string) > -1 };
+
 var socket = io.connect('http://localhost:1337/');
 
 angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvider) {
@@ -92,10 +94,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             });
 
             socket.on('takeNewHomePub', function (p) {
-//                service.homePubs = service.homePubs.reverse();
-//                service.homePubs.push(p);
-//                service.homePubs = service.homePubs.reverse();
-                service.sendEvent('takeNewHomePub', p);
+                service.homePubs = service.homePubs.reverse();
+                service.homePubs.push(p);
+                service.homePubs = service.homePubs.reverse();
+                $rootScope.$apply();
             });
 
             socket.on('updateRate', function (publicacion) {
@@ -133,13 +135,6 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 $rootScope.$apply();
             });
 
-            $scope.$on('takeNewHomePub', function (p) {
-                $scope.pubs = $scope.pubs.reverse();
-                $scope.pubs.push(p);
-                $scope.pubs = $scope.pubs.reverse();
-                $rootScope.$apply();
-            });
-
         })
 
         /**
@@ -162,7 +157,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     $scope.pubs = data;
                 });
             }
-
+            
             $scope.search = function (query) {
                 if (query.length > 0) {
 //            console.log('query: ' + query);

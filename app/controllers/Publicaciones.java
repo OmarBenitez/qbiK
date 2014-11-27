@@ -44,7 +44,7 @@ public class Publicaciones extends CRUD {
 
     public static void list() {
 
-        List<Publicacion> pubs = Publicacion.find().asList();
+        List<Publicacion> pubs = Publicacion.find().order("-fechaPublicacion").asList();
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(pubs));
 

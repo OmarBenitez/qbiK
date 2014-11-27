@@ -35,7 +35,7 @@
         </div>-->
 
     <div class="media">
-        <div class="media-body fadeIn wow"  ng-repeat="p in pubs">
+        <div   ng-repeat="p in pubs" class="media-body {{$index %2 !==0 ? 'bounceInLeft' : 'bounceInRight'}} wow">
             <div class="media">
                 <a class="{{$index % 2 !== 0 ? 'pull-right' : 'pull-left'}}" href="/#/publicaciones/{{p.idAsStr}}">
                     <img class="media-object img-circle " ng-src="{{p.banner}}" >
