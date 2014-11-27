@@ -4,7 +4,7 @@
         <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#carousel" data-slide-to="0" class="active"></li>
-            <li  ng-repeat="p in topPubs" data-target="#carousel" data-slide-to="{{$index+1}}"></li>
+            <li  ng-repeat="p in topPubs" data-target="#carousel" data-slide-to="{{$index + 1}}"></li>
         </ol>
 
         <!-- Wrapper for slides -->
@@ -22,13 +22,31 @@
         </div>
     </div> <!-- Carousel -->
 
-    <div class="thumbnails list ptop">
-        <div class="item wow bounceInUp" ng-repeat="p in pubs">
-            <div class="thumbnail">
-                <img ng-src="{{p.banner}}">
-                <div class="caption">
+    <!--    <div class="media-list ptop">
+            <div class="media bounceInUp" ng-repeat="p in pubs">
+                <div class="media-body">
+                    <img ng-src="{{p.banner}}">
+                    <div class="caption">
+                        <h3>{{p.titulo}}</h3>
+                        <p><a class="btn btn-primary" href="/#/publicaciones/{{p.idAsStr}}">Ver mas</a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+    <div class="media">
+        <div class="media-body fadeIn wow"  ng-repeat="p in pubs">
+            <div class="media">
+                <a class="{{$index % 2 !== 0 ? 'pull-right' : 'pull-left'}}" href="/#/publicaciones/{{p.idAsStr}}">
+                    <img class="media-object img-circle " ng-src="{{p.banner}}" >
+                </a>
+                <div class="media-body">
                     <h3>{{p.titulo}}</h3>
-                    <p><a class="btn btn-primary" href="/#/publicaciones/{{p.idAsStr}}">Ver mas</a> </p>
+                    <p>{{p.contenido| htmlToPlaintext}}</p>
+                    <br>
+                    <small class="text-muted">{{p.usuario.nombre}} | {{p.fechaPublicacion| date:'medium'}}</small>
+                    <a href="/#/publicaciones/{{p.idAsStr}}" class="btn btn-primary pull-right">Ver mas...</a>
+                    <hr>
                 </div>
             </div>
         </div>
