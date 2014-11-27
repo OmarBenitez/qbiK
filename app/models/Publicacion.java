@@ -19,7 +19,7 @@ public class Publicacion extends BaseModel {
 
     @Required
     public String titulo;
-    
+
     @Required
     public String banner;
 
@@ -37,7 +37,12 @@ public class Publicacion extends BaseModel {
     @Reference
     public Municipio municipio;
 
-    public Integer ranking;
+    public Integer rating;
+
+    public Integer totalRating;
+
+    @Embedded
+    public List<Usuario> rated;
 
     public Publicacion(String titulo, String contenido, Usuario usuario) {
         this.titulo = titulo;
@@ -46,13 +51,17 @@ public class Publicacion extends BaseModel {
         this.usuario = usuario;
         this.comentarios = new ArrayList<Comentario>();
         //this.ranking = new Ranking();
-        this.ranking = 0;
+        this.rating = 5;
+        this.totalRating = 5;
+        this.rated = new ArrayList<Usuario>();
     }
 
     public Publicacion() {
         this.fechaPublicacion = new Date();
         this.comentarios = new ArrayList<Comentario>();
-        this.ranking = 0;
+        this.rating = 5;
+        this.totalRating = 5;
+        this.rated = new ArrayList<Usuario>();
     }
 
     public static List<Publicacion> getPublicacionesByUsuario(String id) {
@@ -61,6 +70,16 @@ public class Publicacion extends BaseModel {
 
     public static List<Publicacion> getBest() {
         return Publicacion.find().order("ranking").asList();
+    }
+
+    public void rate(Integer i, String uid) {
+        this.totalRating += i;
+        Usuario u = Usuario.findById(uid);
+        if (!this.rated.contains(u)) {
+            this.rated.add(u);
+            this.rating = Math.round(this.totalRating / (this.rated.size() + 1));
+            this.save();
+        }
     }
 
 }

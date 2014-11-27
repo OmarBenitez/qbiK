@@ -14,7 +14,7 @@ app.configure(function() {
 var usuariosOnline = [];
 
 io.sockets.on('connection', function(socket) {
-    
+
     socket.on('getPublicacion', function(id) {
         client.get("http://localhost:9000/publicaciones/show/" + id, function(data, response) {
             data = JSON.parse(data);
@@ -31,7 +31,8 @@ io.sockets.on('connection', function(socket) {
             data: {
                 'titulo': publicacion.titulo,
                 'contenido': publicacion.contenido,
-                'banner': publicacion.banner
+                'banner': publicacion.banner,
+                'user': publicacion.usuario
             },
             headers: {"Content-Type": "application/json"}
         };
@@ -53,10 +54,23 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('getUsuario', function(id) {
         var route = 'http://localhost:9000/usuario/json/' + id;
-        console.log(route);
         client.get("http://localhost:9000/usuario/json/5474cd31ccf2e2dc88c13fdc", function(data, response) {
 
             socket.emit('takeUsuario', JSON.parse(data));
+
+        });
+
+    });
+
+    socket.on('rate', function(id, rating, userId) {
+
+        client.get('http://localhost:9000/publicacion/rate/' 
+                + id + '/' + rating + '/' + userId, function(data) {
+
+            console.log(JSON.parse(data).rating);
+
+            socket.emit('updateRate', JSON.parse(data));
+            socket.broadcast.emit('updatedPub', JSON.parse(data));
 
         });
 

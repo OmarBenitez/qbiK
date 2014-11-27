@@ -5,10 +5,12 @@
     </div>
     <div class="col-md-9 col-xs-12">
         <h1>{{object.titulo}}</h1>
+        <div star-rating rating-value="rating" max="5" on-rating-selected="rateFunction(rating)"></div>
+        <div>{{object.usuario.email}}</div>
         <hr>
         <div><hashtag ng-model="object.contenido"></hashtag></div>
     </div>
     <div class="col-md-3 col-xs-12">
-        
+
     </div>
 </div>

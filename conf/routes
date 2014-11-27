@@ -13,6 +13,7 @@ GET     /publicaciones/new                          Publicaciones.blank
 GET     /publicaciones/show/{id}                    Publicaciones.show
 POST    /publicaciones/create                       Publicaciones.create
 GET     /publicaciones/list                         Publicaciones.list
+GET     /publicacion/rate/{id}/{rate}/{userId}      Publicaciones.rate
 
 GET     /connected/user                             Usuarios.actual
 
@@ -31,4 +32,4 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 # Catch all
-*       /{controller}/{action}/                  {controller}.{action}
+*       /{controller}/{action}                  {controller}.{action}
