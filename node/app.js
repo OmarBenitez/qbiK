@@ -15,6 +15,15 @@ var usuariosOnline = [];
 
 io.sockets.on('connection', function(socket) {
 
+    socket.on('getHomePubs', function() {
+        client.get("http://localhost:9000/publicaciones/list", function(data, response) {
+            data = JSON.parse(data);
+            if (data[0]) {
+                socket.emit('takeHomePubs', data);
+            }
+        });
+    });
+
     socket.on('getPublicacion', function(id) {
         client.get("http://localhost:9000/publicaciones/show/" + id, function(data, response) {
             data = JSON.parse(data);
@@ -45,7 +54,7 @@ io.sockets.on('connection', function(socket) {
                     data = JSON.parse(data);
                     if (data.idAsStr) {
                         socket.emit('newProdSuccess', data);
-                        socket.broadcast.emit("updateProds", publicacion);
+                        socket.broadcast.emit('takeNewHomePub', data);
                     }
                 });
 
@@ -64,15 +73,15 @@ io.sockets.on('connection', function(socket) {
 
     socket.on('rate', function(id, rating, userId) {
 
-        client.get('http://localhost:9000/publicacion/rate/' 
+        client.get('http://localhost:9000/publicacion/rate/'
                 + id + '/' + rating + '/' + userId, function(data) {
 
-            console.log(JSON.parse(data).rating);
+                    console.log(JSON.parse(data).rating);
 
-            socket.emit('updateRate', JSON.parse(data));
-            socket.broadcast.emit('updatedPub', JSON.parse(data));
+                    socket.emit('updateRate', JSON.parse(data));
+                    socket.broadcast.emit('updatedPub', JSON.parse(data));
 
-        });
+                });
 
     });
 

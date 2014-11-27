@@ -345,3 +345,21 @@ section {
 .rating li.filled {
   color: #fd0;
 }
+
+.media-body img {
+    width: 200px;
+    height: auto;
+    border-radius: 3px;
+    
+}
+
+.media-body > p {
+    white-space: nowrap; 
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contenido img{
+    width: 100%;
+}

@@ -32,7 +32,8 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
         .factory('appFactory', function($rootScope, $http) {
 
             var service = {};
-            service.publicaciones = [];
+            service.homePubs = [];
+            service.top10Pubs = [];
             service.publicacion = {};
             service.user = {};
 
@@ -73,6 +74,22 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
                 socket.emit('rate', id, rating, uid);
             };
 
+            service.getHomePubs = function() {
+                socket.emit('getHomePubs');
+            };
+
+            socket.on('takeHomePubs', function(publicaciones) {
+                service.homePubs = publicaciones;
+                service.sendEvent('takeHomePubs');
+            });
+            
+            socket.on('takeNewHomePub', function(p){
+//                service.homePubs = service.homePubs.reverse();
+//                service.homePubs.push(p);
+//                service.homePubs = service.homePubs.reverse();
+                service.sendEvent('takeNewHomePub', p);
+            });
+
             socket.on('updateRate', function(publicacion) {
                 service.publicacion = publicacion;
                 service.sendEvent('takeRate');
@@ -97,15 +114,22 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
          * @param {type} $http
          * @returns {undefined}
          */
-        .controller('home', function($scope, appFactory, $http) {
+        .controller('home', function($scope, appFactory, $rootScope) {
 
-            $scope.pubs = [];
+            if (!$scope.pubs) {
+                appFactory.getHomePubs();
+            }
 
-            $scope.topPubs = [];
-
-            $http.get('/publicaciones/list').success(function(data) {
-                $scope.pubs = data;
-                $scope.topPubs = data;
+            $scope.$on('takeHomePubs', function() {
+                $scope.pubs = appFactory.homePubs;
+                $rootScope.$apply();
+            });
+            
+            $scope.$on('takeNewHomePub', function(p) {
+                $scope.pubs = $scope.pubs.reverse();
+                $scope.pubs.push(p);
+                $scope.pubs = $scope.pubs.reverse();
+                $rootScope.$apply();
             });
 
         })
@@ -188,6 +212,15 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
 //    $scope.html = '<a ng-click="click(1)" href="#">Click me</a>';
             $scope.comentario = '';
 
+        })
+        /**
+         * Filtro para eliminar las etiquetas de html
+         * @returns {Function}
+         */
+        .filter('htmlToPlaintext', function() {
+            return function(text) {
+                return String(text).replace(/<[^>]+>/gm, '');
+            };
         })
 
         /**
@@ -273,7 +306,6 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function($routeProvide
         .controller('usuarios', function($routeParams, appFactory) {
             appFactory.getUsuario($routeParams.id);
         });
-
 /**
  * Modulo del login y registro
  * @param {type} param1
