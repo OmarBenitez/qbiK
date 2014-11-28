@@ -23,15 +23,16 @@ public class Comentario extends BaseModel {
     
     public Date fechaPublicacion;
     
-    public Categoria categoria;
+//    public Categoria categoria;
     
     @Embedded
     public List<Comentario> comentarios;
 
-    public Comentario(Usuario usuario) {
+    public Comentario(Usuario usuario, String contenido) {
         this.usuario = usuario;
-        this.comentarios = new ArrayList<Comentario>();
+        this.contenido = contenido;
         this.fechaPublicacion = new Date();
+        this.comentarios = new ArrayList<Comentario>();
     }
 
     public Comentario() {

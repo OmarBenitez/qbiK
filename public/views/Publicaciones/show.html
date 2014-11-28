@@ -9,6 +9,26 @@
         <div>{{object.usuario.email}}</div>
         <hr>
         <div><hashtag ng-model="object.contenido"></hashtag></div>
+
+        <div class="media" ng-show="object.comentarios.length > 0">
+            <hr>
+            <div class="media fadeIn wow" ng-repeat="c in object.comentarios">
+                <div class="media">
+                    <div class="media-body">
+                        <strong>{{c.contenido}}</strong>
+                        <br />
+                        <small class="text-muted">{{c.usuario.nombre}} - {{c.fechaPublicacion| date:'medium'}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div>
+            Comentar: <form ng-submit="postComment(object.idAsStr, comentario)">
+                <input type="text" ng-model="comentario">
+            </form>
+        </div>
     </div>
     <div class="col-md-3 col-xs-12">
 

@@ -7,16 +7,17 @@ var Client = require('node-rest-client').Client;
 
 client = new Client();
 
-app.configure(function() {
-    app.use(express.static(__dirname + '/public'))
+app.configure(function () {
+    app.use(express.static(__dirname + '/public'));
 });
 
 var usuariosOnline = [];
+var baseUrl = "http://localhost:9000";
 
-io.sockets.on('connection', function(socket) {
+io.sockets.on('connection', function (socket) {
 
-    socket.on('getHomePubs', function() {
-        client.get("http://localhost:9000/publicaciones/list", function(data, response) {
+    socket.on('getHomePubs', function () {
+        client.get(baseUrl + "/publicaciones/list", function (data, response) {
             data = JSON.parse(data);
             if (data[0]) {
                 socket.emit('takeHomePubs', data);
@@ -24,8 +25,8 @@ io.sockets.on('connection', function(socket) {
         });
     });
 
-    socket.on('getPublicacion', function(id) {
-        client.get("http://localhost:9000/publicaciones/show/" + id, function(data, response) {
+    socket.on('getPublicacion', function (id) {
+        client.get(baseUrl + "/publicaciones/show/" + id, function (data, response) {
             data = JSON.parse(data);
             if (data.idAsStr) {
                 socket.emit('takePublicacion', data);
@@ -34,7 +35,7 @@ io.sockets.on('connection', function(socket) {
 
     });
 
-    socket.on('newPublicacion', function(publicacion) {
+    socket.on('newPublicacion', function (publicacion) {
 
         var args = {
             data: {
@@ -47,10 +48,10 @@ io.sockets.on('connection', function(socket) {
         };
 
         client.post(
-                'http://localhost:9000/publicaciones/create',
+                baseUrl + '/publicaciones/create',
                 args
                 ,
-                function(data, response) {
+                function (data, response) {
                     data = JSON.parse(data);
                     if (data.idAsStr) {
                         socket.emit('newProdSuccess', data);
@@ -61,9 +62,9 @@ io.sockets.on('connection', function(socket) {
     });
 
 
-    socket.on('getUsuario', function(id) {
-        var route = 'http://localhost:9000/usuario/json/' + id;
-        client.get("http://localhost:9000/usuario/json/5474cd31ccf2e2dc88c13fdc", function(data, response) {
+    socket.on('getUsuario', function (id) {
+        var route = baseUrl + '/usuario/json/' + id;
+        client.get(baseUrl + "/usuario/json/5474cd31ccf2e2dc88c13fdc", function (data, response) {
 
             socket.emit('takeUsuario', JSON.parse(data));
 
@@ -71,10 +72,10 @@ io.sockets.on('connection', function(socket) {
 
     });
 
-    socket.on('rate', function(id, rating, userId) {
+    socket.on('rate', function (id, rating, userId) {
 
-        client.get('http://localhost:9000/publicacion/rate/'
-                + id + '/' + rating + '/' + userId, function(data) {
+        client.get(baseUrl + '/publicacion/rate/'
+                + id + '/' + rating + '/' + userId, function (data) {
 
                     console.log(JSON.parse(data).rating);
 
@@ -83,6 +84,27 @@ io.sockets.on('connection', function(socket) {
 
                 });
 
+    });
+
+    socket.on('newComentario', function (publicacionId, usuarioId, comentario) {
+
+        var args = {
+            data: {
+                'publicacionId': publicacionId,
+                'usuarioId': usuarioId,
+                'comentario': comentario
+            },
+            headers: {"Content-Type": "application/json"}
+        };
+
+        client.post(baseUrl + '/publicacion/comment',
+                args,
+                function (data, response) {
+                    data = JSON.parse(data);
+                    if (data.success) {
+                        io.sockets.emit('newCommentSuccess', data);
+                    }
+                });
     });
 
 

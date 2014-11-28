@@ -48,6 +48,8 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             service.top10Pubs = [];
             service.publicacion = {};
             service.user = {};
+            service.tmpCommentData = {};
+            service.tmpPubData = {};
 
             service.sendEvent = function (event) {
                 $rootScope.$broadcast(event);
@@ -90,6 +92,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 socket.emit('getHomePubs');
             };
 
+            service.comment = function (publicacionId, comentario) {
+                socket.emit('newComentario', publicacionId, service.user.idAsStr, comentario);
+            };
+
             socket.on('takeHomePubs', function (publicaciones) {
                 service.homePubs = publicaciones;
                 service.sendEvent('takeHomePubs');
@@ -99,7 +105,8 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 service.homePubs = service.homePubs.reverse();
                 service.homePubs.push(p);
                 service.homePubs = service.homePubs.reverse();
-                service.sendEvent('newPub', p);
+                service.tmpPubData = p;
+                service.sendEvent('newPub');
                 $rootScope.$apply();
             });
 
@@ -111,6 +118,11 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             socket.on('takePublicacion', function (publicacion) {
                 service.publicacion = publicacion;
                 service.sendEvent('takePublicacion');
+            });
+
+            socket.on('newCommentSuccess', function (data) {
+                service.tmpCommentData = data;
+                service.sendEvent('recieveComentario');
             });
 
             service.getConnectedUser();
@@ -194,13 +206,13 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 $http.get('/' + mode + '/' + param).success(function (data) {
                     $scope.pubs = data;
                 });
-
-                $scope.$on('newPub', function (pub) {
-                    console.log('pub.titulo: ' + pub.titulo);
-                    console.log('param: ' + param);
-                    console.log('checkContains(pub, param, mode): ' + checkContains(pub, param, mode));
-                    if (checkContains(pub, param, mode)) {
-                        $scope.pubs.push(pub);
+                
+                $scope.$on('newPub', function () {
+                    var newpub = appFactory.tmpPubData;
+                    if (checkContains(newpub, param, mode)) {
+                        $scope.pubs = $scope.pubs.reverse()
+                        $scope.pubs.push(newpub);
+                        $scope.pubs = $scope.pubs.reverse()
                     }
                 });
             }
@@ -248,6 +260,13 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 }
             };
 
+            $scope.postComment = function (publicacionId, comentario) {
+                if (comentario.length > 0) {
+                    appFactory.comment(publicacionId, comentario);
+                    $scope.comentario = '';
+                }
+            };
+
             socket.on('newProdSuccess', function (object) {
                 window.location = "/#/publicaciones/" + object.idAsStr;
             });
@@ -260,6 +279,14 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     $scope.object = appFactory.publicacion;
                     $scope.rating = appFactory.publicacion.rating;
                     $rootScope.$apply();
+                });
+
+                $scope.$on('recieveComentario', function () {
+                    var data = appFactory.tmpCommentData;
+                    if ($routeParams.id === data.publicacionId) {
+                        $scope.object.comentarios.push(data.comentario);
+                        $rootScope.$apply();
+                    }
                 });
             }
 

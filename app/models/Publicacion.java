@@ -3,6 +3,7 @@ package models;
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
+import flexjson.JSONSerializer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -124,6 +125,30 @@ public class Publicacion extends BaseModel {
         pubs.clear();
         pubs.addAll(set);
         return pubs;
+    }
+    
+    public static JSONSerializer toJsonListSerializer() {
+        JSONSerializer ser = new JSONSerializer();
+        ser.exclude("*.class");
+        ser.exclude("*.persistent");
+        ser.exclude("*.entityId");
+        ser.exclude("*.machine");
+        ser.exclude("*.time");
+        ser.exclude("*._created");
+        ser.exclude("*._id");
+        ser.exclude("*._modified");
+        ser.exclude("*.manual");
+        ser.exclude("*.blobChanged");
+        ser.exclude("*.inc");
+        ser.exclude("*.id_");
+        ser.exclude("*.id");
+        ser.exclude("*.embedded_");
+        ser.exclude("*.new");
+        ser.exclude("*.userDefinedId_");
+        ser.exclude("*.claveCompleta");
+        ser.include("*.comentarios");
+        ser.include("*.hashtags");
+        return ser;
     }
 
 }

@@ -14,6 +14,7 @@ GET     /publicaciones/show/{id}                    Publicaciones.show
 POST    /publicaciones/create                       Publicaciones.create
 GET     /publicaciones/list                         Publicaciones.list
 GET     /publicacion/rate/{id}/{rate}/{userId}      Publicaciones.rate
+POST    /publicacion/comment                        Publicaciones.comment
 
 GET     /connected/user                             Usuarios.actual
 

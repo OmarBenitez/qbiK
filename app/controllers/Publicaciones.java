@@ -1,7 +1,10 @@
 package controllers;
 
 import com.google.gson.Gson;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import models.Comentario;
 import models.Publicacion;
 import models.Usuario;
 import org.json.JSONObject;
@@ -24,13 +27,10 @@ public class Publicaciones extends CRUD {
         object.usuario = u;
         object.municipio = u.ciudad;
         object.hashtags = Publicacion.getHashtagsFromContent(object);
-        
+
         System.out.println(object.hashtags);
 
         object.validateAndSave();
-        
-        
-        
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(object));
     }
@@ -58,17 +58,41 @@ public class Publicaciones extends CRUD {
         renderJSON(Publicacion.toJsonListSerializer().serialize(p));
 
     }
-    
+
     public static void search(String query) {
-        List<Publicacion> publicaciones 
+        List<Publicacion> publicaciones
                 = Publicacion.getPublicacionesByQuery(query);
         renderJSON(Publicacion.toJsonListSerializer().serialize(publicaciones));
     }
-    
+
     public static void tags(String tag) {
         List<Publicacion> publicaciones
                 = Publicacion.getPublicacionesByTag(tag);
         renderJSON(Publicacion.toJsonListSerializer().serialize(publicaciones));
+    }
+
+    public static void comment() throws Exception {
+        Boolean success = Boolean.FALSE;
+        
+        Map<String, Object> map = new HashMap<>();
+        
+        JSONObject values = new JSONObject(params.get("body"));
+
+        Publicacion publicacion = Publicacion.findById(values.get("publicacionId").toString());
+        Usuario usuario = Usuario.findById(values.get("usuarioId").toString());
+
+        if (publicacion != null && usuario != null) {
+            Comentario comentario = new Comentario(usuario, values.get("comentario").toString());
+            if (comentario.validateAndSave()) {
+                publicacion.comentarios.add(comentario);
+                success = publicacion.validateAndSave();
+                map.put("success", success);
+                map.put("publicacionId", publicacion.getIdAsStr());
+                map.put("comentario", comentario);
+                
+            }
+        }
+        renderJSON(map);
     }
 
 }
