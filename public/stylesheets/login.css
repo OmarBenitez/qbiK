@@ -13,4 +13,8 @@ body {
         height: auto;
     }
     
+    .logo img {
+        margin: 0 0 0 0px;
+    }
+    
 }
