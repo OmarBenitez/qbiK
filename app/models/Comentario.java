@@ -25,9 +25,6 @@ public class Comentario extends BaseModel {
     
     public Categoria categoria;
     
-    @Reference
-    public List<Tag> tags;
-    
     @Embedded
     public List<Comentario> comentarios;
 

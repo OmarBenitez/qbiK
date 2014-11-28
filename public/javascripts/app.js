@@ -1,4 +1,6 @@
-String.prototype.contains = function(string){ return this.indexOf(string) > -1 };
+String.prototype.contains = function (string) {
+    return this.indexOf(string) > -1
+};
 
 var socket = io.connect('http://localhost:1337/');
 
@@ -97,6 +99,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 service.homePubs = service.homePubs.reverse();
                 service.homePubs.push(p);
                 service.homePubs = service.homePubs.reverse();
+                service.sendEvent('newPub', p);
                 $rootScope.$apply();
             });
 
@@ -142,25 +145,68 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
          * 
          * @param {type} $scope
          * @param {type} appFactory
+         * @param {type} $routeParams
+         * @param {type} $http
          * @returns {undefined}
          */.controller('busqueda', function ($scope, appFactory, $routeParams, $http) {
             $scope.pubs = [];
 
+            var mode = "";
+            var param = "";
+            var checkContains = function (pub, toCheck, mode) {
+                if (pub && toCheck) {
+                    var contained = false;
+                    if (mode === "search") {
+                        if (pub.titulo) {
+                            contained = contained || pub.titulo.contains(toCheck);
+                        }
+                        if (pub.contenido) {
+                            contained = contained || pub.contenido.contains(toCheck);
+                        }
+                        if (pub.hashtags && pub.hashtags.length > 0) {
+                            for (var i = 0; i < pub.hashtags.length; i++) {
+                                contained = contained || pub.hashtags[i].contains(toCheck);
+                            }
+                        }
+                    } else if (mode === "tags") {
+                        console.log('pub.hashtags: ' + pub.hashtags);
+                        if (pub.hashtags && pub.hashtags.length > 0) {
+                            for (var i = 0; i < pub.hashtags.length; i++) {
+                                contained = contained || pub.hashtags[i].contains(toCheck);
+                            }
+                        }
+                    }
+                    return contained;
+                } else {
+                    return false;
+                }
+            };
+
             if ($routeParams.query) {
-                $http.get('/search/' + $routeParams.query).success(function (data) {
+                mode = "search";
+                param = $routeParams.query;
+            } else if ($routeParams.tag) {
+                mode = "tags";
+                param = $routeParams.tag;
+            }
+
+            if (mode.length > 0 && param.length > 0) {
+                $http.get('/' + mode + '/' + param).success(function (data) {
                     $scope.pubs = data;
+                });
+
+                $scope.$on('newPub', function (pub) {
+                    console.log('pub.titulo: ' + pub.titulo);
+                    console.log('param: ' + param);
+                    console.log('checkContains(pub, param, mode): ' + checkContains(pub, param, mode));
+                    if (checkContains(pub, param, mode)) {
+                        $scope.pubs.push(pub);
+                    }
                 });
             }
 
-            if ($routeParams.tag) {
-                $http.get('/tags/' + $routeParams.tag).success(function (data) {
-                    $scope.pubs = data;
-                });
-            }
-            
             $scope.search = function (query) {
                 if (query.length > 0) {
-//            console.log('query: ' + query);
                     appFactory.search(query);
                 }
             };
