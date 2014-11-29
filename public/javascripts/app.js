@@ -81,8 +81,6 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 socket.emit('getUsuario', id);
 
                 socket.on('takeUsuario', function (usuario) {
-                    console.log('usuario:');
-                    console.log(usuario);
                     service.tmpUserData = usuario;
                     service.sendEvent('takeUsuario');
                     $rootScope.$apply();
@@ -145,6 +143,15 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 $rootScope.$apply();
             });
 
+            socket.on('takeUpUser', function (u) {
+                if (service.user.idAsStr === u.idAsStr) {
+                    service.user = u;
+                }
+                service.tmpUserData = u;
+                service.sendEvent('upUser');
+                $rootScope.$apply();
+            });
+
             socket.on('updateRate', function (publicacion) {
                 service.publicacion = publicacion;
                 service.sendEvent('takeRate');
@@ -176,13 +183,37 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
          */
         .controller('home', function ($scope, appFactory, $rootScope) {
 
-            if (!$scope.pubs) {
+            $scope.pubs = [];
+
+            if ($scope.pubs.length === 0) {
                 appFactory.getHomePubs();
             }
 
             $scope.$on('takeHomePubs', function () {
                 $scope.pubs = appFactory.homePubs;
                 $rootScope.$apply();
+            });
+
+            $scope.$on('upPub', function () {
+                var upPub = appFactory.tmpPubData;
+                var foundAt = -1;
+                for (var i = 0; i < $scope.pubs.length; i++) {
+                    if ($scope.pubs[i].idAsStr === upPub.idAsStr) {
+                        $scope.pubs[i] = upPub;
+                        break;
+                    }
+                }
+            });
+
+            $scope.$on('upUser', function () {
+                var upUser = appFactory.tmpUserData;
+
+                for (var i = 0; i < $scope.pubs.length; i++) {
+                    if ($scope.pubs[i].usuario.idAsStr === upUser.idAsStr) {
+                        $scope.pubs[i].usuario = upUser;
+                        break;
+                    }
+                }
             });
 
         })
@@ -275,6 +306,17 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                         }
                     }
                 });
+
+                $scope.$on('upUser', function () {
+                    var upUser = appFactory.tmpUserData;
+
+                    for (var i = 0; i < $scope.pubs.length; i++) {
+                        if ($scope.pubs[i].usuario.idAsStr === upUser.idAsStr) {
+                            $scope.pubs[i].usuario = upUser;
+                            break;
+                        }
+                    }
+                });
             }
 
             $scope.search = function (query) {
@@ -305,6 +347,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
 
             $scope.publicaciones = [];
             $scope.rating = -1;
+            $scope.object = {};
 
             $scope.add = function (p) {
                 p.usuario = appFactory.user.idAsStr;
@@ -364,15 +407,37 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     }
                 });
 
-                $scope.isEditable = function () {
-                    return appFactory.user === $scope.object.usuario
-                            || ($scope.object.usuario.permisos && $scope.object.usuario.permisos);
-                };
+                $scope.$on('upUser', function () {
+                    var upUser = appFactory.tmpUserData;
+
+                    if ($scope.object.usuario.idAsStr === upUser.idAsStr) {
+                        $scope.object.usuario = upUser;
+                    }
+                });
+
+                if ($scope.object) {
+                    $scope.isEditable = function () {
+                        return appFactory.user === $scope.object.usuario;
+//                                || ($scope.object.usuario.perfil && $scope.object.usuario.perfil === "ADMIN");
+                    };
+                }
+
             }
 
             $scope.$on('takeRate', function () {
                 $scope.rating = appFactory.publicacion.rating;
                 $rootScope.$apply();
+            });
+
+            $scope.$on('upUser', function () {
+                var upUser = appFactory.tmpUserData;
+
+                for (var i = 0; i < $scope.publicaciones.length; i++) {
+                    if ($scope.publicaciones[i].usuario.idAsStr === upUser.idAsStr) {
+                        $scope.publicaciones[i].usuario = upUser;
+                        break;
+                    }
+                }
             });
 
             //Test
@@ -494,6 +559,11 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             } else {
                 window.location = '/#/';
             }
+
+
+            socket.on('upUserSuccess', function (object) {
+                window.location = "/#/usuarios/show/" + object.idAsStr;
+            });
         });
 /**
  * Modulo del login y registro

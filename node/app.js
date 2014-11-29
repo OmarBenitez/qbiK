@@ -80,7 +80,7 @@ io.sockets.on('connection', function (socket) {
                     data = JSON.parse(data);
                     if (data.idAsStr) {
                         socket.emit('upProdSuccess', data);
-                        socket.broadcast.emit('takeUpHomePub', data);
+                        socket.broadcast.emit('takeUpUser', data);
                     }
                 });
     });
@@ -95,6 +95,28 @@ io.sockets.on('connection', function (socket) {
 
         });
 
+    });
+    
+    socket.on('updateUsuario', function (usuario) {
+        var args = {
+            data: {
+                'id': usuario.idAsStr,
+                'nombre': usuario.nombre,
+                'email': usuario.email
+            },
+            headers: {"Content-Type": "application/json"}
+        };
+
+        client.post(
+                baseUrl + '/usuarios/update',
+                args,
+                function (data, response) {
+                    data = JSON.parse(data);
+                    if (data.idAsStr) {
+                        socket.emit('upUserSuccess', data);
+                        socket.broadcast.emit('takeUpUser', data);
+                    }
+                });
     });
 
     socket.on('rate', function (id, rating, userId) {

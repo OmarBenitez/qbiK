@@ -32,6 +32,7 @@ GET     /municipios/json/{id}                     Aplicacion.municipiosJson
 
 #Usuarios
 GET     /usuario/json/{id}                         Usuarios.getUsuario
+POST    /usuarios/update                           Usuarios.update
 
 
 # Ignore favicon requests

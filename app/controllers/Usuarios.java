@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.gson.Gson;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,5 +72,26 @@ public class Usuarios extends CRUD {
         Usuario u = Security.getUser();
         renderJSON(Usuario.toJsonListSerializer().include("*.permisos").serialize(u));
     }
+    
+    public static void update() throws Exception {
+        Gson g = new Gson();
+        Usuario object = g.fromJson(params.get("body"), Usuario.class);
+        JSONObject values = new JSONObject(params.get("body"));
+
+        Usuario u = Usuario.findById(values.get("id"));
+        if (null != u) {
+            System.out.println("object...");
+            System.out.println(object.nombre);
+            System.out.println(object.email);
+            u.nombre = object.nombre;
+            u.email = object.email;
+            
+            u.validateAndSave();
+
+            renderJSON(Usuario.toJsonListSerializer().include("*.permisos").serialize(u));
+
+        }
+    }
+    
 
 }
