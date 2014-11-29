@@ -21,6 +21,8 @@ POST    /publicacion/delpost                        Publicaciones.delpost
 
 GET     /connected/user                             Usuarios.actual
 
+POST    /android/login                              Aplicacion.authAndroid
+
 
 #Busqueda
 GET     /search/{query}                             Publicaciones.search
