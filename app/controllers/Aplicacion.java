@@ -16,6 +16,10 @@ import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
 public class Aplicacion extends Controller {
 
     static String PERFIL_HASH = "asd98ad6r198asd098as09dv0u9";
+    
+    public static void getIo(){
+        redirect("http://localhost:1337/socket.io/socket.io.js");
+    }
 
     public static void index() {
         if (Estado.count() == 0) {

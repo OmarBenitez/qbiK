@@ -2,7 +2,7 @@ String.prototype.contains = function (string) {
     return this.indexOf(string) > -1
 };
 
-var socket = io.connect('http://localhost:1337/');
+var socket = io.connect('http://108.61.205.173:1337/');
 
 angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvider) {
     $routeProvider

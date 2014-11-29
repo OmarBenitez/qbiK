@@ -106,7 +106,7 @@
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="@{'public/js/flat-ui.min.js'}"></script>
-    <script src="http://localhost:1337/socket.io/socket.io.js" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{Aplicacion.getIO}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.2.26/angular-route.js"></script>
     <script src="@{'/public/javascripts/app.js'}" type="text/javascript" charset="${_response_encoding}"></script>

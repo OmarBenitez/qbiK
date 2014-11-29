@@ -12,7 +12,7 @@ app.configure(function () {
 });
 
 var usuariosOnline = [];
-var baseUrl = "http://localhost:9000";
+var baseUrl = "http://localhost";
 
 io.sockets.on('connection', function (socket) {
 
