@@ -85,15 +85,14 @@ public class Aplicacion extends Controller {
         renderJSON(Municipio.toJsonListSerializer().serialize(municipios));
     }
     
-    public static void authAndroid() throws JSONException{
-        System.out.println(params.get("body"));
-        JSONObject values = new JSONObject(params.get("body"));
+    public static void authAndroid() {
+
         
         Usuario foo = new Usuario();
         
-        foo.email = values.opt("email").toString();
+        foo.email = params.get("email");
         
-        foo.password = values.opt("password").toString();
+        foo.password = params.get("password");
         
         foo = Usuario.find("email, password", foo.email, DigestUtils.md5Hex(foo.password)).first();
         
