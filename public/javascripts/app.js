@@ -235,16 +235,31 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     }
                 });
 
-                //Todo: upPub
-//                    console.log('upPub:');
-//                    console.log(upPub);
-//                    for (var i = 0; i < $scope.publicaciones.length; i++) {
-//                        if ($scope.publicaciones[i].idAsStr === upPub.idAsStr) {
-//                            console.log('found it!');
-//                            $scope.publicaciones[i] = upPub;
-//                            break;
-//                        }
-//                    }
+                $scope.$on('upPub', function () {
+                    var upPub = appFactory.tmpPubData;
+                    var foundAt = -1;
+                    
+                    for (var i = 0; i < $scope.pubs.length; i++) {
+                        if ($scope.pubs[i].idAsStr === upPub.idAsStr) {
+                            foundAt = i;
+                            break;
+                        }
+                    }
+                    
+                    if (foundAt >= 0) {
+                        if (checkContains(upPub, param, mode)) {
+                            $scope.pubs[i] = upPub;
+                        } else {
+                            $scope.pubs.splice(i, 1);
+                        }
+                    } else {
+                        if (checkContains(upPub, param, mode)) {
+                            $scope.pubs = $scope.pubs.reverse();
+                            $scope.pubs.push(upPub);
+                            $scope.pubs = $scope.pubs.reverse();
+                        }
+                    }
+                });
             }
 
             $scope.search = function (query) {
