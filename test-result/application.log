@@ -1,0 +1,16 @@
+29 Nov 2014 05:16:10,586 INFO  ~ Starting /home/oscar/qbiK
+29 Nov 2014 05:16:10,884 INFO  ~ Module morphia is available (/home/oscar/Downloads/play-1.2.7/modules/morphia-1.2.12)
+29 Nov 2014 05:16:10,885 INFO  ~ Module secure is available (/home/oscar/playuach/modules/secure)
+29 Nov 2014 05:16:10,885 INFO  ~ Module sass is available (/home/oscar/Downloads/play-1.2.7/modules/sass-1.1)
+29 Nov 2014 05:16:10,885 INFO  ~ Module paginate is available (/home/oscar/Downloads/play-1.2.7/modules/paginate-0.12)
+29 Nov 2014 05:16:10,885 INFO  ~ Module crud is available (/home/oscar/playuach/modules/crud)
+29 Nov 2014 05:16:12,144 WARN  ~ You're running Play! in DEV mode
+29 Nov 2014 05:16:12,202 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
+29 Nov 2014 05:16:52,197 INFO  ~ MorphiaPlugin-1.2.12> initialized
+29 Nov 2014 05:16:52,204 INFO  ~ Application 'qbiK' is now started !
+29 Nov 2014 05:17:38,160 INFO  ~ MorphiaPlugin-1.2.12> initialized
+29 Nov 2014 05:29:53,541 INFO  ~ MorphiaPlugin-1.2.12> initialized
+29 Nov 2014 05:34:58,696 INFO  ~ MorphiaPlugin-1.2.12> initialized
+29 Nov 2014 05:40:07,764 INFO  ~ MorphiaPlugin-1.2.12> initialized
+29 Nov 2014 05:42:27,233 INFO  ~ MorphiaPlugin-1.2.12> initialized
+29 Nov 2014 05:51:00,277 INFO  ~ MorphiaPlugin-1.2.12> initialized

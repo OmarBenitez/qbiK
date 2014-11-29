@@ -4,6 +4,8 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
 import controllers.Security;
 import java.util.List;
+import play.data.validation.Required;
+import play.data.validation.Unique;
 
 /**
  *
@@ -12,10 +14,14 @@ import java.util.List;
 @Entity
 public class Usuario extends BaseModel {
 
+    @Unique
+    @Required
     public String email;
-
+    
+    @Required
     public String nombre;
-
+    
+    @Required
     public String password;
     
     @Reference
