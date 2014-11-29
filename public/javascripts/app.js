@@ -130,6 +130,12 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             });
 
             socket.on('takePostDelete', function (data) {
+                for (var i = 0; i < service.homePubs.length; i++) {
+                    if (service.homePubs[i].idAsStr === data.publicacionId) {
+                        service.homePubs.splice(i, 1);
+                        break;
+                    }
+                }
                 service.tmpPubData = data;
                 service.sendEvent('takePostDelete');
                 $rootScope.$apply();
@@ -454,6 +460,12 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 $scope.$on('takePostDelete', function () {
                     console.log('takePostDelete1');
                     var delPub = appFactory.tmpPubData;
+                    
+                    console.log('$scope.object.idAsStr');
+                    console.log($scope.object.idAsStr);
+                    
+                    console.log('delPub.publicacionId');
+                    console.log(delPub.publicacionId);
 
                     if ($scope.object.idAsStr === delPub.publicacionId) {
                         window.location = "/#/";

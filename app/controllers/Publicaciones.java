@@ -46,6 +46,8 @@ public class Publicaciones extends CRUD {
             p.contenido = object.contenido;
             p.banner = object.banner;
             p.hashtags = Publicacion.getHashtagsFromContent(object);
+            
+            p.validateAndSave();
 
             renderJSON(Publicacion.toJsonListSerializer().serialize(p));
 

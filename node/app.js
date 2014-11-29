@@ -67,7 +67,7 @@ io.sockets.on('connection', function (socket) {
                 'publicacionId': publicacion.idAsStr,
                 'titulo': publicacion.titulo,
                 'contenido': publicacion.contenido,
-                'banner': publicacion.banner,
+                'banner': publicacion.banner
             },
             headers: {"Content-Type": "application/json"}
         };
@@ -80,7 +80,7 @@ io.sockets.on('connection', function (socket) {
                     data = JSON.parse(data);
                     if (data.idAsStr) {
                         socket.emit('upProdSuccess', data);
-                        socket.broadcast.emit('takeUpUser', data);
+                        socket.broadcast.emit('takeUpHomePub', data);
                     }
                 });
     });
