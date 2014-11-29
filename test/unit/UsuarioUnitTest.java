@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package unit;
 
 import models.Estado;
@@ -78,14 +73,16 @@ public class UsuarioUnitTest extends UnitTest {
 
         //Probar validaciones
         //email
-        usuario.email = null;
+        usuario.email = null; 
         assertFalse("No se debe guardar un email nulo",
                 usuario.validateAndSave());
-        System.out.println(usuario.email);
+        
         usuario.email = "";
         assertFalse("No se debe guardar un email vacio",
                 usuario.validateAndSave());
+        
         usuario.email = email;
+        
         //nombre
         usuario.nombre = null;
         assertFalse("No se debe guardar un nombre nulo",
@@ -118,6 +115,8 @@ public class UsuarioUnitTest extends UnitTest {
         //delete
         usuario.delete();
         usuario2.delete();
+        estado.delete();
+        municipio.delete(); 
 
         assertNull("Se debe poder borrar usuario",
                 Usuario.find("email", email).first());

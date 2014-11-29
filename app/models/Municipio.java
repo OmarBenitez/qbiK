@@ -2,6 +2,7 @@ package models;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
+import play.data.validation.Required;
 import play.modules.morphia.Model;
 
 /**
@@ -11,8 +12,10 @@ import play.modules.morphia.Model;
 @Entity
 public class Municipio extends BaseModel {
 
+    @Required
     public String clave;
 
+    @Required
     public String nombre;
 
     @Reference

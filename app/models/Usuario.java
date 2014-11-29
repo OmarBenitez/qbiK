@@ -5,7 +5,7 @@ import com.google.code.morphia.annotations.Reference;
 import controllers.Security;
 import java.util.List;
 import play.data.validation.Required;
-import play.data.validation.Unique;
+import play.modules.morphia.validation.Unique;
 
 /**
  *
