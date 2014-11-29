@@ -22,6 +22,7 @@ POST    /publicacion/delpost                        Publicaciones.delpost
 GET     /connected/user                             Usuarios.actual
 
 POST    /android/login                              Aplicacion.authAndroid
+POST    /android/registro                           Aplicacion.registrarAndroid
 
 
 #Busqueda

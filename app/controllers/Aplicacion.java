@@ -100,5 +100,29 @@ public class Aplicacion extends Controller {
         
         
     }
+    
+    public static void registrarAndroid() {
+
+        
+        Usuario foo = new Usuario();
+        
+        foo.nombre = params.get("nombre");
+        
+        foo.email = params.get("email");
+        
+        foo.password = params.get("password");
+        
+        foo.ciudad = Municipio.find("clave", "180").first();
+        
+        if(foo.validateAndSave()){
+            renderJSON(Usuario.toJsonListSerializer().serialize(foo));
+        } else {
+            renderJSON(Usuario.toJsonListSerializer().serialize(null));
+        }
+        
+        
+        
+        
+    }
 
 }
