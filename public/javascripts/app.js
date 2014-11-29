@@ -429,6 +429,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
 
                 $scope.$on('takePublicacion', function () {
                     $scope.object = appFactory.publicacion;
+                    console.log($scope.object);
                     $scope.rating = appFactory.publicacion.rating;
                     $rootScope.$apply();
                 });

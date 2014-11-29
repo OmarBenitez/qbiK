@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Municipio;
+import models.Perfil;
 import models.Usuario;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
@@ -29,7 +30,8 @@ public class Usuarios extends CRUD {
         String uuid = values.get("ciudad")[0];
 
         Municipio ciudad = Municipio.findById(uuid);
-
+        Perfil perfil = Perfil.find("byClave", "USER").first();
+        
         Usuario u = Usuario.find("email", email).first();
 
         if (u != null) {
@@ -41,6 +43,7 @@ public class Usuarios extends CRUD {
         } else {
             Usuario usuario = new Usuario(nombre, email, DigestUtils.md5Hex(password));
             usuario.ciudad = ciudad;
+            usuario.perfil = perfil;
             usuario.validateAndSave();
             try {
                 Secure.authenticate(usuario.email, password, true);

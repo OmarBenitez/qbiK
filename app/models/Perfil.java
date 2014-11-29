@@ -19,21 +19,23 @@ public class Perfil extends Model {
     public List<Permiso> permisos;
 
     public Perfil(String clave, String descripcion) {
+        this.permisos = new ArrayList<>();
         this.clave = clave;
         this.descripcion = descripcion;
     }
 
     public Perfil() {
-        this.permisos = new ArrayList<Permiso>();
+        this.permisos = new ArrayList<>();
     }
 
     public static void fillPerfiles() {
-        System.out.println("asdasdasd");
-        if(Perfil.find().asList().isEmpty()){
-            Perfil p = new Perfil("ADMIN", "Administrador general del sistema");
-            p.validateAndSave();
-            System.out.println("DONE!!!?");
-        }
+        Perfil p = new Perfil("ADMIN", "Administrador general del sistema");
+        p.permisos.add((Permiso) Permiso.find("byClave", "ADMIN").first());
+        p.validateAndSave();
+
+        p = new Perfil("USER", "Usuario del sistema");
+        p.permisos.add((Permiso) Permiso.find("byClave", "GENERAL").first());
+        p.validateAndSave();
     }
 
     /**
@@ -56,8 +58,8 @@ public class Perfil extends Model {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.clave;
     }
-    
+
 }

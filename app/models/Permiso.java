@@ -52,9 +52,9 @@ public class Permiso extends Model {
 
     public static void fillPermisos() {
         if(Permiso.find().asList().isEmpty()){
-            Permiso p = new Permiso("productos", "Acceso a  administracion de productos");
+            Permiso p = new Permiso("ADMIN", "Acceso a administracion general del sistema");
             p.save();
-            p = new Permiso("general", "Acceso a los catalogos de los productos");
+            p = new Permiso("GENERAL", "Acceso general al sistema");
             p.save();
         }
     }

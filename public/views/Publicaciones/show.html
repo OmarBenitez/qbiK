@@ -6,7 +6,7 @@
     <div class="col-md-9 col-xs-12">
         <h1>{{object.titulo}}</h1>
         <div star-rating rating-value="rating" max="5" on-rating-selected="rateFunction(rating)"></div>
-        <p class="rating-txt">54 personas lo han calificado</p>
+        <p class="rating-txt">{{object.totalRating || 0}} estrellas en total</p>
         
         <div>{{object.usuario.nombre}} - {{object.usuario.email}}</div>
         <hr>
