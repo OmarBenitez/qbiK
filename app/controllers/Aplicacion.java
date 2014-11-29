@@ -148,4 +148,18 @@ public class Aplicacion extends Controller {
         }
     }
 
+    public static void createComentarioAndroid() throws Exception {
+
+        Publicacion publicacion = Publicacion.findById(params.get("publicacion"));
+        Usuario usuario = Usuario.findById(params.get("usuario"));
+
+        if (publicacion != null && usuario != null) {
+            Comentario object = new Comentario(usuario, params.get("contenido"));
+            publicacion.comentarios.add(object);
+            if (publicacion.validateAndSave()) {
+                renderJSON(Publicacion.toJsonListSerializer().serialize(object.comentarios));
+            }
+        }
+    }
+
 }
