@@ -1,13 +1,15 @@
 <div class="container ptop">
-    <div ng-show="true">
-        <a href="/#/usuarios/edit/{{object.idAsStr}}">Editar</a>
+    <div class="col-md-12 col-xs-12">
+        <strong>Nombre: </strong>{{object.nombre}}
+        <br>
+        <strong>Email: </strong>{{object.email}}
+        <br>
+        <strong>Estado: </strong>{{object.ciudad.estado.nombre}}
+        <br>
+        <strong>Municipio: </strong>{{object.ciudad.nombre}}
         <hr>
+        <div ng-show="true" class="pull-right edit">
+            <a href="/#/usuarios/edit/{{object.idAsStr}}">Editar</a>
+        </div>
     </div>
-    <strong>Nombre: </strong>{{object.nombre}}
-    <br>
-    <strong>Email: </strong>{{object.email}}
-    <br>
-    <strong>Estado: </strong>{{object.ciudad.estado.nombre}}
-    <br>
-    <strong>Municipio: </strong>{{object.ciudad.nombre}}
 </div>

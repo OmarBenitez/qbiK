@@ -445,9 +445,18 @@ section {
 
 .edit {
     text-align: right;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .edit > a:hover {
     color: #1abc9c;
+}
+
+.ptop {
+    color: #5F6F81;
+    text-align: left;
+}
+
+.form-control {
+    margin-bottom: 5px;
 }

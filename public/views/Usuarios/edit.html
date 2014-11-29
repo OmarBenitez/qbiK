@@ -1,14 +1,20 @@
 <div class="container ptop">
     <form class="form-group" ng-submit="updateData(object)">
         <input class="form-control" placeholder="Username" type="text" value="{{object.nombre}}">
+        
         <input class="form-control" placeholder="Email" type="text" value="{{object.email}}">
-        <input type="submit" value="Guardar">
+        
+        <input class="btn btn-primary col-md-2 col-xs-12" type="submit" value="Guardar">
+        <br>
     </form>
-    <hr>
+    
     <form class="form-group" ng-submit="updatePassword(password)">
         <input class="form-control" placeholder="Password actual" type="text" value="{{password.current}}">
+        
         <input class="form-control" placeholder="Nuevo password" type="text" value="{{password.new}}">
+        
         <input class="form-control" placeholder="Confirmar nuevo password" type="text" value="{{password.confirm}}">
-        <input type="submit" value="Actualizar password">
+        
+        <input class="btn btn-primary col-md-2 col-xs-12" type="submit" value="Actualizar password">
     </form>
 </div>
