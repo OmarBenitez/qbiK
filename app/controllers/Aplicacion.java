@@ -110,7 +110,12 @@ public class Aplicacion extends Controller {
         
         foo.email = params.get("email");
         
-        foo.password = params.get("password");
+        foo.password = DigestUtils.md5Hex(params.get("password"));
+        
+        System.out.println("asDFSADFASDF");
+        System.out.println(foo.nombre);
+        System.out.println(foo.email);
+        System.out.println(foo.password);
         
         foo.ciudad = Municipio.find("clave", "180").first();
         
