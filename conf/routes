@@ -23,6 +23,7 @@ GET     /connected/user                             Usuarios.actual
 
 POST    /android/login                              Aplicacion.authAndroid
 POST    /android/registro                           Aplicacion.registrarAndroid
+POST    /android/publicaciones/create               Aplicacion.createPublicacionAndroid
 
 
 #Busqueda
