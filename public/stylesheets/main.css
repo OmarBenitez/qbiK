@@ -446,6 +446,11 @@ section {
 .edit {
     text-align: right;
     font-size: 15px;
+    margin-right: 5px;
+}
+
+.edit > a {
+    margin-right: 10px;
 }
 
 .edit > a:hover {

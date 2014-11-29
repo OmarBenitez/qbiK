@@ -10,18 +10,21 @@
         <hr>
         <div><hashtag ng-model="object.contenido"></hashtag></div>
         <div class="edit">
-            <a href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a>
+            <a href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a> 
+            <button class="btn btn-del pull-right col-xs-3 col-md-2" type="reset">Eliminar <i class="fa fa-trash"></i></button>
         </div>
+            
+        <br>
 
         <div class="media" ng-show="object.comentarios.length > 0">
             <hr>
             <div class="media fadeIn wow" ng-repeat="c in object.comentarios">
                 <div class="media">
                     <div class="media-body triangle-border">
-                        <p class="col-xs-12"><strong>{{c.contenido}}</strong></p>
-                        <button class="btn btn-del pull-right" type="reset"><i class="fa fa-trash"></i></button>
+                        <p class="col-xs-12"><strong>{{c.contenido}}</strong></p>                       
                         <br />
                         <small class="text-muted col-md-6 col-xs-12">{{c.usuario.nombre}} - {{c.fechaPublicacion| date:'medium'}}</small>
+                        <button class="btn btn-del pull-right col-xs-4 col-md-2" type="reset">Eliminar <i class="fa fa-trash"></i> </button>
                     </div>
                 </div>
             </div>
