@@ -35,29 +35,6 @@ public class Publicaciones extends CRUD {
         renderJSON(Publicacion.toJsonListSerializer().serialize(object));
     }
 
-    public static void createPublicacionAndroid() throws Exception {
-        
-        Publicacion object = new Publicacion();
-
-        String titulo = params.get("titulo");
-        String banner = params.get("banner");
-        String contenido = params.get("contenido");
-
-        Usuario u = Usuario.findById(params.get("usuario"));
-
-        object.usuario = u;
-        object.municipio = u.ciudad;
-        object.contenido = contenido;
-        object.hashtags = Publicacion.getHashtagsFromContent(object);
-        object.titulo = titulo;
-        object.banner = banner;
-
-        System.out.println(object.hashtags);
-
-        if (object.validateAndSave()) {
-            renderJSON(Publicacion.toJsonListSerializer().serialize(object));
-        }
-    }
 
     public static void update() throws Exception {
         Gson g = new Gson();

@@ -19,8 +19,8 @@ import org.json.JSONObject;
 public class Aplicacion extends Controller {
 
     static String PERFIL_HASH = "asd98ad6r198asd098as09dv0u9";
-    
-    public static void getIo(){
+
+    public static void getIo() {
         redirect("http://localhost:1337/socket.io/socket.io.js");
     }
 
@@ -84,50 +84,68 @@ public class Aplicacion extends Controller {
                 .order("nombre").asList();
         renderJSON(Municipio.toJsonListSerializer().serialize(municipios));
     }
-    
+
     public static void authAndroid() {
 
-        
         Usuario foo = new Usuario();
-        
+
         foo.email = params.get("email");
-        
+
         foo.password = params.get("password");
-        
+
         foo = Usuario.find("email, password", foo.email, DigestUtils.md5Hex(foo.password)).first();
-        
+
         renderJSON(Usuario.toJsonListSerializer().serialize(foo));
-        
-        
+
     }
-    
+
     public static void registrarAndroid() {
 
-        
         Usuario foo = new Usuario();
-        
+
         foo.nombre = params.get("nombre");
-        
+
         foo.email = params.get("email");
-        
+
         foo.password = DigestUtils.md5Hex(params.get("password"));
-        
+
         System.out.println("asDFSADFASDF");
         System.out.println(foo.nombre);
         System.out.println(foo.email);
         System.out.println(foo.password);
-        
+
         foo.ciudad = Municipio.find("clave", "180").first();
-        
-        if(foo.validateAndSave()){
+
+        if (foo.validateAndSave()) {
             renderJSON(Usuario.toJsonListSerializer().serialize(foo));
         } else {
             renderJSON(Usuario.toJsonListSerializer().serialize(null));
         }
-        
-        
-        
-        
+
+    }
+
+    public static void createPublicacionAndroid() throws Exception {
+
+        Publicacion object = new Publicacion();
+
+        String titulo = params.get("titulo");
+        String banner = params.get("banner");
+        String contenido = params.get("contenido");
+
+        Usuario u = Usuario.findById(params.get("usuario"));
+
+        object.usuario = u;
+        object.municipio = u.ciudad;
+        object.contenido = contenido;
+        object.hashtags = Publicacion.getHashtagsFromContent(object);
+        object.titulo = titulo;
+        object.banner = banner;
+
+        System.out.println(object.hashtags);
+
+        if (object.validateAndSave()) {
+            renderJSON(Publicacion.toJsonListSerializer().serialize(object));
+        }
     }
 
 }
