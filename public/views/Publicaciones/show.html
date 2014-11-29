@@ -9,28 +9,32 @@
         <div>{{object.usuario.email}}</div>
         <hr>
         <div><hashtag ng-model="object.contenido"></hashtag></div>
-
+        <div class="edit">
+            <a href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a>
+        </div>
+        
         <div class="media" ng-show="object.comentarios.length > 0">
             <hr>
             <div class="media fadeIn wow" ng-repeat="c in object.comentarios">
                 <div class="media">
-                    <div class="media-body">
-                        <strong>{{c.contenido}}</strong>
+                    <div class="media-body triangle-border">
+                        <p class="col-xs-12"><strong>{{c.contenido}}</strong></p>
+                        <button class="btn btn-del pull-right" type="reset"><i class="fa fa-trash"></i></button>
                         <br />
-                        <small class="text-muted">{{c.usuario.nombre}} - {{c.fechaPublicacion| date:'medium'}}</small>
+                        <small class="text-muted col-md-6 col-xs-12">{{c.usuario.nombre}} - {{c.fechaPublicacion| date:'medium'}}</small>
                     </div>
                 </div>
             </div>
         </div>
 
         <hr>
-        <div>
-            Comentar: <form ng-submit="postComment(object.idAsStr, comentario)">
-                <input type="text" ng-model="comentario">
+        <div class="comentario col-md-12 col-xs-12">
+            <form ng-submit="postComment(object.idAsStr, comentario)">
+                <input  class="coment col-md-12 col-xs-12" type="text" ng-model="comentario" placeholder="Escribe un comentario...">
+                <button class="pull-right btn btn-primary col-md-2 col-xs-12">Publicar</button>
             </form>
         </div>
-        <hr>
-        <a href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a>
+        
     </div>
     <div class="col-md-3 col-xs-12">
 

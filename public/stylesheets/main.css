@@ -391,3 +391,63 @@ section {
     width: 150px;
     height: 150px;
 }
+
+.comentario {
+    margin-bottom: 100px;
+}
+
+.coment {
+    border-radius: 4px;
+    margin: 5px 5px 10px 0;
+}
+
+.btn.btn-del {
+    padding: 2px 3px 2px 3px;
+    background-color: #1abc9c;
+    color: #fff;
+}
+
+/*------------------------------------------------------------*/
+.triangle-border {
+    position: relative;
+    padding: 8px;
+    border: 2px solid #5f6f81;
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+/*.triangle-border:before {
+    content: "";
+    position: absolute;
+    top: 80px;
+    left: 10px;
+    border-width: 20px 20px 0;
+    border-style: solid;
+    border-color: #5f6f81 transparent;
+    display: block;
+    width: 0;
+}
+.triangle-border:after {
+    content: " ";
+    position: absolute;
+    bottom: -30px;
+    left: 17px;
+    border-width: 13px 13px 0;
+    border-style: solid;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+}*/
+
+.media, .media .media {
+    margin-top: 6px;
+}
+
+.edit {
+    text-align: right;
+    font-size: 13px;
+}
+
+.edit > a:hover {
+    color: #1abc9c;
+}
