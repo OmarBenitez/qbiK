@@ -116,6 +116,16 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             service.comment = function (publicacionId, comentario) {
                 socket.emit('newComentario', publicacionId, service.user.idAsStr, comentario);
             };
+            
+            service.deleteComment = function (publicacionId, comentario) {
+                socket.emit('delComentario', publicacionId, comentario);
+                
+                socket.on('delCommentSuccess', function(data) {
+                    service.tmpCommentData = data;
+                    service.sendEvent('commentDeleted');
+                    $rootScope.$apply();
+                });
+            };
 
             socket.on('takeHomePubs', function (publicaciones) {
                 service.homePubs = publicaciones;
@@ -420,9 +430,30 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                         return appFactory.user === $scope.object.usuario;
 //                                || ($scope.object.usuario.perfil && $scope.object.usuario.perfil === "ADMIN");
                     };
+                    
+                    $scope.deleteComment = function(comment) {
+                        appFactory.deleteComment($scope.object.idAsStr, comment);
+                    }
+                    
+                    $scope.$on('commentDeleted', function () {
+                        var publicacionId = appFactory.tmpCommentData.publicacionId;
+                        var comentario = appFactory.tmpCommentData.comentario;
+                        
+                        if ($scope.object.idAsStr === publicacionId) {
+                            for (var i = 0; i < $scope.object.comentarios.length; i++) {
+                                if ($scope.object.comentarios[i].idAsStr === comentario.idAsStr) {
+                                    $scope.object.comentarios.splice(i, 1);
+                                }
+                            }
+                        }
+                    });
                 }
 
             }
+
+            $scope.commentIsDeletable = function (comentario) {
+                return comentario.usuario.idAsStr === appFactory.user.idAsStr;
+            };
 
             $scope.$on('takeRate', function () {
                 $scope.rating = appFactory.publicacion.rating;

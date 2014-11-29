@@ -6,22 +6,27 @@
     <div class="col-md-9 col-xs-12">
         <h1>{{object.titulo}}</h1>
         <div star-rating rating-value="rating" max="5" on-rating-selected="rateFunction(rating)"></div>
-        <div>{{object.usuario.nombre}}</div>
+        <p class="rating-txt">54 personas lo han calificado</p>
+        
+        <div>{{object.usuario.nombre}} - {{object.usuario.email}}</div>
         <hr>
         <div><hashtag ng-model="object.contenido"></hashtag></div>
         <div class="edit">
-            <a href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a>
+            <a href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a> 
+            <button class="btn btn-del pull-right col-xs-3 col-md-2" type="reset">Eliminar <i class="fa fa-trash"></i></button>
         </div>
+            
+        <br>
 
         <div class="media" ng-show="object.comentarios.length > 0">
             <hr>
             <div class="media fadeIn wow" ng-repeat="c in object.comentarios">
                 <div class="media">
                     <div class="media-body triangle-border">
-                        <p class="col-xs-12"><strong>{{c.contenido}}</strong></p>
-                        <button class="btn btn-del pull-right" type="reset"><i class="fa fa-trash"></i></button>
+                        <p class="col-xs-12"><strong>{{c.contenido}}</strong></p>                       
                         <br />
                         <small class="text-muted col-md-6 col-xs-12">{{c.usuario.nombre}} - {{c.fechaPublicacion| date:'medium'}}</small>
+                        <button ng-show="commentIsDeletable(c)" ng-click="deleteComment(c)" class="btn btn-del pull-right col-xs-4 col-md-2" type="reset">Eliminar <i class="fa fa-trash"></i> </button>
                     </div>
                 </div>
             </div>

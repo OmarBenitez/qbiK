@@ -34,7 +34,7 @@ public class Publicaciones extends CRUD {
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(object));
     }
-    
+
     public static void update() throws Exception {
         Gson g = new Gson();
         Publicacion object = g.fromJson(params.get("body"), Publicacion.class);
@@ -48,7 +48,7 @@ public class Publicaciones extends CRUD {
             p.hashtags = Publicacion.getHashtagsFromContent(object);
 
             renderJSON(Publicacion.toJsonListSerializer().serialize(p));
-            
+
         }
     }
 
@@ -90,9 +90,9 @@ public class Publicaciones extends CRUD {
 
     public static void comment() throws Exception {
         Boolean success = Boolean.FALSE;
-        
+
         Map<String, Object> map = new HashMap<>();
-        
+
         JSONObject values = new JSONObject(params.get("body"));
 
         Publicacion publicacion = Publicacion.findById(values.get("publicacionId").toString());
@@ -106,8 +106,29 @@ public class Publicaciones extends CRUD {
                 map.put("success", success);
                 map.put("publicacionId", publicacion.getIdAsStr());
                 map.put("comentario", comentario);
-                
+
             }
+        }
+        renderJSON(map);
+    }
+
+    public static void delcomment() throws Exception {
+        Gson g = new Gson();
+        Map<String, Object> map = new HashMap<>();
+        Boolean success = Boolean.FALSE;
+
+        JSONObject values = new JSONObject(params.get("body"));
+
+        Publicacion publicacion = Publicacion.findById(values.get("publicacionId").toString());
+        Comentario comentario = g.fromJson(params.get("body.comentario"), Comentario.class);
+
+        if (publicacion != null && comentario != null) {
+            publicacion.comentarios.remove(comentario);
+            comentario.delete();
+
+            map.put("success", publicacion.validateAndSave());
+            map.put("publicacionId", publicacion.getIdAsStr());
+            map.put("comentario", comentario);
         }
         renderJSON(map);
     }

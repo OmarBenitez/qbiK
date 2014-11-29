@@ -153,6 +153,27 @@ io.sockets.on('connection', function (socket) {
                     }
                 });
     });
+    
+    socket.on('delComentario', function (publicacionId, comentario) {
+        var args = {
+            data: {
+                'publicacionId': publicacionId,
+                'comentario': comentario
+            },
+            headers: {"Content-Type": "application/json"}
+        };
+
+        client.post(baseUrl + '/publicacion/delcomment',
+                args,
+                function (data, response) {
+                    data = JSON.parse(data);
+                    if (data.success) {
+                        socket.emit('delCommentSuccess', data);
+                        //TODO: takeCommentDelete
+                        socket.broadcast.emit('takeCommentDelete', data);
+                    }
+                });
+    });
 
 
 

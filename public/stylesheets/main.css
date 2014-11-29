@@ -445,9 +445,33 @@ section {
 
 .edit {
     text-align: right;
-    font-size: 13px;
+    font-size: 15px;
+    margin-right: 5px;
+}
+
+.edit > a {
+    margin-right: 10px;
 }
 
 .edit > a:hover {
+    color: #1abc9c;
+}
+
+.ptop {
+    color: #5F6F81;
+    text-align: left;
+}
+
+.form-control {
+    margin-bottom: 5px;
+}
+
+.rating-txt {
+    font-size: 13px;
+    color: #5F6F81;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+.rating-txt:hover {
     color: #1abc9c;
 }
