@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.gson.Gson;
 import play.*;
 import play.mvc.*;
 
@@ -80,6 +81,17 @@ public class Aplicacion extends Controller {
                 Estado.findById(id))
                 .order("nombre").asList();
         renderJSON(Municipio.toJsonListSerializer().serialize(municipios));
+    }
+    
+    public static void authAndroid(){
+        Gson g = new Gson();
+        Usuario foo = g.fromJson(params.get("body"), Usuario.class);
+        
+        foo = Usuario.find("email, password", foo.email, DigestUtils.md5Hex(foo.password)).first();
+        
+        renderJSON(Usuario.toJsonListSerializer().serialize(foo));
+        
+        
     }
 
 }
