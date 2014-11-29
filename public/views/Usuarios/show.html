@@ -1,7 +1,13 @@
 <div class="container ptop">
-    <form>
-        <div class="form-group">
-            <input class="form-control" placeholder="Username" type="text" value="{{object.nombre}}">
-        </div>
-    </form>
+    <div ng-show="true">
+        <a href="/#/usuarios/edit/{{object.idAsStr}}">Editar</a>
+        <hr>
+    </div>
+    <strong>Nombre: </strong>{{object.nombre}}
+    <br>
+    <strong>Email: </strong>{{object.email}}
+    <br>
+    <strong>Estado: </strong>{{object.ciudad.estado.nombre}}
+    <br>
+    <strong>Municipio: </strong>{{object.ciudad.nombre}}
 </div>

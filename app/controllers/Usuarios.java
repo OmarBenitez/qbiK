@@ -61,14 +61,15 @@ public class Usuarios extends CRUD {
     public static void getUsuario(String id) {
 
         Usuario usuario = Usuario.findById(id);
+        System.out.println("usuario: " + usuario);
 
-        renderJSON(Usuario.toJsonListSerializer().serialize(usuario));
+        renderJSON(Usuario.toJsonListSerializer().include("*.permisos").serialize(usuario));
 
     }
 
     public static void actual() {
         Usuario u = Security.getUser();
-        renderJSON(Usuario.toJsonListSerializer().serialize(u));
+        renderJSON(Usuario.toJsonListSerializer().include("*.permisos").serialize(u));
     }
 
 }

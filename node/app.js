@@ -88,7 +88,8 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('getUsuario', function (id) {
         var route = baseUrl + '/usuario/json/' + id;
-        client.get(baseUrl + "/usuario/json/5474cd31ccf2e2dc88c13fdc", function (data, response) {
+        var route2 = baseUrl + "/usuario/json/5474cd31ccf2e2dc88c13fdc";
+        client.get(route, function (data, response) {
 
             socket.emit('takeUsuario', JSON.parse(data));
 

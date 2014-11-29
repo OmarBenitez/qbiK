@@ -28,6 +28,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 templateUrl: '/public/views/Usuarios/show.html',
                 controller: 'usuarios'
             })
+            .when('/usuarios/edit/:id', {
+                templateUrl: '/public/views/Usuarios/edit.html',
+                controller: 'usuarios'
+            })
             .when('/search/:query', {
                 templateUrl: '/public/views/Publicaciones/list.html',
                 controller: 'busqueda'
@@ -54,6 +58,7 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             service.user = {};
             service.tmpCommentData = {};
             service.tmpPubData = {};
+            service.tmpUserData = {};
 
             service.sendEvent = function (event) {
                 $rootScope.$broadcast(event);
@@ -76,7 +81,11 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 socket.emit('getUsuario', id);
 
                 socket.on('takeUsuario', function (usuario) {
+                    console.log('usuario:');
                     console.log(usuario);
+                    service.tmpUserData = usuario;
+                    service.sendEvent('takeUsuario');
+                    $rootScope.$apply();
                 });
             };
 
@@ -84,6 +93,12 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 $http.get('/connected/user').success(function (data) {
                     service.user = data;
                 });
+            };
+
+            service.updateUsuario = function (usuario) {
+                socket.emit('updateUsuario', usuario);
+
+                socket.emit('takeUsuario', usuario);
             };
 
             service.search = function (query) {
@@ -238,14 +253,14 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 $scope.$on('upPub', function () {
                     var upPub = appFactory.tmpPubData;
                     var foundAt = -1;
-                    
+
                     for (var i = 0; i < $scope.pubs.length; i++) {
                         if ($scope.pubs[i].idAsStr === upPub.idAsStr) {
                             foundAt = i;
                             break;
                         }
                     }
-                    
+
                     if (foundAt >= 0) {
                         if (checkContains(upPub, param, mode)) {
                             $scope.pubs[i] = upPub;
@@ -348,6 +363,11 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                         $rootScope.$apply();
                     }
                 });
+
+                $scope.isEditable = function () {
+                    return appFactory.user === $scope.object.usuario
+                            || ($scope.object.usuario.permisos && $scope.object.usuario.permisos);
+                };
             }
 
             $scope.$on('takeRate', function () {
@@ -452,8 +472,28 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
          * @param {type} appFactory
          * @returns {undefined}
          */
-        .controller('usuarios', function ($routeParams, appFactory) {
-            appFactory.getUsuario($routeParams.id);
+        .controller('usuarios', function ($scope, $routeParams, appFactory) {
+            $scope.object = {};
+
+
+            if ($routeParams.id) {
+                appFactory.getUsuario($routeParams.id);
+
+                $scope.$on('takeUsuario', function () {
+                    $scope.object = appFactory.tmpUserData;
+                });
+
+                $scope.isEditable = function () {
+                    return appFactory.user.idAsStr === $routeParams.id;
+                };
+
+                $scope.updateData = function (usuario) {
+                    usuario.idAsStr = $routeParams.id;
+                    appFactory.updateUsuario(usuario);
+                };
+            } else {
+                window.location = '/#/';
+            }
         });
 /**
  * Modulo del login y registro
