@@ -116,16 +116,30 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
             service.comment = function (publicacionId, comentario) {
                 socket.emit('newComentario', publicacionId, service.user.idAsStr, comentario);
             };
-            
+
             service.deleteComment = function (publicacionId, comentario) {
                 socket.emit('delComentario', publicacionId, comentario);
-                
-                socket.on('delCommentSuccess', function(data) {
-                    service.tmpCommentData = data;
-                    service.sendEvent('commentDeleted');
-                    $rootScope.$apply();
-                });
             };
+
+            service.deletePost = function (publicacionId) {
+                socket.emit('delPost', publicacionId);
+            };
+
+            socket.on('delPostSuccess', function (data) {
+                window.location = '/#/';
+            });
+
+            socket.on('takePostDelete', function (data) {
+                service.tmpPubData = data;
+                service.sendEvent('takePostDelete');
+                $rootScope.$apply();
+            });
+
+            socket.on('delCommentSuccess', function (data) {
+                service.tmpCommentData = data;
+                service.sendEvent('commentDeleted');
+                $rootScope.$apply();
+            });
 
             socket.on('takeHomePubs', function (publicaciones) {
                 service.homePubs = publicaciones;
@@ -317,6 +331,18 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     }
                 });
 
+                $scope.$on('takePostDelete', function () {
+                    console.log('takePostDelete');
+                    var delPub = appFactory.tmpPubData;
+
+                    for (var i = 0; i < $scope.pubs.length; i++) {
+                        if ($scope.pubs[i].idAsStr === delPub.publicacionId) {
+                            $scope.pubs.splice(i, 1);
+                            break;
+                        }
+                    }
+                });
+
                 $scope.$on('upUser', function () {
                     var upUser = appFactory.tmpUserData;
 
@@ -425,23 +451,44 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     }
                 });
 
+                $scope.$on('takePostDelete', function () {
+                    console.log('takePostDelete1');
+                    var delPub = appFactory.tmpPubData;
+
+                    if ($scope.object.idAsStr === delPub.publicacionId) {
+                        window.location = "/#/";
+                    }
+                });
+
                 if ($scope.object) {
                     $scope.isEditable = function () {
-                        return appFactory.user === $scope.object.usuario;
+                        return $scope.object.usuario && $scope.object.usuario.idAsStr === appFactory.user.idAsStr;
 //                                || ($scope.object.usuario.perfil && $scope.object.usuario.perfil === "ADMIN");
                     };
-                    
-                    $scope.deleteComment = function(comment) {
+
+                    $scope.commentIsDeletable = function (comentario) {
+                        return comentario.usuario.idAsStr === appFactory.user.idAsStr;
+                    };
+
+                    $scope.postIsDeletable = function () {
+                        return $scope.object.usuario && $scope.object.usuario.idAsStr === appFactory.user.idAsStr;
+                    };
+
+                    $scope.deleteComment = function (comment) {
                         appFactory.deleteComment($scope.object.idAsStr, comment);
-                    }
-                    
+                    };
+
+                    $scope.deletePost = function () {
+                        appFactory.deletePost($scope.object.idAsStr);
+                    };
+
                     $scope.$on('commentDeleted', function () {
                         var publicacionId = appFactory.tmpCommentData.publicacionId;
-                        var comentario = appFactory.tmpCommentData.comentario;
-                        
+                        var comentarioId = appFactory.tmpCommentData.comentarioId;
+
                         if ($scope.object.idAsStr === publicacionId) {
                             for (var i = 0; i < $scope.object.comentarios.length; i++) {
-                                if ($scope.object.comentarios[i].idAsStr === comentario.idAsStr) {
+                                if ($scope.object.comentarios[i].idAsStr === comentarioId) {
                                     $scope.object.comentarios.splice(i, 1);
                                 }
                             }
@@ -449,11 +496,19 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     });
                 }
 
-            }
+            } else {
+                $scope.$on('takePostDelete', function () {
+                    console.log('takePostDelete2');
+                    var delPub = appFactory.tmpPubData;
 
-            $scope.commentIsDeletable = function (comentario) {
-                return comentario.usuario.idAsStr === appFactory.user.idAsStr;
-            };
+                    for (var i = 0; i < $scope.pubs.length; i++) {
+                        if ($scope.publicaciones[i].idAsStr === delPub.publicacionId) {
+                            $scope.publicaciones.splice(i, 1);
+                            break;
+                        }
+                    }
+                });
+            }
 
             $scope.$on('takeRate', function () {
                 $scope.rating = appFactory.publicacion.rating;

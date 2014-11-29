@@ -158,7 +158,7 @@ io.sockets.on('connection', function (socket) {
         var args = {
             data: {
                 'publicacionId': publicacionId,
-                'comentario': comentario
+                'comentarioId': comentario.idAsStr
             },
             headers: {"Content-Type": "application/json"}
         };
@@ -168,9 +168,28 @@ io.sockets.on('connection', function (socket) {
                 function (data, response) {
                     data = JSON.parse(data);
                     if (data.success) {
-                        socket.emit('delCommentSuccess', data);
-                        //TODO: takeCommentDelete
-                        socket.broadcast.emit('takeCommentDelete', data);
+                        io.sockets.emit('delCommentSuccess', data);
+                    }
+                });
+    });
+    
+    socket.on('delPost', function (publicacionId) {
+        console.log('publicacionId');
+        console.log(publicacionId);
+        var args = {
+            data: {
+                'publicacionId': publicacionId
+            },
+            headers: {"Content-Type": "application/json"}
+        };
+
+        client.post(baseUrl + '/publicacion/delpost',
+                args,
+                function (data, response) {
+                    data = JSON.parse(data);
+                    if (data.success) {
+                        socket.emit('delPostSuccess', data);
+                        socket.broadcast.emit('takePostDelete', data);
                     }
                 });
     });

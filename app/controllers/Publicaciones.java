@@ -120,15 +120,32 @@ public class Publicaciones extends CRUD {
         JSONObject values = new JSONObject(params.get("body"));
 
         Publicacion publicacion = Publicacion.findById(values.get("publicacionId").toString());
-        Comentario comentario = g.fromJson(params.get("body.comentario"), Comentario.class);
+        Comentario comentario = Comentario.findById(values.get("comentarioId").toString());
 
         if (publicacion != null && comentario != null) {
             publicacion.comentarios.remove(comentario);
             comentario.delete();
 
             map.put("success", publicacion.validateAndSave());
+            
             map.put("publicacionId", publicacion.getIdAsStr());
-            map.put("comentario", comentario);
+            map.put("comentarioId", comentario.getIdAsStr());
+        }
+        renderJSON(map);
+    }
+
+    public static void delpost() throws Exception {
+        Gson g = new Gson();
+        Map<String, Object> map = new HashMap<>();
+        Boolean success = Boolean.FALSE;
+
+        JSONObject values = new JSONObject(params.get("body"));
+
+        Publicacion publicacion = Publicacion.findById(values.get("publicacionId").toString());
+        if (publicacion != null) {
+            map.put("publicacionId", publicacion.getIdAsStr());
+            publicacion.delete();
+            map.put("success", true);
         }
         renderJSON(map);
     }

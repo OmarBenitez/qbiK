@@ -17,6 +17,7 @@ GET     /publicaciones/list                         Publicaciones.list
 GET     /publicacion/rate/{id}/{rate}/{userId}      Publicaciones.rate
 POST    /publicacion/comment                        Publicaciones.comment
 POST    /publicacion/delcomment                     Publicaciones.delcomment
+POST    /publicacion/delpost                        Publicaciones.delpost
 
 GET     /connected/user                             Usuarios.actual
 

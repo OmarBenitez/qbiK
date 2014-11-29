@@ -12,8 +12,8 @@
         <hr>
         <div><hashtag ng-model="object.contenido"></hashtag></div>
         <div class="edit">
-            <a href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a> 
-            <button class="btn btn-del pull-right col-xs-3 col-md-2" type="reset">Eliminar <i class="fa fa-trash"></i></button>
+            <a ng-show="isEditable()" href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a> 
+            <button ng-show="postIsDeletable()" ng-click="deletePost()" class="btn btn-del pull-right col-xs-3 col-md-2" type="reset">Eliminar <i class="fa fa-trash"></i></button>
         </div>
             
         <br>
