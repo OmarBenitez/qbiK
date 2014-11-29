@@ -3,19 +3,19 @@
         <div class="bg" style="background-image: url('{{object.banner}}');"></div>
         <text>{{object.titulo}}<text>
     </div>
-    <div class="col-md-9 col-xs-12">
+    <div class="col-md-12 col-xs-12">
         <h1>{{object.titulo}}</h1>
         <div star-rating rating-value="rating" max="5" on-rating-selected="rateFunction(rating)"></div>
-        <p class="rating-txt">{{object.totalRating || 0}} estrellas en total</p>
-        
+        <p class="rating-txt">{{object.totalRating|| 0}} estrellas en total</p>
+
         <div>{{object.usuario.nombre}} - {{object.usuario.email}}</div>
         <hr>
         <div><hashtag ng-model="object.contenido"></hashtag></div>
         <div class="edit">
-            <a ng-show="isEditable()" href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a> 
-            <button ng-show="postIsDeletable()" ng-click="deletePost()" class="btn btn-del pull-right col-xs-3 col-md-2" type="reset">Eliminar <i class="fa fa-trash"></i></button>
+            <a ng-show="isEditable()" href="/#/publicaciones/edit/{{object.idAsStr}}" class="btn btn-primary btn-xs">Editar publicación</a> 
+            <button ng-show="postIsDeletable()" ng-click="deletePost()" class="btn btn-xs btn-danger pull-right" type="reset">Eliminar <i class="fa fa-trash"></i></button>
         </div>
-            
+
         <br>
 
         <div class="media" ng-show="object.comentarios.length > 0">
@@ -26,23 +26,25 @@
                         <p class="col-xs-12"><strong>{{c.contenido}}</strong></p>                       
                         <br />
                         <small class="text-muted col-md-6 col-xs-12">{{c.usuario.nombre}} - {{c.fechaPublicacion| date:'medium'}}</small>
-                        <button ng-show="commentIsDeletable(c)" ng-click="deleteComment(c)" class="btn btn-del pull-right col-xs-4 col-md-2" type="reset">Eliminar <i class="fa fa-trash"></i> </button>
+                        <button ng-show="commentIsDeletable(c)" ng-click="deleteComment(c)" class="btn btn-xs btn-danger pull-right" type="reset">Eliminar <i class="fa fa-trash"></i> </button>
                     </div>
                 </div>
             </div>
         </div>
 
         <hr>
-        <div class="comentario col-md-12 col-xs-12">
+        <div class="col-md-10 col-xs-12">
             <form ng-submit="postComment(object.idAsStr, comentario)">
-                <input  class="coment col-md-12 col-xs-12" type="text" ng-model="comentario" placeholder="Escribe un comentario...">
-                <button class="pull-right btn btn-primary col-md-2 col-xs-12">Publicar</button>
+                <input  class="form-control" type="text" ng-model="comentario" placeholder="Escribe un comentario...">    
             </form>
         </div>
-        <div ng-show="isEditable()">
+        <div class=" col-md-2 col-xs-12">
+            <button class="pull-right btn btn-primary col-xs-12">Publicar</button>
+        </div>
+        <!--<div ng-show="isEditable()">
             <hr>
             <a href="/#/publicaciones/edit/{{object.idAsStr}}">Editar publicación</a>
-        </div>
+        </div>-->
     </div>
     <div class="col-md-3 col-xs-12">
 
