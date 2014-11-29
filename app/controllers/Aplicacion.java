@@ -9,6 +9,8 @@ import java.util.*;
 import models.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -83,10 +85,15 @@ public class Aplicacion extends Controller {
         renderJSON(Municipio.toJsonListSerializer().serialize(municipios));
     }
     
-    public static void authAndroid(){
-        System.out.println("ASDASDASDASDASDASDADASD");
-        Gson g = new Gson();
-        Usuario foo = g.fromJson(params.get("body"), Usuario.class);
+    public static void authAndroid() throws JSONException{
+        System.out.println(params.get("body"));
+        JSONObject values = new JSONObject(params.get("body"));
+        
+        Usuario foo = new Usuario();
+        
+        foo.email = values.opt("email").toString();
+        
+        foo.password = values.opt("password").toString();
         
         foo = Usuario.find("email, password", foo.email, DigestUtils.md5Hex(foo.password)).first();
         
