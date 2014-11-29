@@ -101,8 +101,7 @@ io.sockets.on('connection', function (socket) {
         var args = {
             data: {
                 'id': usuario.idAsStr,
-                'nombre': usuario.nombre,
-                'email': usuario.email
+                'nombre': usuario.nombre
             },
             headers: {"Content-Type": "application/json"}
         };

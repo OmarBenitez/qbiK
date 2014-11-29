@@ -85,9 +85,7 @@ public class Usuarios extends CRUD {
         if (null != u) {
             System.out.println("object...");
             System.out.println(object.nombre);
-            System.out.println(object.email);
             u.nombre = object.nombre;
-            u.email = object.email;
             
             u.validateAndSave();
 
