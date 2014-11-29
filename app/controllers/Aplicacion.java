@@ -84,6 +84,7 @@ public class Aplicacion extends Controller {
     }
     
     public static void authAndroid(){
+        System.out.println("ASDASDASDASDASDASDADASD");
         Gson g = new Gson();
         Usuario foo = g.fromJson(params.get("body"), Usuario.class);
         
