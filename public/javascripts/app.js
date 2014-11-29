@@ -16,6 +16,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 templateUrl: '/public/views/Publicaciones/show.html',
                 controller: 'publicaciones'
             })
+            .when('/publicaciones/edit/:id', {
+                templateUrl: '/public/views/Publicaciones/edit.html',
+                controller: 'publicaciones'
+            })
             .when('/publicaciones/hashtag', {
                 templateUrl: '/public/views/Publicaciones/hashtag.html',
                 controller: 'publicaciones'
@@ -57,6 +61,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
 
             service.addPublicacion = function (publicacion) {
                 socket.emit('newPublicacion', publicacion);
+            };
+
+            service.updatePublicacion = function (publicacion) {
+                socket.emit('updatePublicacion', publicacion);
             };
 
             service.getPublicacion = function (id) {
@@ -107,6 +115,18 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 service.homePubs = service.homePubs.reverse();
                 service.tmpPubData = p;
                 service.sendEvent('newPub');
+                $rootScope.$apply();
+            });
+
+            socket.on('takeUpHomePub', function (p) {
+                for (var i = 0; i < service.homePubs.length; i++) {
+                    if (service.homePubs[i].idAsStr === p.idAsStr) {
+                        service.homePubs[i] = p;
+                        break;
+                    }
+                }
+                service.tmpPubData = p;
+                service.sendEvent('upPub');
                 $rootScope.$apply();
             });
 
@@ -181,7 +201,6 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                             }
                         }
                     } else if (mode === "tags") {
-                        console.log('pub.hashtags: ' + pub.hashtags);
                         if (pub.hashtags && pub.hashtags.length > 0) {
                             for (var i = 0; i < pub.hashtags.length; i++) {
                                 contained = contained || pub.hashtags[i].contains(toCheck);
@@ -206,15 +225,26 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 $http.get('/' + mode + '/' + param).success(function (data) {
                     $scope.pubs = data;
                 });
-                
+
                 $scope.$on('newPub', function () {
                     var newpub = appFactory.tmpPubData;
                     if (checkContains(newpub, param, mode)) {
-                        $scope.pubs = $scope.pubs.reverse()
+                        $scope.pubs = $scope.pubs.reverse();
                         $scope.pubs.push(newpub);
-                        $scope.pubs = $scope.pubs.reverse()
+                        $scope.pubs = $scope.pubs.reverse();
                     }
                 });
+
+                //Todo: upPub
+//                    console.log('upPub:');
+//                    console.log(upPub);
+//                    for (var i = 0; i < $scope.publicaciones.length; i++) {
+//                        if ($scope.publicaciones[i].idAsStr === upPub.idAsStr) {
+//                            console.log('found it!');
+//                            $scope.publicaciones[i] = upPub;
+//                            break;
+//                        }
+//                    }
             }
 
             $scope.search = function (query) {
@@ -251,6 +281,10 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 appFactory.addPublicacion(p);
             };
 
+            $scope.update = function (p) {
+                appFactory.updatePublicacion(p);
+            };
+
             $scope.rateFunction = function (rating) {
                 if (appFactory.user.idAsStr) {
                     appFactory.rate($routeParams.id, rating, appFactory.user.idAsStr);
@@ -271,8 +305,11 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                 window.location = "/#/publicaciones/" + object.idAsStr;
             });
 
-            if ($routeParams.id) {
+            socket.on('upProdSuccess', function (object) {
+                window.location = "/#/publicaciones/" + object.idAsStr;
+            });
 
+            if ($routeParams.id) {
                 appFactory.getPublicacion($routeParams.id);
 
                 $scope.$on('takePublicacion', function () {
@@ -285,6 +322,14 @@ angular.module('qbik', ['ngRoute', 'textAngular']).config(function ($routeProvid
                     var data = appFactory.tmpCommentData;
                     if ($routeParams.id === data.publicacionId) {
                         $scope.object.comentarios.push(data.comentario);
+                        $rootScope.$apply();
+                    }
+                });
+
+                $scope.$on('upPub', function () {
+                    var data = appFactory.tmpPubData;
+                    if ($routeParams.id === data.idAsStr) {
+                        $scope.object = data;
                         $rootScope.$apply();
                     }
                 });

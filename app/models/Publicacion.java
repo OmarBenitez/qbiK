@@ -91,12 +91,10 @@ public class Publicacion extends BaseModel {
 
     public static List<String> getHashtagsFromContent(Publicacion pub) {
         List<String> hts = new ArrayList<>();
-        System.out.println("Gotta find them all");
         if (pub != null && pub.contenido != null && pub.contenido.length() > 0) {
             Pattern p = Pattern.compile("\\#[a-z0-9]+");
             Matcher m = p.matcher(pub.contenido);
             while (m.find()) {
-                System.out.println(m.group());
                 if (m.group().length() >= 2) {
                     hts.add(m.group().substring(1));
                 }

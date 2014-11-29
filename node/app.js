@@ -61,6 +61,30 @@ io.sockets.on('connection', function (socket) {
 
     });
 
+    socket.on('updatePublicacion', function (publicacion) {
+        var args = {
+            data: {
+                'publicacionId': publicacion.idAsStr,
+                'titulo': publicacion.titulo,
+                'contenido': publicacion.contenido,
+                'banner': publicacion.banner,
+            },
+            headers: {"Content-Type": "application/json"}
+        };
+        
+        client.post(
+                baseUrl + '/publicaciones/update',
+                args
+                ,
+                function (data, response) {
+                    data = JSON.parse(data);
+                    if (data.idAsStr) {
+                        socket.emit('upProdSuccess', data);
+                        socket.broadcast.emit('takeUpHomePub', data);
+                    }
+                });
+    });
+
 
     socket.on('getUsuario', function (id) {
         var route = baseUrl + '/usuario/json/' + id;

@@ -34,6 +34,26 @@ public class Publicaciones extends CRUD {
 
         renderJSON(Publicacion.toJsonListSerializer().serialize(object));
     }
+    
+    public static void update() throws Exception {
+        Gson g = new Gson();
+        Publicacion object = g.fromJson(params.get("body"), Publicacion.class);
+        JSONObject values = new JSONObject(params.get("body"));
+
+        Publicacion p = Publicacion.findById(values.get("publicacionId"));
+        if (null != p) {
+            p.titulo = object.titulo;
+            p.contenido = object.contenido;
+            p.banner = object.banner;
+            p.hashtags = Publicacion.getHashtagsFromContent(object);
+
+            System.out.println("up success?");
+            System.out.println(p.validateAndSave());
+
+            renderJSON(Publicacion.toJsonListSerializer().serialize(p));
+            
+        }
+    }
 
     public static void show(String id) {
         Publicacion p = Publicacion.findById(id);

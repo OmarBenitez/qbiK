@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="banner">
+        <div class="bg" style="background-image: url('{{object.banner}}');"></div>
+        <text>{{object.titulo}}<text>
+    </div>
+    <form class="form-horizontal alingpub" role="form" name="newProd">
+        <div class="form-group">
+            <label for="titulo" class="col-lg-2 control-label">Título</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" 
+                       placeholder="Titulo" ng-model="object.titulo" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="titulo" class="col-lg-2 control-label">Contenido</label>
+            <div class="col-lg-10">
+                <div text-angular ng-model="object.contenido"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="titulo" class="col-lg-2 control-label">Url Banner</label>
+            <div class="col-lg-offset-2 col-lg-10">
+                <input type="text" class="form-control" 
+                       placeholder="Url Banner" ng-model="object.banner" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="submit" class="btn btn-default" ng-click="update(object)">Guardar</button>
+            </div>
+        </div>
+        <script>
+            $(function() {
+                console.log($('.input-file'));
+                $('.input-file').inputfile({
+                    uploadText: 'Select a file',
+                    removeText: '<span class="fa fa-trash"></span>',
+                    restoreText: '<span class="fa fa-remove"></span>',
+                    uploadButtonClass: 'btn btn-primary',
+                    removeButtonClass: 'btn btn-default'
+                });
+            });
+        </script>
+    </form>
+</div>

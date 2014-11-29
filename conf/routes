@@ -12,6 +12,7 @@ GET     /publicaciones/edit/{id}                    Publicaciones.show
 GET     /publicaciones/new                          Publicaciones.blank
 GET     /publicaciones/show/{id}                    Publicaciones.show
 POST    /publicaciones/create                       Publicaciones.create
+POST    /publicaciones/edit                         Publicaciones.update
 GET     /publicaciones/list                         Publicaciones.list
 GET     /publicacion/rate/{id}/{rate}/{userId}      Publicaciones.rate
 POST    /publicacion/comment                        Publicaciones.comment
